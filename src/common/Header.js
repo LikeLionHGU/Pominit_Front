@@ -3,6 +3,7 @@ import styled from "styled-components";
 const Wrapper = styled.header`
   position: absolute;  
   top: 0; left: 0; right: 0;
+  margin-bottom:23.72px;
   height: 60px;
   width: 100%;     
   z-index: 10;
@@ -11,4 +12,6 @@ const Wrapper = styled.header`
   display:flex; align-items:center; justify-content:center;
 `;
 
-export default function Header(){ return <Wrapper>헤더</Wrapper>; }
+export default function Header(){ 
+    return <Wrapper>헤더</Wrapper>; 
+}
