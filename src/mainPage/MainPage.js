@@ -3,6 +3,7 @@ import Sidebar from "../common/Sidebar";
 import Testpage from "../testPage/TestPage";
 import Typebtn from "./component/typebtn";
 import Filterbox from "./component/filterbox";
+import Centers from  "./component/centers";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -29,6 +30,7 @@ export default function MainPage() {
       <Wrapper>포항 추천 강습소</Wrapper>
       <Typebtn/>
       <Filterbox/>
+      <Centers/>
     </div>
   );
 }
