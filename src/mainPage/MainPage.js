@@ -29,8 +29,8 @@ export default function MainPage() {
       <Sidebar />
       <Wrapper>포항 추천 강습소</Wrapper>
       <Typebtn/>
-      <Filterbox/>
       <Centers/>
+      <Filterbox/>
     </div>
   );
 }
