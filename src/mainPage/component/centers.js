@@ -64,7 +64,7 @@ export default function SurfingCenters() {
             alt={center["강습소 이름"]}
           />
           <Name>{center["강습소 이름"]}</Name>
-          <Script>{center["소개 글"]}</Script>
+          <Script>{center["한줄 소개"]}</Script>
           <Info>{`${center["동네"]} · ${center["별점"]} · ${center["후기"]}`}</Info>
         </Card>
       ))}
