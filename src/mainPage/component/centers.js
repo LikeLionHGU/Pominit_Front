@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import data from "../../data/sufferingcenter.json";
 import styled from "styled-components";
 
@@ -50,6 +51,7 @@ const Info = styled.div`
 
 export default function SurfingCenters() {
   const [centers, setCenters] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setCenters(data);
@@ -58,7 +60,7 @@ export default function SurfingCenters() {
   return (
     <Grid>
       {centers.map((center, idx) => (
-        <Card key={idx}>
+        <Card key={idx} onClick={()=> navigate(`/detail/${idx}`)} style={{ cursor: "pointer" }}>
           <Thumbnail
             src={center["썸네일 이미지 URL"]}
             alt={center["강습소 이름"]}
