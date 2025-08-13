@@ -4,6 +4,7 @@ import Testpage from "../testPage/TestPage";
 import Typebtn from "./component/typebtn";
 import Filterbox from "./component/filterbox";
 import Centers from  "./component/centers";
+import Searchbar from  "./component/searchbar";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -31,6 +32,7 @@ export default function MainPage() {
       <Typebtn/>
       <Centers/>
       <Filterbox/>
+      <Searchbar/>
     </div>
   );
 }

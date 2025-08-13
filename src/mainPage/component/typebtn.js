@@ -10,20 +10,24 @@ const Anchor = styled.div`
 `;
 
 const Btn = styled.button`
-  display: inline-flex;
-  padding: 12px 16px;
-  align-items: center;
-  gap: 8px;
-  border-radius: 100px;
-  background: #c5c5c5;
-  border: none;
-  cursor: pointer;
+ display: inline-flex;
+padding: 12px 16px;
+align-items: center;
+border-radius: 100px;
+border: 1px solid #336DFF;
+background: #FFF;
+cursor: pointer;
 `;
 
 const Label = styled.span`
-  font-size: 18px;
-  font-weight: 700;
-  color: #333;
+  color: #2F83F3;
+text-align: center;
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 140%;
+width: 105px;
   white-space: nowrap;
 `;
 
@@ -32,8 +36,7 @@ const IconBox = styled.span`
   align-items: center;
   justify-content: center;
   padding: 8px;
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.06);
+  padding-right: 0;
 `;
 
 const Popover = styled.div`
@@ -41,6 +44,10 @@ const Popover = styled.div`
   top: calc(100% + 8px); 
   left: 0;
 `;
+const ArrowIcon = styled.svg`
+  stroke: #336DFF;
+`;
+
 
 export default function TypeBtn() {
   const [open, setOpen] = useState(false);
@@ -61,14 +68,11 @@ export default function TypeBtn() {
       <Btn onClick={() => setOpen((prev) => !prev)}>
         <Label>포항 레포츠 종류</Label>
         <IconBox>
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" fill="none">
-            <path
-              d="M1 0.724L6 6.724L11 0.724"
-              stroke="#777777"
-              strokeWidth="1.2"
-            />
-          </svg>
-        </IconBox>
+  <ArrowIcon xmlns="http://www.w3.org/2000/svg" width="12" height="8"
+             viewBox="0 0 12 8" fill="none" aria-hidden>
+    <path d="M1 0.724L6 6.724L11 0.724" strokeWidth="1.2" />
+  </ArrowIcon>
+</IconBox>
       </Btn>
 
       {open && (

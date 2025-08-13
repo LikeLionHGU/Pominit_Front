@@ -9,12 +9,11 @@ const Wrapper = styled.div`
 
 const Btn = styled.button`
   display: inline-flex;
-  padding: 8px 12px;
-  align-items: center;
-  gap: 8px;
-  border-radius: 6px;
-  border: 1px solid #000;
-  background: #fff;
+padding: 8px 12px;
+align-items: center;
+border-radius: 6px;
+border: 1px solid #336DFF;
+background: rgba(255, 255, 255, 0.85);
   cursor: pointer;
 `;
 
@@ -30,34 +29,32 @@ const IconBox = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-  border-radius: 6px;
-  background: rgba(0,0,0,0.06);
+  padding-left: 8px;
 `;
 
 const Dropdown = styled.div`
   position: absolute;
+  background-color:white;
   top: calc(100% + 6px);
   left: 0;
   padding: 8px 12px;
+  padding-top:0px;
+  padding-bottom:0px;
   border-radius: 6px;
-  border: 1px solid #000;
-  background: #fff;
+border: 1px solid var(--Foundation-White-white-600, #C5C5C5);
+box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12);
 `;
 
 
 const Menu = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 16px;   /* 아래로 16px */
-  column-gap: 12px;/* 옆으로 12px (1열이면 영향 없음) */
 `;
 
 const MenuItem = styled.button`
   display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 8px 12px;
+  padding: 8px 15px;
+  padding-left:0px;
   border:none;
   background-color:white;
   cursor: pointer;
@@ -67,8 +64,17 @@ const MenuItem = styled.button`
   word-break: keep-all;
 `;
 
+const MenuItemLabel = styled.span`
+  padding-top: 3px;
+  padding-bottom: 3px;
+  color: ${({ selected }) => (selected ? "#2F83F3" : "#000")}; /* 선택 시 색 변경 */
+  font-family: Pretendard, system-ui, -apple-system, sans-serif;
+  font-weight: ${({ selected }) => (selected ? 600 : 400)};
+`;
+
 export default function FilterBox() {
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState("ratingDesc");
   const ref = useRef(null);
 
   useEffect(() => {
@@ -80,6 +86,7 @@ export default function FilterBox() {
   }, []);
 
   const handleSelect = (value) => {
+    setSelected(value);
     setOpen(false);
   };
 
@@ -87,7 +94,7 @@ export default function FilterBox() {
     <div ref={ref}>
       <Wrapper>
         <Btn onClick={() => setOpen((prev) => !prev)}>
-          <Label>높은 평점 순</Label>
+          <Label>높은평점순</Label>
           <IconBox>
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden>
               <path d="M1 0.724L6 6.724L11 0.724" stroke="#777777" strokeWidth="1.2" />
@@ -98,9 +105,21 @@ export default function FilterBox() {
         {open && (
           <Dropdown>
             <Menu>
-              <MenuItem onClick={() => handleSelect("ratingDesc")}>높은 평점 순</MenuItem>
-              <MenuItem onClick={() => handleSelect("ratingAsc")}>낮은 평점 순</MenuItem>
-              <MenuItem onClick={() => handleSelect("reviewDesc")}>리뷰 많은 순</MenuItem>
+              <MenuItem onClick={() => handleSelect("ratingDesc")}>
+                <MenuItemLabel selected={selected === "ratingDesc"}>
+                  높은평점순
+                </MenuItemLabel>
+              </MenuItem>
+              <MenuItem onClick={() => handleSelect("ratingAsc")}>
+                <MenuItemLabel selected={selected === "ratingAsc"}>
+                  낮은평점순
+                </MenuItemLabel>
+              </MenuItem>
+              <MenuItem onClick={() => handleSelect("reviewDesc")}>
+                <MenuItemLabel selected={selected === "reviewDesc"}>
+                  리뷰많은순
+                </MenuItemLabel>
+              </MenuItem>
             </Menu>
           </Dropdown>
         )}
