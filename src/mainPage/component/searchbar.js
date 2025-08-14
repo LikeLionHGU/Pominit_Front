@@ -3,8 +3,8 @@ import React, { useState, useRef, useEffect } from "react";
 
 const Wrapper = styled.div`
   position: absolute;
-  top: 83.45px;
-  left: 390px;
+  top: 371px;
+  left: 355px;
 `;
 
 const Field = styled.div`

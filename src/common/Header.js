@@ -8,8 +8,8 @@ const LogoWrapper = styled.div`
 const Logoutbtn = styled.div`
 display: inline-flex;
 position:absolute;
-top:13.5px;
-left:998px;
+top:11px;
+left:954px;
 padding: 8px 12px;
 justify-content: center;
 align-items: center;
