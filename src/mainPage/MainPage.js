@@ -1,6 +1,5 @@
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
-import Testpage from "../testPage/TestPage";
 import Typebtn from "./component/typebtn";
 import Filterbox from "./component/filterbox";
 import Centers from  "./component/centers";
