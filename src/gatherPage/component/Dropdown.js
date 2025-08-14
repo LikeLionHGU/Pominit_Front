@@ -1,61 +1,41 @@
 import React, { useRef, useState } from "react";
 import styles from "./Dropdown.module.css";
 import useDetectClose from "./useDetectClose";
+import down from "../../asset/img/down.svg";
 
-function Dropdown() {
+function Dropdown({ defaultValue, options }) {
   const dropDownRef = useRef();
-  const [value, setValue] = useState("포항 레포츠 종류");
+  const [value, setValue] = useState(defaultValue);
 
   const [isOpen, setIsOpen] = useDetectClose(dropDownRef);
 
   return (
     <div
       ref={dropDownRef}
-      className={styles.selectBox}
+      className={`${styles.selectBox} ${isOpen ? styles.open : ""}`}
       onClick={() => {
         setIsOpen(!isOpen);
       }}
     >
-      {value}
+      <span>
+        {value}
+        <img src={down} alt="down" />
+      </span>
 
       {isOpen && (
         <ul className={styles.optionList}>
-          <li
-            data-content="선택지 1"
-            className={styles.optionItem}
-            onClick={(e) => {
-              setValue(e.target.dataset["content"]);
-            }}
-          >
-            선택지 1
-          </li>
-          <li
-            data-content="선택지 2"
-            className={styles.optionItem}
-            onClick={(e) => {
-              setValue(e.target.dataset["content"]);
-            }}
-          >
-            선택지 2
-          </li>
-          <li
-            data-content="선택지 3"
-            className={styles.optionItem}
-            onClick={(e) => {
-              setValue(e.target.dataset["content"]);
-            }}
-          >
-            선택지 3
-          </li>
-          <li
-            data-content="선택지 4"
-            className={styles.optionItem}
-            onClick={(e) => {
-              setValue(e.target.dataset["content"]);
-            }}
-          >
-            선택지 4
-          </li>
+          {options.map((option, index) => (
+            <li
+              key={index}
+              data-content={option}
+              className={styles.optionItem}
+              onClick={(e) => {
+                setValue(e.target.dataset["content"]);
+              }}
+            >
+              {option}
+            </li>
+          ))}
         </ul>
       )}
     </div>
