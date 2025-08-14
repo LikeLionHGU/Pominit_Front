@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import data from "../data/sufferingcenter.json";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
@@ -8,6 +9,7 @@ import Info from "./componenet/centerinfo";
 import Map from "./componenet/map";
 import Meeting from "./componenet/meeting";
 import Review2 from "./componenet/review2";
+
 
 
 const Page = styled.div`
@@ -76,6 +78,7 @@ const Register = styled.button`
 
 
 export default function DetailPage() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const center = data[id];
   if (!center) {
@@ -83,6 +86,7 @@ export default function DetailPage() {
   }
 
   return (
+    
     <Page>
       <div className="container">
         <HeaderWrapper>
@@ -99,7 +103,7 @@ export default function DetailPage() {
 <Review2/>
       </div>
       <Bar>
-        <Comparebtn>비교하기</Comparebtn>
+        <Comparebtn onClick={()=> navigate(`/compare`)} style={{ cursor: "pointer" }}>비교하기</Comparebtn>
         <Register>예약하기</Register>
       </Bar>
     </Page>
