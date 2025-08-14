@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./mainPage/MainPage";
 import CenterDetailPage from "./centerdetailPage/CenterDetailPage";
-import GatherPage from "./joinPage/GatherPage";
+import GatherPage from "./gatherPage/GatherPage";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/detail/:id" element={<CenterDetailPage />} />
-        <Route path="/gather/:id" element={<GatherPage />} />
+        <Route path="/gather" element={<GatherPage />} />
       </Routes>
     </BrowserRouter>
   );
