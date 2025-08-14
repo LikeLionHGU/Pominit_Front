@@ -4,7 +4,7 @@ import Dropbox from "./dropbox";
 
 const Anchor = styled.div`
   position: absolute;
-  top: 83.45px;
+  top: 371px;
   left: 180px;
   z-index: 20;
 `;
