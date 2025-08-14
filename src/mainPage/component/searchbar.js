@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import React, { useState, useRef, useEffect } from "react";
 
 const Wrapper = styled.div`
   position: absolute;
