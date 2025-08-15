@@ -15,7 +15,8 @@ const Write=styled.div`
 position:absolute;
 left: 973px;
 top:1325.72px;
-color: var(--Foundation-White-white-700, #9A9A9A);
+
+color: #2285E3;
 font-family: Pretendard;
 font-size: 16px;
 font-style: normal;
@@ -68,7 +69,10 @@ const BoxWrapper = styled.div`
   padding-bottom: 16px;
   border-bottom: 1px solid var(--Foundation-White-white-500, #D9D9D9);
 `;
-
+const Rating = styled.span`
+  color: #ff517e;
+  font-weight: 600;
+`;
 
 export default function Review1() {
   const reviews = [
@@ -102,14 +106,11 @@ export default function Review1() {
           <BoxWrapper key={i}>
             <Nickname>{r.nickname}</Nickname>
             <Stardate>
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="none">
-                <path
-                  d="M7.62598 0.500977L9.19757 5.33786H14.2834L10.1689 8.32721L11.7405 13.1641L7.62598 10.1747L3.51148 13.1641L5.08308 8.32721L0.968581 5.33786H6.05438L7.62598 0.500977Z"
-                  fill="#C5C5C5"
-                />
-              </svg>
-              {r.rating} · {r.date}
-            </Stardate>
+  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="none">
+    <path d="M7.62598 0.500977L9.19757 5.33786H14.2834L10.1689 8.32721L11.7405 13.1641L7.62598 10.1747L3.51148 13.1641L5.08308 8.32721L0.968581 5.33786H6.05438L7.62598 0.500977Z" fill="#FF517E"/>
+  </svg>
+  <Rating>{r.rating}</Rating> · {r.date}
+</Stardate>
             <Content>{r.content}</Content>
           </BoxWrapper>
         ))}

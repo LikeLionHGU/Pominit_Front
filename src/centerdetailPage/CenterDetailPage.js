@@ -17,7 +17,7 @@ const Page = styled.div`
   width: auto;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #2185E3 0%, #FFF 100%);
+  background: #FAFBFF;
   position: relative;
   min-height: 100vh;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
@@ -25,7 +25,7 @@ const Page = styled.div`
 
 const SidebarWrapper = styled.div`
   position: absolute;
-  top: 83.72px;
+  top: 71px;
   display: flex;
   flex-direction: column;
 `;
@@ -35,7 +35,6 @@ const HeaderWrapper = styled.div`
   height: 60px;
   flex-shrink: 0;
   border-radius: 0 0 12px 12px;
-  background: var(--Foundation-White-white-500, #D9D9D9);
 `;
 
 const Bar = styled.div`
@@ -43,7 +42,7 @@ const Bar = styled.div`
   top: 1592px;
   width: 100%;
   height: 72px;
-  background: var(--Foundation-White-white-600, #C5C5C5);
+ background: #D6EBFF;
 
   display: flex;
   justify-content: flex-end; /* 오른쪽 끝 정렬 */
@@ -60,8 +59,15 @@ const Comparebtn = styled.button`
   align-items: center;
   gap: 8px;
   border-radius: 6px;
-  background: var(--Foundation-White-white-700, #9A9A9A);
+  background: white;
   border: none;
+ color: #2285E3;
+text-align: center;
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 140%; /* 22.4px */
 `;
 
 const Register = styled.button`
@@ -72,8 +78,16 @@ const Register = styled.button`
   align-items: center;
   gap: 8px;
   border: none;
-  border-radius: 6px;
-  background: var(--Foundation-White-white-500, #D9D9D9);
+ border-radius: 6px;
+background: #2285E3;
+color: #FFF;
+text-align: center;
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 140%; /* 22.4px */
+
 `;
 
 
