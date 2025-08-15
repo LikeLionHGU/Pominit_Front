@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { useState } from "react";
-
-/* Icon을 Btn보다 먼저 선언! */
+const SidebarWrap = styled.div`
+  transform: translateX(-16px); 
+  
+`;
 const Icon = styled.div`
   width: 16px;
   height: 15px;
@@ -28,7 +30,7 @@ const BtnGroup = styled.div`
   left: 0;
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 25px;
 `;
 
 const Btn = styled.button`
@@ -61,9 +63,10 @@ const Btn = styled.button`
 `;
 
 const Banner = styled.div`
+margin-left:15px;
 margin-top:37px;
-  width: 140px;
-  height: 260px;
+ width: 153px;
+height: 260px;
   flex-shrink: 0;
   border-radius: 12px;
   background: #c5c5c5;
@@ -74,11 +77,25 @@ export default function Sidebar() {
 
   return (
     <div>
-      
+      <SidebarWrap>
         <Backbtn>
-          <svg xmlns="http://www.w3.org/2000/svg" width="153" height="186" viewBox="0 0 153 186" fill="none">
-            <rect width="153" height="186" rx="12" fill="white"/>
-          </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="183" height="216" viewBox="0 0 183 216" fill="none">
+  <g filter="url(#filter0_d_593_1082)">
+    <rect x="15" y="11" width="153" height="186" rx="12" fill="white"/>
+  </g>
+  <defs>
+    <filter id="filter0_d_593_1082" x="0" y="0" width="183" height="216" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="7.5"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_593_1082"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_593_1082" result="shape"/>
+    </filter>
+  </defs>
+</svg>
 
           {/* 버튼을 Backbtn 위에 겹치게 */}
           <BtnGroup>
@@ -126,7 +143,7 @@ export default function Sidebar() {
         </Backbtn>
 
         <Banner />
-   
+        </SidebarWrap>
     </div>
   );
 }

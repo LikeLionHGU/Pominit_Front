@@ -40,7 +40,7 @@ const MainContainer = styled.div`
 `;
 const SidebarWrapper = styled.div`
   position: absolute;
-  top: 372px;
+  top: 360px;
   display: flex;
   flex-direction: column;
 `;
