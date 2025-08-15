@@ -4,6 +4,7 @@ import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 
 import Dropdown from "./component/Dropdown";
+import GatherList from "./component/GatherList";
 
 function GatherPage() {
   return (
@@ -19,7 +20,10 @@ function GatherPage() {
             />
           </div>
           <div className={styles.gathers}>
-            <div className={styles.gatherList}></div>
+            이런 모임은 어때요?
+            <div className={styles.gatherList}>
+              <GatherList />
+            </div>
           </div>
         </div>
       </div>
