@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 const Wrapper = styled.div`
   position: absolute;
-  top: 83.45px;
+  top: 465.28px;
   left: 936.58px;
 `;
 
@@ -13,7 +13,7 @@ padding: 8px 12px;
 align-items: center;
 border-radius: 6px;
 border: 1px solid #336DFF;
-background: rgba(255, 255, 255, 0.85);
+background: white;
   cursor: pointer;
 `;
 
@@ -112,7 +112,7 @@ export default function FilterBox() {
               </MenuItem>
               <MenuItem onClick={() => handleSelect("ratingAsc")}>
                 <MenuItemLabel selected={selected === "ratingAsc"}>
-                  낮은평점순
+                  낮은가격순
                 </MenuItemLabel>
               </MenuItem>
               <MenuItem onClick={() => handleSelect("reviewDesc")}>

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const Grid = styled.div`
   position: absolute;
-  top: 220px;
+  top: 521.28px;
   left: 190px;
   display: grid;
   grid-template-columns: repeat(3, 284px); 
