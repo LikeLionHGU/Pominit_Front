@@ -1,14 +1,14 @@
-import Ball from "../../asset/img/ball.svg"
-import Ball2 from "../../asset/img/ball2.svg";
-import S from "../../asset/img/s.svg";
-import E from "../../asset/img/e.svg";
-import A from "../../asset/img/a.svg";
-import Z from "../../asset/img/z.svg";
-import L from "../../asset/img/l.svg";
-import E2 from "../../asset/img/e2.svg";
-import Tree1 from "../../asset/img/tree1.svg";
-import Tree2 from "../../asset/img/tree2.svg";
-import Chair from "../../asset/img/chair.svg";
+import Ball from "../asset/img/ball.svg"
+import Ball2 from "../asset/img/ball2.svg";
+import S from "../asset/img/s.svg";
+import E from "../asset/img/e.svg";
+import A from "../asset/img/a.svg";
+import Z from "../asset/img/z.svg";
+import L from "../asset/img/l.svg";
+import E2 from "../asset/img/e2.svg";
+import Tree1 from "../asset/img/tree1.svg";
+import Tree2 from "../asset/img/tree2.svg";
+import Chair from "../asset/img/chair.svg";
 
 import styled from "styled-components";
 

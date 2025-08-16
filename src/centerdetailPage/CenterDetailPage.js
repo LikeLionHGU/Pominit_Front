@@ -48,7 +48,7 @@ const Bar = styled.div`
   justify-content: flex-end; /* 오른쪽 끝 정렬 */
   align-items: center;
   gap: 16px; /* 버튼 간격 */
-  padding-right: 40px; /* 오른쪽 여백 */
+  padding-right: 120px; /* 오른쪽 여백 */
 `;
 
 const Comparebtn = styled.button`

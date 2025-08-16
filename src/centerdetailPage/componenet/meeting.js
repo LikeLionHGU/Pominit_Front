@@ -39,6 +39,7 @@ const ScrollArea = styled.div`
 
   /* (선택) 스크롤바 커스텀 - 크롬/엣지/사파리 */
   &::-webkit-scrollbar {
+   border-radius: 100px;
     width: 8px;
   }
   &::-webkit-scrollbar-thumb {
@@ -47,6 +48,7 @@ background: #D6EBFF;
   }
   &::-webkit-scrollbar-track {
     background: #f2f2f2;
+     border-radius: 100px;
   }
 `;
 
