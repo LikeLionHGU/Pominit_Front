@@ -126,21 +126,13 @@ export default function DetailPage() {
 
   const idx = String(id);
   const center = data[idx]; // 이건 화면용으로 OK
-  const storedId = String(center.id); // ← 비교함에는 '고유 id'로 저장
+  const storedId = String(center.id);
 
   if (!center) return <div>데이터를 찾을 수 없습니다.</div>;
 
   const handleCompare = () => {
-    const { ids, status } = addToCompare(idx);
+    const { ids } = addToCompare(storedId);
   
-    if (status === "exists") {
-      alert("이미 비교함에 담긴 항목입니다.");
-      return;
-    }
-    if (status === "full") {
-      alert("비교함은 최대 3개까지 담을 수 있어요.");
-      return;
-    }
   
     // status === "added"
     if (ids.length < 2) {
