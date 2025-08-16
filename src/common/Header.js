@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, matchPath } from "react-router-dom";
 
 const LogoWrapper = styled.div`
   padding-top: 17px;
@@ -16,8 +16,8 @@ const Logoutbtn = styled.div`
   align-items: center;
   gap: 10px;
   border-radius: 6px;
-border: 0.8px solid #2F83F3;
-background: var(--BG-02, #FFF);
+  border: 0.8px solid #2F83F3;
+  background: var(--BG-02, #FFF);
   cursor: pointer;
   caret-color: transparent;
 `;
@@ -30,20 +30,32 @@ const Logout = styled.div`
   line-height: normal;
 `;
 
-// currentColor로 색 제어
 const Logo = styled.svg`
-  color: ${({ $detail }) => ($detail ? "#336DFF" : "#FFFFFF")};
+  color: ${({ $blue }) => ($blue ? "#336DFF" : "#FFFFFF")};
 `;
+
+
+const BLUE_PATTERNS = [
+  "/detail/*",   
+  "/compare/*", 
+];
+
+function isOneOf(pathname, patterns) {
+  return patterns.some((p) =>
+    matchPath({ path: p, end: !p.endsWith("/*") }, pathname)
+  );
+}
 
 export default function Header() {
   const { pathname } = useLocation();
-  const isDetail = pathname.startsWith("/detail"); // /detail, /detail/123 등
+
+  const isBlueLogo = isOneOf(pathname, BLUE_PATTERNS);
 
   return (
     <div>
       <LogoWrapper>
         <Logo
-          $detail={isDetail}
+          $blue={isBlueLogo}
           width="87"
           height="18"
           viewBox="0 0 87 18"
