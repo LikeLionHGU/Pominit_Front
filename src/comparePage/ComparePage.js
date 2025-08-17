@@ -27,15 +27,13 @@ const removeId = (id) => {
 const clearAll = () => localStorage.removeItem(COMPARE_KEY);
 
 /* ===== 안전한 데이터 접근 (배열/객체 모두 대응) ===== */
-const getItemById = (id) => {
-  const sid = String(id);
-  if (Array.isArray(data)) {
-    // id 속성으로 우선 탐색, 실패 시 인덱스 접근 보조
-    return data.find((d) => String(d?.id) === sid) ?? data[Number(sid)];
-  }
-  // 객체 맵 형태일 때
-  return data[sid] ?? data[Number(sid)];
-};
+ const getItemById = (id) => {
+     const sid = String(id);
+     // 배열일 때: 항상 고유 id로 find
+     if (Array.isArray(data)) return data.find(d => String(d?.id) === sid);
+     // 객체 맵 구조라면 id 키 접근만
+     return data?.[sid];
+   };
 
 /* ===== 파서 ===== */
 const parseRating = (val) => {
@@ -49,6 +47,28 @@ const parseReviewCount = (val) => {
   const m = String(val).match(/\d+/);
   return m ? Number(m[0]) : 0;
 };
+useEffect(() => {
+  try {
+    const raw = JSON.parse(localStorage.getItem(COMPARE_KEY) || "[]");
+    if (!Array.isArray(raw) || raw.length === 0) return;
+
+    const fixed = raw.map((sid) => {
+      // 이미 올바른 id면 유지
+      const byId = Array.isArray(data) && data.find(d => String(d.id) === String(sid));
+      if (byId) return String(byId.id);
+
+      // 과거 인덱스로 저장된 경우 → 해당 항목의 진짜 id로 교체
+      const byIndex = Array.isArray(data) ? data[Number(sid)] : undefined;
+      return byIndex?.id != null ? String(byIndex.id) : String(sid);
+    });
+
+    const deduped = Array.from(new Set(fixed)).slice(0, MAX_COMPARE);
+    localStorage.setItem(COMPARE_KEY, JSON.stringify(deduped));
+    setStateIds(deduped); // 상태도 교정 반영
+  } catch {}
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
+
 const SidebarWrapper = styled.div`
   position: absolute;
   top: 83.72px;
@@ -124,24 +144,7 @@ left:870px;
 `;
 
 
-/* ===== UI ===== */
-const Wrap = styled.div`
-  width: 420px;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-  border: 1px solid #E6F0FF;
-  overflow: hidden;
-  font-family: Pretendard, system-ui, -apple-system, sans-serif;
-`;
-const Head = styled.div`
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 14px; background: #F5FAFF; border-bottom: 1px solid #E6F0FF;
-  font-weight: 700; color: #2285E3;
-`;
-const Badge = styled.span`
-  padding: 2px 8px; border-radius: 999px; background: #E6F2FF; color: #2285E3; font-weight: 700; font-size: 12px;
-`;
+
 const List = styled.ul`
   list-style: none; margin: 0; padding: 8px 0;
   max-height: 420px; overflow-y: auto;
