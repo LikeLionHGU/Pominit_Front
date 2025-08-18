@@ -12,6 +12,9 @@ import Chair from "../asset/img/chair.svg";
 
 import styled from "styled-components";
 
+const Box=styled.div`
+user-select: none;
+`;
 const Ballstyle = styled.div`
  position: absolute;  
   left: 330px;
@@ -72,7 +75,7 @@ position: absolute;
 `;
 export default function MainPage() {
     return (
-        <div>
+        <Box>
            <Ballstyle><img src={Ball} alt="Ball" /></Ballstyle>
 <Ss><img src={S} alt="seazle" /></Ss>
 <Es><img src={E} alt="seazle" /></Es>
@@ -84,7 +87,7 @@ export default function MainPage() {
 <Tree1s><img src={Tree1} alt="seazle" /></Tree1s>
 <Chairs><img src={Chair} alt="seazle" /></Chairs>
 <Ball2s><img src={Ball2} alt="seazle" /></Ball2s> 
-        </div>
+        </Box>
 
   );
 }

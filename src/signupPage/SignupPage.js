@@ -16,6 +16,7 @@ const Page = styled.div`
   position: relative;
   min-height: 100vh;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
+    user-select: none;
 `;
 
 const Box=styled.div`

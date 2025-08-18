@@ -15,31 +15,37 @@ const Ss = styled.div`
  position: absolute;  
  top:78px;
   left: 16px;
+  opacity: 0.5;
 `;
 const Es = styled.div`
  position: absolute;  
  top:138px;
   left: 225px;
+   opacity: 0.5;
 `;
 const As = styled.div`
  position: absolute;  
  top:138px;
   left: 408px;
+   opacity: 0.5;
 `;
 const Zs = styled.div`
  position: absolute;  
  top:90px;
   left: 600px;
+   opacity: 0.5;
 `;
 const Ls = styled.div`
  position: absolute;  
  top:85px;
   left: 796px;
+   opacity: 0.5;
 `;
 const E2s = styled.div`
  position: absolute;  
  top:136px;
   left: 880px;
+   opacity: 0.5;
 `;
 const Tree1s = styled.div`
 position: absolute;  

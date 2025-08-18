@@ -29,10 +29,11 @@ font-style: normal;
 font-weight: 600;
 line-height: 36px; /* 163.636% */
  text-align: left;
+ user-select: none;
 
 `;
 const MainContainer = styled.div`
-   height: 180vh;  /* 페이지 전체 높이를 차지 */
+   height: 180vh;  
   width: auto;
   display: flex;
   flex-direction: column;
