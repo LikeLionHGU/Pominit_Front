@@ -1,25 +1,19 @@
 .selectBox {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
   gap: 8px;
 
   cursor: pointer;
-
-  display: inline-flex;
-  padding: 0.75rem 1rem;
   align-items: center;
   align-content: center;
-  gap: 0.5rem;
   border-radius: 6.25rem;
   border: 1px solid #336dff;
 
   background: #fff;
   max-height: 40px; /* 기본 높이 */
   width: 155px;
-
-  transition: max-height 0.3s ease; /* height 대신 max-height로 애니메이션 */
-  overflow: hidden;
+  height: 46px;
 
   color: #2f83f3;
   /*글자 스타일*/
@@ -32,16 +26,35 @@
 }
 
 .selectBox.open {
-  max-height: 200px; /* 열렸을 때 */
-  background: #fff;
-  border-radius: 10px;
+  color: #2f83f3;
+  overflow: visible; /* 잘리지 않게 */
 }
 .optionList {
   color: black;
-  display: flex;
+  display: none;
   flex-direction: column;
   list-style: none;
   padding-left: 0;
+}
+
+.optionList.open {
+  margin-top: 200px;
+  margin-left: 250px;
+  display: grid;
+  width: 413px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+
+  padding: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
+
+  z-index: 2;
 }
 
 .selected {
@@ -69,10 +82,17 @@
 .optionItem {
   padding: 6px 8px;
   cursor: pointer;
-  border-radius: 4px;
-  transition: background 0.2s;
+  border-radius: 6.25rem;
+  border: 1px solid #fff;
+  color: #2f83f3;
 }
 
 .optionItem:hover {
-  background: #b0b0b0;
+  border: 1px solid #2f83f3;
+  background: #fff;
+}
+.optionItem:active {
+  border: 1px solid #2f83f3;
+  background: #2f83f3;
+  color: #fff;
 }
