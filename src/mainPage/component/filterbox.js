@@ -1,23 +1,11 @@
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import React, { useState, useRef, useEffect } from "react";
 
 const Wrapper = styled.div`
   position: absolute;
   top: 465.28px;
   left: 936.58px;
-`;
-
-const Btn = styled.button`
-  display: inline-flex;
-padding: 8px 12px;
-align-items: center;
-border-radius: 6px;
-border: 1px solid #336DFF;
-background: white;
-  cursor: pointer;
-`;
-
-const Label = styled.div`
+  display: inline-block; /* 트리거 너비 = 래퍼 너비 */
   color: #000;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
   font-size: 14px;
@@ -25,105 +13,131 @@ const Label = styled.div`
   line-height: 140%;
 `;
 
-const IconBox = styled.span`
+const Trigger = styled.button`
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding-left: 8px;
-`;
-
-const Dropdown = styled.div`
-  position: absolute;
-  background-color:white;
-  top: calc(100% + 6px);
-  left: 0;
+  gap: 8px;
   padding: 8px 12px;
-  padding-top:0px;
-  padding-bottom:0px;
   border-radius: 6px;
-border: 1px solid var(--Foundation-White-white-600, #C5C5C5);
-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12);
-`;
-
-
-const Menu = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-`;
-
-const MenuItem = styled.button`
-  display: inline-flex;
-  padding: 8px 15px;
-  padding-left:0px;
-  border:none;
-  background-color:white;
+  border: 1px solid #336DFF;
+  background: #fff;
   cursor: pointer;
+`;
+
+const LabelFocus = styled.span`
+  color: #000;
   font-size: 14px;
-  line-height: 1;
-   white-space: nowrap;
-  word-break: keep-all;
+  line-height: 140%;
 `;
 
-const MenuItemLabel = styled.span`
-  padding-top: 3px;
-  padding-bottom: 3px;
-  color: ${({ selected }) => (selected ? "#2F83F3" : "#000")}; /* 선택 시 색 변경 */
-  font-family: Pretendard, system-ui, -apple-system, sans-serif;
-  font-weight: ${({ selected }) => (selected ? 600 : 400)};
+const Caret = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="9" viewBox="0 0 12 9" fill="none" aria-hidden>
+    <path d="M1 1.27637L6 7.27637L11 1.27637" stroke="#777777" strokeWidth="1.2" />
+  </svg>
+);
+
+/* Panel */
+const Menu = styled.div`
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  width: 100%;            /* ▼ 트리거와 같은 폭 */
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #c5c5c5;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 `;
 
-export default function FilterBox() {
+const MenuList = styled.div`
+  display: grid;
+`;
+
+const Item = styled.button`
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 0;
+  cursor: pointer;
+
+  /* 선택 상태 */
+  background: ${({ $selected }) => ($selected ? "#2F83F3" : "#fff")};
+  color: ${({ $selected }) => ($selected ? "#fff" : "#000")};
+  font-weight: ${({ $selected }) => ($selected ? 600 : 400)};
+
+  /* hover 시: 선택 안 된 것만 옅은 배경 */
+  &:hover {
+    background: ${({ $selected }) => ($selected ? "#2F83F3" : "#F5F8FF")};
+  }
+`;
+
+const OPTIONS = [
+  { value: "ratingDesc", label: "높은평점순" },
+  { value: "priceAsc",   label: "낮은가격순" },
+  { value: "reviewDesc", label: "리뷰많은순" },
+];
+
+export default function SortDropdown({
+  defaultValue = "ratingDesc",
+  onChange,
+  style,
+}) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState("ratingDesc");
+  const [selected, setSelected] = useState(defaultValue);
   const ref = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
+    const onDocClick = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    const onEsc = (e) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onEsc);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onEsc);
+    };
   }, []);
 
-  const handleSelect = (value) => {
-    setSelected(value);
+  const choose = (v) => {
+    setSelected(v);
     setOpen(false);
+    onChange?.(v);
   };
 
-  return (
-    <div ref={ref}>
-      <Wrapper>
-        <Btn onClick={() => setOpen((prev) => !prev)}>
-          <Label>높은평점순</Label>
-          <IconBox>
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden>
-              <path d="M1 0.724L6 6.724L11 0.724" stroke="#777777" strokeWidth="1.2" />
-            </svg>
-          </IconBox>
-        </Btn>
+  const current = OPTIONS.find((o) => o.value === selected) || OPTIONS[0];
 
-        {open && (
-          <Dropdown>
-            <Menu>
-              <MenuItem onClick={() => handleSelect("ratingDesc")}>
-                <MenuItemLabel selected={selected === "ratingDesc"}>
-                  높은평점순
-                </MenuItemLabel>
-              </MenuItem>
-              <MenuItem onClick={() => handleSelect("ratingAsc")}>
-                <MenuItemLabel selected={selected === "ratingAsc"}>
-                  낮은가격순
-                </MenuItemLabel>
-              </MenuItem>
-              <MenuItem onClick={() => handleSelect("reviewDesc")}>
-                <MenuItemLabel selected={selected === "reviewDesc"}>
-                  리뷰많은순
-                </MenuItemLabel>
-              </MenuItem>
-            </Menu>
-          </Dropdown>
-        )}
-      </Wrapper>
-    </div>
+  return (
+    <Wrapper ref={ref} style={style}>
+      <Trigger
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={() => setOpen((p) => !p)}
+      >
+        <LabelFocus>{current.label}</LabelFocus>
+        <Caret />
+      </Trigger>
+
+      {open && (
+        <Menu role="menu" aria-label="정렬 선택">
+          <MenuList>
+            {OPTIONS.map((opt) => (
+              <Item
+                key={opt.value}
+                role="menuitemradio"
+                aria-checked={selected === opt.value}
+                $selected={selected === opt.value}
+                onClick={() => choose(opt.value)}
+              >
+                {opt.label}
+              </Item>
+            ))}
+          </MenuList>
+        </Menu>
+      )}
+    </Wrapper>
   );
 }

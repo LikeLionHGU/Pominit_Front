@@ -16,7 +16,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const Category = styled.div`
-  position: relative;              /* 자식 absolute 배치 기준 */
+  position: relative;             
   width: 880px;
   height: 60px;
   flex-shrink: 0;

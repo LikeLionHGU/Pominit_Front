@@ -2,15 +2,13 @@ import styled from "styled-components";
 import { useState } from "react";
 const SidebarWrap = styled.div`
   transform: translateX(-16px); 
-  
+  user-select: none;
 `;
 const Icon = styled.div`
   width: 16px;
   height: 15px;
   flex-shrink: 0;
   opacity: 0.9;
-
-  /* active에 따라 path 색 제어 */
   svg path {
     fill: ${({ active }) => (active ? "#fff" : "#B7D8F7")};
   }

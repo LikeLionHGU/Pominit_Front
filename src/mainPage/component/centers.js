@@ -8,7 +8,7 @@ const Grid = styled.div`
   top: 521.28px;
   left: 190px;
   display: grid;
-  grid-template-columns: repeat(3, 284px); 
+  grid-template-columns: repeat(3, 284px);
   gap: 14px;
 `;
 
@@ -16,7 +16,8 @@ const Card = styled.div`
   width: 284px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
+  cursor: pointer;
 `;
 
 const Thumbnail = styled.img`
@@ -39,15 +40,53 @@ const Script = styled.div`
   font-size: 14px;
   font-weight: 400;
   overflow: hidden;
-  white-space: nowrap; 
+  white-space: nowrap;
 `;
 
-const Info = styled.div`
+
+const InfoRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #555;
   font-family: Pretendard, sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #555;
 `;
+
+const InfoItem = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;           
+`;
+
+const Dot = styled.span`
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #6D6D6D;
+  display: inline-block;
+`;
+
+const Truncate = styled.span`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+
+const Icon16 = (props) => (
+  <svg width="16" height="16" viewBox="0 0 16 17" fill="none" aria-hidden {...props}>
+    <path d="M7.6532 13.3855C5.1468 13.2672 3.15271 11.2012 3.15271 8.66203C3.15271 6.05187 5.27291 3.93063 7.88177 3.93063C10.4197 3.93063 12.4847 5.9257 12.603 8.43334L10.9478 7.93654C10.6246 6.54078 9.37143 5.50776 7.88177 5.50776C6.1399 5.50776 4.72906 6.91929 4.72906 8.66203C4.72906 10.1524 5.76158 11.4062 7.15665 11.7295L7.6532 13.3855ZM15.7635 8.66203C15.7635 8.89859 15.7557 9.13517 15.732 9.37173L14.1793 8.90648C14.1872 8.82762 14.1872 8.74088 14.1872 8.66203C14.1872 5.17656 11.3655 2.3535 7.88177 2.3535C4.39803 2.3535 1.57635 5.17656 1.57635 8.66203C1.57635 12.1475 4.39803 14.9706 7.88177 14.9706C7.96059 14.9706 8.04729 14.9706 8.12611 14.9627L8.59113 16.5161C8.35468 16.5398 8.11823 16.5477 7.88177 16.5477C3.53103 16.5477 0 13.0149 0 8.66203C0 4.30914 3.53103 0.776367 7.88177 0.776367C12.2325 0.776367 15.7635 4.30914 15.7635 8.66203ZM12.7921 12.0213L14.5813 11.422C14.9438 11.3037 14.936 10.7833 14.5734 10.6729L8.58325 8.87494C8.28374 8.7882 8 9.06419 8.09458 9.36385L9.89163 15.3569C10.002 15.7276 10.5222 15.7355 10.6404 15.3648L11.2394 13.5748L14.3212 16.6581C14.4788 16.8158 14.7232 16.8158 14.8808 16.6581L15.8818 15.6566C16.0394 15.4989 16.0394 15.2544 15.8818 15.0967L12.7921 12.0213Z" fill="#FF517E"/>
+  </svg>
+);
+
+const IconStar14 = (props) => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden {...props}>
+    <path d="M7 0.776367L8.5716 5.61325H13.6574L9.5429 8.60261L11.1145 13.4395L7 10.4501L2.8855 13.4395L4.4571 8.60261L0.342604 5.61325H5.4284L7 0.776367Z" fill="#FF517E"/>
+  </svg>
+);
+
 
 export default function SurfingCenters() {
   const [centers, setCenters] = useState([]);
@@ -60,14 +99,29 @@ export default function SurfingCenters() {
   return (
     <Grid>
       {centers.map((center, idx) => (
-        <Card key={idx} onClick={()=> navigate(`/detail/${idx}`)} style={{ cursor: "pointer" }}>
+        <Card key={idx} onClick={() => navigate(`/detail/${idx}`)}>
           <Thumbnail
             src={center["썸네일 이미지 URL"]}
             alt={center["강습소 이름"]}
           />
           <Name>{center["강습소 이름"]}</Name>
           <Script>{center["한줄 소개"]}</Script>
-          <Info>{`${center["동네"]} · ${center["별점"]} · ${center["후기"]}`}</Info>
+
+          <InfoRow>
+            <InfoItem style={{ maxWidth: 130 }}>
+              <Icon16 />
+              <Truncate>{center["동네"]}</Truncate>
+            </InfoItem>
+
+            <Dot />
+
+            <InfoItem>
+              <IconStar14 />
+              <span>{center["별점"]}</span>
+              <Dot />
+              <span style={{ color: "#6D6D6D" }}>{center["후기"]}</span>
+            </InfoItem>
+          </InfoRow>
         </Card>
       ))}
     </Grid>
