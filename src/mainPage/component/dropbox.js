@@ -6,20 +6,40 @@ const Wrapper = styled.div`
   column-gap: 12px; 
   row-gap: 16px;  
   padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12);
-  background: #c5c5c5;
+ border-radius: 12px;
+background: #FFF;
+box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
 `;
 const Item = styled.div`
+user-select: none;     
+color: #2F83F3;
 display: flex;
  justify-content: center;
   align-items: center;
 padding: 12px 16px;
 align-items: left;
 gap: 6px;
+
+border: 1px solid transparent;
 border-radius: 100px;
-background: #C5C5C5;
-border: 1px solid black;
+background: ;
+border-radius: 100px;
+
+ &:hover {
+    border-color: #2F83F3;
+     cursor: pointer;
+  }
+
+  &:active {
+    background: #2F83F3;
+    color:white;
+  }
+
+  font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 140%; /* 22.4px */
 
 `
 export default function dropbox() {

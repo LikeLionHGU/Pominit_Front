@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+//import React, { Component } from "react";
 import styles from "./styles/GatherPage.module.css";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";

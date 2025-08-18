@@ -8,7 +8,7 @@ left: 180px;
   width: 880px;
   height: 240px;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 19px;
   overflow: hidden;         
 `;
 const Text=styled.div`

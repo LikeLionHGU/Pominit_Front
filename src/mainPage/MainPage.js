@@ -4,7 +4,7 @@ import Typebtn from "./component/typebtn";
 import Filterbox from "./component/filterbox";
 import Centers from  "./component/centers";
 import Searchbar from  "./component/searchbar";
-import BG from "./component/background";
+import BG from "../common/background";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -40,7 +40,7 @@ const MainContainer = styled.div`
 `;
 const SidebarWrapper = styled.div`
   position: absolute;
-  top: 372px;
+  top: 360px;
   display: flex;
   flex-direction: column;
 `;
