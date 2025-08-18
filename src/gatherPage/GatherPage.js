@@ -20,7 +20,7 @@ function GatherPage() {
             />
           </div>
           <div className={styles.gathers}>
-            이런 모임은 어때요?
+            <div className={styles.gatherTop}>이런 모임은 어때요?</div>
             <div className={styles.gatherList}>
               <GatherList />
             </div>
