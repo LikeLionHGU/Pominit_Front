@@ -10,7 +10,7 @@ import Meeting from "./componenet/meeting";
 import Review2 from "./componenet/review2";
 
 const Page = styled.div`
-  height: 100%;
+  height: 200vh;
   width: auto;
   display: flex;
   flex-direction: column;

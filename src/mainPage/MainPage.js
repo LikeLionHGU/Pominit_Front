@@ -5,6 +5,7 @@ import Filterbox from "./component/filterbox";
 import Centers from  "./component/centers";
 import Searchbar from  "./component/searchbar";
 import BG from "../common/background";
+import Floating from "../common/floatingbtn";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -63,7 +64,7 @@ export default function MainPage() {
       </SidebarWrapper>
       <Centers/>
       <Filterbox/>
-
+      <Floating/>
       </div>
     </MainContainer>
   );
