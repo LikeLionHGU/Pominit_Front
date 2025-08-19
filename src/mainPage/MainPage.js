@@ -3,7 +3,6 @@ import Sidebar from "../common/Sidebar";
 import Typebtn from "./component/typebtn";
 import Filterbox from "./component/filterbox";
 import Centers from  "./component/centers";
-import Searchbar from  "./component/searchbar";
 import BG from "../common/background";
 import Floating from "../common/floatingbtn";
 import styled from "styled-components";
@@ -59,7 +58,6 @@ export default function MainPage() {
         포항의 모든 해저 레포츠, 씨즐과 함께 즐겨보세요.</Welcome>
       <Header />
       <Typebtn/>
-      <Searchbar/>
       <Wrapper>포항 추천 강습소</Wrapper>
       <SidebarWrapper>
         <Sidebar />

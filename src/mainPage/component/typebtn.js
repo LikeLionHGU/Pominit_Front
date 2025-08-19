@@ -1,9 +1,7 @@
-// TypeBtn.jsx  — 스타일 그대로, 선택 시 버튼 라벨만 갱신
-
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
-/* ======= 상단 버튼 영역 (스타일 변경 없음) ======= */
+
 const Anchor = styled.div`
   position: absolute;
   top: 371px;
