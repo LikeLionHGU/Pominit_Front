@@ -5,12 +5,13 @@ const Wrapper = styled.div`
   position: absolute;
   top: 465.28px;
   left: 936.58px;
-  display: inline-block; /* 트리거 너비 = 래퍼 너비 */
+  display: inline-block; 
   color: #000;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 140%;
+  z-index: 1000;  
 `;
 
 const Trigger = styled.button`
@@ -36,17 +37,17 @@ const Caret = () => (
   </svg>
 );
 
-/* Panel */
 const Menu = styled.div`
   position: absolute;
   top: calc(100% + 12px);
   left: 0;
-  width: 100%;            /* ▼ 트리거와 같은 폭 */
+  width: 100%;         
   border-radius: 6px;
   background: #fff;
   border: 1px solid #c5c5c5;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  z-index: 1000;  
 `;
 
 const MenuList = styled.div`
@@ -62,32 +63,45 @@ const Item = styled.button`
   border: 0;
   cursor: pointer;
 
-  /* 선택 상태 */
   background: ${({ $selected }) => ($selected ? "#2F83F3" : "#fff")};
   color: ${({ $selected }) => ($selected ? "#fff" : "#000")};
   font-weight: ${({ $selected }) => ($selected ? 600 : 400)};
 
-  /* hover 시: 선택 안 된 것만 옅은 배경 */
   &:hover {
     background: ${({ $selected }) => ($selected ? "#2F83F3" : "#F5F8FF")};
   }
 `;
+export default function FilterBox({
+  value,            //부모가 주는 현재 선택값
+  defaultValue = 0, // 초기 선택값
+  onChange,         // 선택 변경 시 부모에게 알려줄 콜백
+  options,          
+  style,           
+}){
 
-const OPTIONS = [
-  { value: "ratingDesc", label: "높은평점순" },
-  { value: "priceAsc",   label: "낮은가격순" },
-  { value: "reviewDesc", label: "리뷰많은순" },
-];
+  //외부 options가 오면 대체 가능하게 기본값 정의해둠.
+  const OPTIONS = [
+    { value: 0, label: "높은평점순" },
+    { value: 1,   label: "낮은가격순" },
+    { value: 2, label: "리뷰많은순" },
+  ];
 
-export default function SortDropdown({
-  defaultValue = "ratingDesc",
-  onChange,
-  style,
-}) {
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(defaultValue);
-  const ref = useRef(null);
+  const [open, setOpen] = useState(false); //드롭다운 열림/닫힘
 
+  //부모 컴포넌트가 value를 직접 내려주면 컨트롤드 모드 (내부적으로 상태를 들고 있지 않고 부모가 주는 값만 그대로 씀)
+  const isControlled = value !== undefined && value !== null;
+
+  //언 컨트롤드 모드일 때 쓸 내부 상태
+  const [innerSelected, setInnerSelected] = useState(defaultValue);
+ 
+ //실제 로직에 쓸 최종 선택값
+ //컨트롤드 -> 부모가 준 value 사용
+ //언컨트롤드 -> 내부에서 관리하는 innerSelected 사용함
+  const selected = isControlled ? value : innerSelected;
+
+  const ref = useRef(null); //DOM 참조, 외부 클릭/ 포커스 제어
+  
+  /*드롭다운 바깥 클릭했을때 닫는 기능 */
   useEffect(() => {
     const onDocClick = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
@@ -101,12 +115,18 @@ export default function SortDropdown({
     };
   }, []);
 
+  /* 선택 동작 처리, 선택된 값으로 라벨 바꾸기 */
   const choose = (v) => {
-    setSelected(v);
-    setOpen(false);
-    onChange?.(v);
+    console.debug("[FilterBox] onChange ->", v, labelOf(v));
+    if (!isControlled) setInnerSelected(v); //언컨트롤드 모드일때만 내부 상태를 직접 변경
+    onChange?.(v); //부모 컴포넌트에게 선택된 값 알림
+    setOpen(false); //선택끝나면 드롭다운 닫기
   };
-
+  // value를 문자열 label로 변환
+  function labelOf(v) {
+    const found = OPTIONS.find(o => o.value === v);
+    return found ? found.label : v;
+  }
   const current = OPTIONS.find((o) => o.value === selected) || OPTIONS[0];
 
   return (

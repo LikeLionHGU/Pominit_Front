@@ -1,13 +1,16 @@
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import data from "../data/sufferingcenter.json";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 import styled from "styled-components";
 import Review1 from "./componenet/review1";
-import Info from "./componenet/centerinfo";
+import CenterInfo from "./componenet/centerinfo";
 import Map from "./componenet/map";
 import Meeting from "./componenet/meeting";
 import Review2 from "./componenet/review2";
+
 
 const Page = styled.div`
   height: 200vh;
@@ -85,14 +88,28 @@ const Register = styled.button`
   cursor: pointer;
 `;
 
-export default function DetailPage() {
+const API_BASE_URL = "https://www.liketiger.info:443";
+const DetailPage = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const idx = String(id);
-  const center = data[idx];
+  const { id } = useParams(); // URL 파라미터에서 id 가져오기
+  const [center, setCenter] = useState(null);
+  const [error, setError] = useState(null);
 
-  if (!center) return <div>데이터를 찾을 수 없습니다.</div>;
+  const fetchCenterData = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/location/detail/${id}`);
+      setCenter(response.data); // 응답 데이터 저장
+    } catch (e) {
+      setError("데이터를 불러오지 못했습니다.");
+      console.error(e);
+    }
+  }, [id]);
 
+  useEffect(() => {
+    fetchCenterData();
+  }, [fetchCenterData]);
+  if (error) return <div>{error}</div>;
+  if (!center) return <div>불러오는 중…</div>;
   return (
     <Page>
       <div className="container">
@@ -103,10 +120,11 @@ export default function DetailPage() {
           <Sidebar />
         </SidebarWrapper>
 
-        <Info center={center} />
+        <CenterInfo center={center} />
         <Review1 />
-        <Map />
-        <Meeting />
+        <Map center={center} />
+        
+        <Meeting center={center} />
         <Review2 />
       </div>
 
@@ -117,4 +135,5 @@ export default function DetailPage() {
       </Bar>
     </Page>
   );
-}
+};
+export default DetailPage;

@@ -130,58 +130,91 @@ const IconBtn = styled.button`
   line-height: 0;        
 `;
 
-
-const Centerlist =()=> {
-  const[searchTerm,setSearchTerm]=useState("");
-  const [lists,setlists]=useState([]);
-  const [baseLists, setBaseLists] = useState([]); 
+//부모로부터 sorting, sport를 props로 받고 기본값 설정함
+export default function Centerlist({ sorting = 0, sport = "" }) {
+  const [searchTerm, setSearchTerm] = useState(""); //검색어 상태
+  const [lists, setLists] = useState([]); //최종 리스트 상태
+  const [baseLists, setBaseLists] = useState([]); //검색 전, 기본데이터 리스트
+  const [loading, setLoading] = useState(false); //api 호출 중 로딩 상태
   const navigate = useNavigate();
-  const [debounced, setDebounced] = useState("");
 
-  const [loading, setLoading] = useState(false);
-
+  // 정렬 prop 들어오는지 확인 -> sorting 값 바뀔 때마다 콘솔에 찍기
   useEffect(() => {
+    console.log("[Centers] received sorting prop:", sorting);
+  }, [sorting]);
+
+  // 기본 리스트: 처음 + sorting/sport 바뀔 때
+  useEffect(() => {
+    // 검색 중이면 기본 리스트 재호출 스킵
+    if (searchTerm.trim()) {
+      console.log("[Centers] sorting changed but search is active -> skip list API");
+      return;
+    }
+
+    let cancelled = false;
     (async () => {
       try {
         setLoading(true);
         const url = `${API_BASE_URL}/home/location/list`;
-        const body = { sport: "", sorting: 0 };
+        const body = { sport, sorting };
+        //요청 바디에 현재 선택된 sport와 sorting을 담음
+
+        console.log("[Centers] POST /home/location/list body:", body);
+        console.time("[Centers] fetch list");
+
         const res = await axios.post(url, body, {
           headers: { "Content-Type": "application/json" },
         });
+        
+        //최종적으로 arr에 강습소 목록 배열 저장
         const arr = Array.isArray(res.data) ? res.data : (res.data?.list || []);
-        setBaseLists(arr);
-        setlists(arr);
+        
+        if (!cancelled) {
+          console.log("[Centers] response items:", arr.length);
+          setBaseLists(arr);
+          setLists(arr);
+        }
       } catch (e) {
-        console.error(e);
+        console.error("[Centers] list error:", e.response?.status, e.message);
       } finally {
-        setLoading(false);
+        console.timeEnd("[Centers] fetch list");
+        if (!cancelled) setLoading(false);
       }
     })();
-  }, []);
 
-const Search = async () => {
-  const keyword = searchTerm.trim().replace(/:.+$/, ""); 
-  if (!keyword) {
-    setlists(baseLists); 
-    return;
-  }
+    return () => { cancelled = true; };
+  }, [sorting, sport, searchTerm]); //  정렬/종목 변경 반영
 
-  try {
-    setLoading(true);
-    const url = `${API_BASE_URL}/home/location/search`;
-    const res = await axios.get(url, {
-      params: { input: keyword },         
-      headers: { Accept: "application/json" },
-    });
-    const arr = Array.isArray(res.data) ? res.data : (res.data?.list || []);
-    setlists(arr);
-  } catch (e) {
-    console.error("search error", e.response?.status, e.message);
-  } finally {
-    setLoading(false);
-  }
-};
+  // 검색 기능 실행하는 함수
+  const Search = async () => {
+    const keyword = searchTerm.trim().replace(/:.+$/, ""); //검색창에 입력된 값 앞 뒤 공백 제거하기
+    //검색어 비어있을때
+    if (!keyword) {
+      setLists(baseLists);
+      console.log("[Centers] search cleared -> restore base list:", baseLists.length);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const url = `${API_BASE_URL}/home/location/search`;
+      console.log("[Centers] GET /home/location/search params:", { input: keyword });
+      console.time("[Centers] fetch search");
+
+      //검색실행
+      const res = await axios.get(url, { params: { input: keyword }, headers: { Accept: "application/json" } });
+      
+      //응답데이터가 배열이면 그대로 사용
+      const arr = Array.isArray(res.data) ? res.data : (res.data?.list || []);
+      console.log("[Centers] search response items:", arr.length);
+      setLists(arr);
+    } catch (e) {
+      console.error("[Centers] search error:", e.response?.status, e.message);
+    } finally {
+      console.timeEnd("[Centers] fetch search");
+      setLoading(false);
+    }
+  };
 
   return (
     <div>
@@ -248,4 +281,3 @@ const Search = async () => {
 
   );
 };
-export default Centerlist;
