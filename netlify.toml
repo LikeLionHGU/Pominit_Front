@@ -2,7 +2,10 @@
   command = "npm run build"
   publish = "build"   # Vite면 "dist"로 바꾸세요
 
+
+
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api/*"
+  to = "http://223.130.159.188/:splat" 
   status = 200
+  force = true
