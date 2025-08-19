@@ -29,6 +29,7 @@ left:290px;
 top:150.5px;
 height:528px;
 width:478px;
+
 display: inline-flex;
 padding: 24px;
 flex-direction: column;
@@ -122,9 +123,10 @@ const Signuppage = () => {
           name: form.name,          
           statement: form.statement,  
         };
-      await axios.post(url, body,{
+      const res = await axios.post(url, body,{
         headers:{"Content-Type": "application/json"},
       });
+      console.log(res);
       alert("회원가입이 완료되었습니다!");
       navigate("/login");
     } catch (err) {

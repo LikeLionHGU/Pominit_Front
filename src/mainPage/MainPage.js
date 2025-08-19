@@ -8,6 +8,8 @@ import BG from "../common/background";
 import Floating from "../common/floatingbtn";
 import styled from "styled-components";
 
+
+
 const Wrapper = styled.div`
  position: absolute;  
    top:471.28px;

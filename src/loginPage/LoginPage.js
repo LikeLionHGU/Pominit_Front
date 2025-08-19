@@ -124,9 +124,14 @@ const LoginPage = () => {
           username: form.username,
           password: form.password,
         };
-      await axios.post(url, body,{
-        headers:{"Content-Type": "application/json"},
-      });
+
+        const res = await axios.post(url, body, {
+            headers: { "Content-Type": "application/json" },
+          });
+
+          const token =res.headers["authorization"];
+          console.log(token);
+          localStorage.setItem("token",token);
       alert("로그인이 완료되었습니다!");
       navigate("/main");
     } catch (err) {
@@ -171,7 +176,7 @@ const LoginPage = () => {
               required
             />
             <Register onClick={onSubmit} disabled={loading}>로그인</Register>
-            <Register onClick={() => navigate("/signup")}>회원가입</Register>
+            <Register onClick={() => navigate("/")}>회원가입</Register>
        
         </Box>
 </form>

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import data from "../../data/sufferingcenter.json";
 import styled from "styled-components";
+
+const API_BASE_URL = "https://www.liketiger.info:443";
 
 const Grid = styled.div`
   position: absolute;
@@ -88,42 +91,71 @@ const IconStar14 = (props) => (
 );
 
 
-export default function SurfingCenters() {
-  const [centers, setCenters] = useState([]);
+const Centerlist =()=> {
+  const [lists,setlists]=useState([]);
   const navigate = useNavigate();
+  const [sortingCenters, setsortingCenters]=useState([]);
+  const [form] = useState({
+    sport: "",
+    sorting: 0,
+  });
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setCenters(data);
-  }, []);
+  useEffect(()=>{
+    const fetchlist = async()=>{
+      try{
+        setLoading(true);
+        const url = `${API_BASE_URL}/home/location/list`;
+        setsortingCenters(url.data || []);
+        const body = {
+          sport: form.sport,
+          sorting: form.sorting,
+        };
+  
+        const res = await axios.post(url, body, {
+            headers: { "Content-Type": "application/json" },
+          });
+          //console.log(res.data);
+          setlists(res.data);
+          console.log(lists);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    } 
+    };
+    fetchlist();
+  },[]);
 
   return (
     <Grid>
-      {centers.map((center, idx) => (
-        <Card key={idx} onClick={() => navigate(`/detail/${idx}`)}>
+      {lists.map((list) => (
+        <Card key={list.id} onClick={() => navigate(`/detail/${list.id}`)}>
           <Thumbnail
-            src={center["썸네일 이미지 URL"]}
-            alt={center["강습소 이름"]}
+            src={list.thumbnail}
+            alt={list.thumbnail}
           />
-          <Name>{center["강습소 이름"]}</Name>
-          <Script>{center["한줄 소개"]}</Script>
+          <Name>{list.name}</Name>
+          <Script>{list.description}</Script>
 
           <InfoRow>
             <InfoItem style={{ maxWidth: 130 }}>
               <Icon16 />
-              <Truncate>{center["동네"]}</Truncate>
+              <Truncate>{list.region}</Truncate>
             </InfoItem>
 
             <Dot />
 
             <InfoItem>
               <IconStar14 />
-              <span>{center["별점"]}</span>
+              <span>{list.score}</span>
               <Dot />
-              <span style={{ color: "#6D6D6D" }}>{center["후기"]}</span>
+              <span style={{ color: "#6D6D6D" }}>{list.reviewCount}</span>
             </InfoItem>
           </InfoRow>
         </Card>
       ))}
     </Grid>
   );
-}
+};
+export default Centerlist;
