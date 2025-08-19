@@ -27,15 +27,20 @@ const Box=styled.div`
 position:absolute;
 left:290px;
 top:150.5px;
-height:528px;
-width:478px;
+
 display: inline-flex;
 padding: 24px;
 flex-direction: column;
-text-align:left;
+
 border-radius: 12px;
-background: white;
-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+background: var(--BG-02, #FFF);
+box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.20);
+
+
+height:429px;
+width:478px;
+
+text-align:left;
 `;
 const Signup=styled.div`
 color: #2F83F3;
@@ -45,6 +50,7 @@ font-size: 28px;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
+padding-top:26px;
 padding-bottom:26px;
 `;
 const Id=styled.div`
@@ -96,13 +102,11 @@ border-radius: 6px;
 border: 1px solid var(--Foundation-White-white-500, #D9D9D9);
 background: #2F83F3;
 `;
-const Signuppage = () => {
+const LoginPage = () => {
     const navigate = useNavigate();
     const [form, setForm] = useState({
       username: "",
       password: "",
-      name: "",
-      statement: "",
     });
 
     const [loading, setLoading] = useState(false);
@@ -115,21 +119,19 @@ const Signuppage = () => {
     const onSubmit = async () =>{
       try{
         setLoading(true);
-        const url = `${API_BASE_URL}/register`;
+        const url = `${API_BASE_URL}/login`;
         const body = {
           username: form.username,
           password: form.password,
-          name: form.name,          
-          statement: form.statement,  
         };
       await axios.post(url, body,{
         headers:{"Content-Type": "application/json"},
       });
-      alert("회원가입이 완료되었습니다!");
-      navigate("/login");
+      alert("로그인이 완료되었습니다!");
+      navigate("/main");
     } catch (err) {
       console.error(err);
-      alert("회원가입에 실패했어요. (API 경로/서버 응답 확인)");
+      alert("로그인에 실패했어요. (API 경로/서버 응답 확인)");
     } finally {
       setLoading(false);
     }
@@ -147,7 +149,7 @@ const Signuppage = () => {
 </Logo>
 <form onSubmit={onSubmit}>
   <Box>
-            <Signup>회원가입</Signup>
+            <Signup>로그인</Signup>
             <Id>아이디</Id>
             <Bar
               type="text"
@@ -168,25 +170,9 @@ const Signuppage = () => {
               autoComplete="new-password"
               required
             />
-            <Id>닉네임</Id>
-            <Bar
-              type="text"
-              name="name"
-              placeholder="15자 이내로 입력해주세요."
-              value={form.name}
-              onChange={onChange}
-              maxLength={15}
-              required
-            />
-            <Id>상태메시지</Id>
-            <Bar
-              type="text"
-              name="statement"
-              placeholder="해양 레저 스포츠에 임하는 나의 각오는? 본인의 한줄평"
-              value={form.statement}
-              onChange={onChange}
-            />
-            <Register onClick={onSubmit} disabled={loading}>가입하기</Register>
+            <Register onClick={onSubmit} disabled={loading}>로그인</Register>
+            <Register onClick={() => navigate("/signup")}>회원가입</Register>
+       
         </Box>
 </form>
         </div> 
@@ -195,4 +181,4 @@ const Signuppage = () => {
     );
 };
 
-export default Signuppage;
+export default LoginPage;
