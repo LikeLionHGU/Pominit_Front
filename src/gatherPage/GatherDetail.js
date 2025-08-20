@@ -2,12 +2,21 @@ import React from "react";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 
+import Info from "./component/Info";
+import Member from "./component/Member";
+
+import styles from "./styles/GatherDetail.module.css";
+
 function GatherDetail() {
   return (
-    <div>
+    <div className="container">
       <Header />
       <div className={styles.wrap}>
         <Sidebar />
+        <div className={styles.container}>
+          <Info />
+          <Member />
+        </div>
       </div>
     </div>
   );

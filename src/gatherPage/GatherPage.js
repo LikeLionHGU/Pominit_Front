@@ -4,11 +4,12 @@ import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 
 import Dropdown from "../common/Dropdown";
-import GatherList from "./component/GatherList";
+import GatherList from "./component/List";
+import "../index.css";
 
 function GatherPage() {
   return (
-    <div>
+    <div className="container">
       <Header />
       <div className={styles.wrap}>
         <Sidebar />

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import data from "../../data/gather.json";
 
-import styles from "./GatherList.module.css";
+import styles from "./List.module.css";
 
 import Date from "../../asset/img/date.svg";
 import Location from "../../asset/img/location.svg";
 import Member from "../../asset/img/member.svg";
 import Arrow from "../../asset/img/>>>.svg";
 
-function GatherList() {
+function List() {
   const [lists, setList] = useState([]);
   const navigate = useNavigate();
 
@@ -69,4 +69,4 @@ function GatherList() {
   );
 }
 
-export default GatherList;
+export default List;

@@ -1,11 +1,10 @@
 .wrap {
-  margin: 0 0 0 6.9rem;
   display: flex;
   flex-direction: row;
 }
 
 .container {
-  margin-left: 11.25rem;
+  margin-left: 10px;
   margin-top: 20px;
 }
 
