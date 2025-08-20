@@ -16,7 +16,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const Category = styled.div`
-  position: relative;              /* 자식 absolute 배치 기준 */
+  position: relative;             
   width: 880px;
   height: 60px;
   flex-shrink: 0;
@@ -42,13 +42,13 @@ const Label = styled.div`
 `;
 
 /* 좌우 위치만 다르게 */
-const Center = styled(Label)`left: 24px;`;
-const Centername = styled(Label)`left: 155px;`;
-const Star = styled(Label)`left: 270px;`;
-const Dong = styled(Label)`left: 360px;`;
-const Price = styled(Label)`left: 450px;`;
-const Rental = styled(Label)`left: 560px;`;
-const Review = styled(Label)`left: 700px;`;
+const Center = styled(Label)`left: 59px;`;
+const Centername = styled(Label)`left: 193px;`;
+const Star = styled(Label)`left: 306px;`;
+const Dong = styled(Label)`left: 404px;`;
+const Price = styled(Label)`left: 515px;`;
+const Rental = styled(Label)`left: 605px;`;
+const Review = styled(Label)`left: 697px;`;
 
 export default function SurfingCenters() {
   return (
@@ -64,10 +64,10 @@ export default function SurfingCenters() {
       <Category>
         <Center>강습소</Center>
         <Centername>강습소명</Centername>
-        <Star>평점</Star>
-        <Dong>동네</Dong>
-        <Price>대표가격</Price>
-        <Rental>장비보관가</Rental>
+        <Star>동네</Star>
+        <Dong>대표가격</Dong>
+        <Price>장점</Price>
+        <Rental>단점</Rental>
         <Review>리뷰 데이터 분석</Review>
       </Category>
     </div>

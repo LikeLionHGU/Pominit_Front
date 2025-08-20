@@ -5,11 +5,13 @@ import GatherPage from "./gatherPage/GatherPage";
 import ComparePage from "./comparePage/ComparePage";
 import SignupPage from "./signupPage/SignupPage";
 import GatherDetail from "./gatherPage/GatherDetail";
+import LoginPage from "./loginPage/LoginPage";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/detail/:id" element={<CenterDetailPage />} />
         <Route path="/gather" element={<GatherPage />} />
