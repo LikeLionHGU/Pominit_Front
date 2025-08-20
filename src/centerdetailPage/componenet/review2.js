@@ -1,99 +1,154 @@
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
+import axios from "axios";
+
 const Review = styled.div`
-position:absolute;
-left: 180px;
-top:1325.72px;
-color: #000;
-font-family: Pretendard;
-font-size: 20px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  position:absolute;
+  left: 180px;
+  top:1325.72px;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-weight: 600;
 `;
 
-const Write=styled.div`
-position:absolute;
-left: 973px;
-top:1325.72px;
-
-color: #2285E3;
-font-family: Pretendard;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+const Write = styled.div`
+  position:absolute;
+  left: 973px;
+  top:1325.72px;
+  color: #2285E3;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 600;
 `;
 
-
-const Nickname=styled.div`
-color: #000;
-font-family: Pretendard;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: 140%; /* 22.4px */
-padding-bottom:4px;
+const Nickname = styled.div`
+  color: #000;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 140%;
+  padding-bottom:4px;
 `;
 
-const Stardate=styled.div`
-color: var(--Foundation-White-white-600, #C5C5C5);
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-padding-bottom:12px;
+const Stardate = styled.div`
+  color: #C5C5C5;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+  padding-bottom:12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;
 
-const Content=styled.div`
-color: #000;
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 140%; /* 19.6px */
+const Content = styled.div`
+  color: #000;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 140%;
 `;
+
 const ReviewList = styled.div`
   position: absolute;
   left: 180px;
   top: 1381.72px;
-
   width: 880px;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* 리뷰 박스 간격 */
+  gap: 20px;
 `;
 
 const BoxWrapper = styled.div`
   width: 100%;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--Foundation-White-white-500, #D9D9D9);
+  border-bottom: 1px solid #D9D9D9;
 `;
+
 const Rating = styled.span`
   color: #ff517e;
   font-weight: 600;
 `;
 
-export default function Review1() {
-  const reviews = [
-    {
-      nickname: "포미닛",
-      rating: 4.8,
-      date: "12일전",
-      content: "제가 서핑은 처음인데 강사님께서 친절하게 알려주셔서 수월하게 했습니다!",
-    },
-    {
-      nickname: "서퍼맨",
-      rating: 5.0,
-      date: "5일전",
-      content: "파도 타는 재미에 푹 빠졌습니다. 장비도 깨끗했어요!",
-    },
-    // 필요한 만큼 리뷰 추가
-  ];
+/* 더 보기 버튼 */
+const MoreWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+`;
+const MoreButton = styled.button`
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #D4D4D4;
+  background: #fff;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+const API_BASE_URL = "https://www.liketiger.info:443";
+
+function normalizeCenter(raw) {
+  if (!raw || raw.id == null) return null;
+  return { id: Number(raw.id) };
+}
+
+export default function Review2({ center }) {
+  const [reviews, setReviews] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(10);        // ✅ 추가
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const c = normalizeCenter(center);
+
+  const fetchReviewData = useCallback(async (centerId) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await axios.get(`${API_BASE_URL}/location/reviews/${centerId}`);
+
+      const list = Array.isArray(response.data)
+        ? response.data
+        : (response.data?.items ?? []);
+
+      const normalized = list.map((it, idx) => ({
+        id: it.id ?? idx,
+        nickname: it.name ?? it.nickname ?? "익명",
+        content: it.content ?? "",
+        rating: it.score ?? it.rating ?? 0,
+        date: it.time ?? it.createdAt ?? "",
+      }));
+      setReviews(normalized);
+      setVisibleCount(10);                                     // ✅ 새 데이터 들어오면 초기화
+    } catch (e) {
+      console.error(e);
+      setError("데이터를 불러오지 못했습니다.");
+      setReviews([]);
+      setVisibleCount(10);                                     // ✅ 오류 시도 초기화(안전)
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!c) return;
+    fetchReviewData(c.id);
+  }, [c?.id, fetchReviewData]);
+
+  if (!c) return null;
+
+  const visibleReviews = reviews.slice(0, visibleCount);       // ✅ 잘라서 표시
+  const canShowMore = visibleCount < reviews.length;           // ✅ 더 보기가 가능한지
+
+  const handleShowMore = () => {
+    setVisibleCount((n) => Math.min(n + 10, reviews.length));  // ✅ 10개씩 증가
+  };
 
   return (
     <div>
-      <Review>방문자 리뷰 ({reviews.length})</Review>
+      <Review>방문자 리뷰 ({loading ? "…" : reviews.length})</Review>
       <Write>
         리뷰 작성하기{" "}
         <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" fill="none">
@@ -102,18 +157,33 @@ export default function Review1() {
       </Write>
 
       <ReviewList>
-        {reviews.map((r, i) => (
-          <BoxWrapper key={i}>
+        {loading && <BoxWrapper><Nickname>불러오는 중…</Nickname></BoxWrapper>}
+        {error && !loading && <BoxWrapper><Nickname>{error}</Nickname></BoxWrapper>}
+        {!loading && !error && reviews.length === 0 && (
+          <BoxWrapper><Nickname>아직 리뷰가 없습니다.</Nickname></BoxWrapper>
+        )}
+
+        {!loading && !error && visibleReviews.map((r) => (
+          <BoxWrapper key={r.id}>
             <Nickname>{r.nickname}</Nickname>
             <Stardate>
-  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="none">
-    <path d="M7.62598 0.500977L9.19757 5.33786H14.2834L10.1689 8.32721L11.7405 13.1641L7.62598 10.1747L3.51148 13.1641L5.08308 8.32721L0.968581 5.33786H6.05438L7.62598 0.500977Z" fill="#FF517E"/>
-  </svg>
-  <Rating>{r.rating}</Rating> · {r.date}
-</Stardate>
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="none">
+                <path d="M7.62598 0.500977L9.19757 5.33786H14.2834L10.1689 8.32721L11.7405 13.1641L7.62598 10.1747L3.51148 13.1641L5.08308 8.32721L0.968581 5.33786H6.05438L7.62598 0.500977Z" fill="#FF517E"/>
+              </svg>
+              <Rating>{r.rating}</Rating> · {r.date}일 전
+            </Stardate>
             <Content>{r.content}</Content>
           </BoxWrapper>
         ))}
+
+        {/* ✅ 더 보기 버튼 */}
+        {!loading && !error && canShowMore && (
+          <MoreWrap>
+            <MoreButton onClick={handleShowMore}>
+              더 보기 (+10)
+            </MoreButton>
+          </MoreWrap>
+        )}
       </ReviewList>
     </div>
   );
