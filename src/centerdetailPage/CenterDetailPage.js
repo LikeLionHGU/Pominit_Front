@@ -13,14 +13,17 @@ import Review2 from "./componenet/review2";
 
 
 const Page = styled.div`
-  height: 200vh;
-  width: auto;
+ width: 100%;
   display: flex;
   flex-direction: column;
   background: #FAFBFF;
-  position: relative;
+  padding-bottom: calc(72px + 16px + env(safe-area-inset-bottom));
   min-height: 100vh;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
+`;
+const Container = styled.div`
+  position: relative;   /* absolute 자식들의 기준 */
+  width: 100%;
 `;
 
 const SidebarWrapper = styled.div`
@@ -38,8 +41,10 @@ const HeaderWrapper = styled.div`
 `;
 
 const Bar = styled.div`
-  position: absolute;
-  top: 1592px;
+  position: fixed;
+  left:0;
+  bottom:0;
+  right:0;
   width: 100%;
   height: 72px;
   background: #D6EBFF;
@@ -47,7 +52,12 @@ const Bar = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 16px;
-  padding-right: 120px;
+  padding: 0 max(120px, env(safe-area-inset-right)) 
+           calc(8px + env(safe-area-inset-bottom))
+           max(16px, env(safe-area-inset-left));
+  z-index: 1000;             /* 콘텐츠보다 위에 오도록 */
+  border-top: 1px solid #cfe5ff;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
 `;
 
 const Comparebtn = styled.button`
@@ -125,14 +135,14 @@ const DetailPage = () => {
         <Map center={center} />
         
         <Meeting center={center} />
-        <Review2 />
-      </div>
+        <Review2 center={center} />
+      
 
       <Bar>
-        {/* 그냥 이동만 */}
         <Comparebtn onClick={() => navigate("/compare")}>비교하기</Comparebtn>
         <Register>예약하기</Register>
       </Bar>
+      </div>
     </Page>
   );
 };
