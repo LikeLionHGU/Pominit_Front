@@ -1,4 +1,4 @@
-.contents {
+.writen {
   display: flex;
   width: 55.0625rem;
   padding: 1rem;
@@ -7,7 +7,7 @@
   gap: 1rem;
 
   border-radius: 0.75rem;
-  border: 1px solid #2f83f3;
+  border: 1px solid var(--Foundation-main-blue-200, #9fc6f9);
   background: #fff;
 }
 
@@ -47,8 +47,13 @@
 }
 
 .write {
-  background: #eaf5ff;
-  padding: 0.5rem 1rem;
+  display: flex;
+  width: 55rem;
+  flex-direction: column;
+  align-items: flex-end;
+
+  border-radius: 0.375rem;
+  border: 1px solid var(--Foundation-main-blue-500, #2f83f3);
 }
 
 .writeHeader {
