@@ -5,18 +5,23 @@ import GatherPage from "./gatherPage/GatherPage";
 import ComparePage from "./comparePage/ComparePage";
 import SignupPage from "./signupPage/SignupPage";
 import LoginPage from "./loginPage/LoginPage";
+import { CompareProvider } from "./common/compareBasket";
+
+
 function App() {
   return (
+    <CompareProvider>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SignupPage />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/main" element={<MainPage />} />
+        <Route path="/" element={<MainPage />} />
         <Route path="/detail/:id" element={<CenterDetailPage />} />
         <Route path="/gather" element={<GatherPage />} />
         <Route path="/compare" element={<ComparePage />} />
       </Routes>
     </BrowserRouter>
+    </CompareProvider>
   );
 }
 

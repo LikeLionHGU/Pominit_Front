@@ -1,33 +1,37 @@
 import styled from "styled-components";
 import { useLocation, matchPath } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LogoWrapper = styled.div`
   padding-top: 17px;
   padding-left: 0px;
 `;
 
-const Logoutbtn = styled.div`
+const Loginbtn = styled.div`
+display: flex;
+padding: 8px 12px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+align-self: stretch;
   display: inline-flex;
   position: absolute;
   top: 11px;
   left: 954px;
-  padding: 8px 12px;
-  justify-content: center;
-  align-items: center;
   gap: 10px;
-  border-radius: 6px;
-  border: 0.8px solid #2F83F3;
-  background: var(--BG-02, #FFF);
+border-radius: 6px;
+border: 1px solid var(--Foundation-main-blue-50, #EAF3FE);
   cursor: pointer;
   caret-color: transparent;
 `;
 
-const Logout = styled.div`
-  color: #336DFF;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: normal;
+const Login = styled.div`
+color: var(--Foundation-main-blue-50, #EAF3FE);
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
 `;
 
 const Logo = styled.svg`
@@ -48,7 +52,7 @@ function isOneOf(pathname, patterns) {
 
 export default function Header() {
   const { pathname } = useLocation();
-
+  const navigate = useNavigate();
   const isBlueLogo = isOneOf(pathname, BLUE_PATTERNS);
 
   return (
@@ -69,9 +73,9 @@ export default function Header() {
       </LogoWrapper>
 
       {pathname !== "/signup" && (
-        <Logoutbtn>
-          <Logout>로그아웃</Logout>
-        </Logoutbtn>
+        <Loginbtn>
+          <Login onClick={() => navigate("/login")}>로그인</Login>
+        </Loginbtn>
       )}
     </div>
   );

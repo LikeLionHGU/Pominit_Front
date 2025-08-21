@@ -133,7 +133,7 @@ const LoginPage = () => {
           console.log(token);
           localStorage.setItem("token",token);
       alert("로그인이 완료되었습니다!");
-      navigate("/main");
+      navigate("/");
     } catch (err) {
       console.error(err);
       alert("로그인에 실패했어요. (API 경로/서버 응답 확인)");
@@ -176,7 +176,7 @@ const LoginPage = () => {
               required
             />
             <Register onClick={onSubmit} disabled={loading}>로그인</Register>
-            <Register onClick={() => navigate("/")}>회원가입</Register>
+            <Register onClick={() => navigate("/signup")}>회원가입</Register>
        
         </Box>
 </form>

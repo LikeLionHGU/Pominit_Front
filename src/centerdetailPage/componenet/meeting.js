@@ -24,7 +24,6 @@ const Text = styled.div`
   line-height: normal;
 `;
 
-/* 스크롤 영역 컨테이너 */
 const ScrollArea = styled.div`
   position: absolute;
   top: 1126.72px;
@@ -127,7 +126,6 @@ export default function Meeting({ center }) {
       setError(null);
       const response = await axios.get(`${API_BASE_URL}/location/gathers/${centerId}`);
 
-      // 응답 스키마 방어적 매핑
       const list = Array.isArray(response.data)
         ? response.data
         : (response.data?.items ?? []);
