@@ -5,6 +5,7 @@ import Sidebar from "../common/Sidebar";
 import Info from "./component/Info";
 import Member from "./component/Member";
 import Review from "./component/Review";
+import Location from "./component/Location";
 
 import styles from "./styles/GatherDetail.module.css";
 
@@ -61,6 +62,7 @@ function GatherDetail() {
           <Info />
           <Member />
           <Review userName={userName} isLoggedIn={isLoggedIn} />
+          <Location />
         </div>
       </div>
     </div>

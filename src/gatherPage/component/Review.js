@@ -3,7 +3,7 @@ import styles from "./Review.module.css";
 import axios from "axios";
 import SECRET from "../../asset/img/comment.svg";
 
-const API_BASE_URL = "lhttp://liketiger.info:8080";
+const API_BASE_URL = "http://liketiger.info:8080";
 
 function TimeFormat(time) {
   const now = new Date();
