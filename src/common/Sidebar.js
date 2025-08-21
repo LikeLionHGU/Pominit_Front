@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 const SidebarWrap = styled.div`
   transform: translateX(-16px); 
   user-select: none;
@@ -72,7 +74,7 @@ height: 260px;
 
 export default function Sidebar() {
   const [activeIndex, setActiveIndex] = useState(0); // 기본 선택 인덱스
-
+  const navigate = useNavigate();
   return (
     <div>
       <SidebarWrap>
@@ -98,7 +100,7 @@ export default function Sidebar() {
           {/* 버튼을 Backbtn 위에 겹치게 */}
           <BtnGroup>
             {/* 홈 */}
-            <Btn active={activeIndex === 0} onClick={() => setActiveIndex(0)}>
+            <Btn active={activeIndex === 0} onClick={() => navigate("/")}>
               <Icon active={activeIndex === 0}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
                   {/* fill 속성 제거! */}
@@ -109,7 +111,7 @@ export default function Sidebar() {
             </Btn>
 
             {/* 모임 */}
-            <Btn active={activeIndex === 1} onClick={() => setActiveIndex(1)}>
+            <Btn active={activeIndex === 1}onClick={() => navigate("/gather")}>
               <Icon active={activeIndex === 1}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="12" viewBox="0 0 19 12" fill="none">
                   <path opacity="0.9" d="M12.9545 5.14286C14.3882 5.14286 15.5368 3.99429 15.5368 2.57143C15.5368 1.14857 14.3882 0 12.9545 0C11.5209 0 10.3636 1.14857 10.3636 2.57143C10.3636 3.99429 11.5209 5.14286 12.9545 5.14286ZM6.04545 5.14286C7.47909 5.14286 8.62773 3.99429 8.62773 2.57143C8.62773 1.14857 7.47909 0 6.04545 0C4.61182 0 3.45455 1.14857 3.45455 2.57143C3.45455 3.99429 4.61182 5.14286 6.04545 5.14286ZM6.04545 6.85714C4.03318 6.85714 0 7.86 0 9.85714V11.1429C0 11.6143 0.388636 12 0.863636 12H11.2273C11.7023 12 12.0909 11.6143 12.0909 11.1429V9.85714C12.0909 7.86 8.05773 6.85714 6.04545 6.85714ZM12.9545 6.85714C12.7041 6.85714 12.4191 6.87429 12.1168 6.9C12.1341 6.90857 12.1427 6.92571 12.1514 6.93429C13.1359 7.64571 13.8182 8.59714 13.8182 9.85714V11.1429C13.8182 11.4429 13.7577 11.7343 13.6627 12H18.1364C18.6114 12 19 11.6143 19 11.1429V9.85714C19 7.86 14.9668 6.85714 12.9545 6.85714Z"/>
