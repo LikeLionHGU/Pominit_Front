@@ -7,6 +7,7 @@ import Sidebar from "../common/Sidebar";
 
 import Dropdown from "../common/Dropdown";
 import GatherList from "./component/List";
+import Calendar from "../common/Calendar/Calendar";
 import "../index.css";
 
 function GatherPage() {

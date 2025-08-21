@@ -1,9 +1,7 @@
 import React, { memo, useMemo } from "react";
-import styled from "styled-components";
 import { utcToZonedTime } from "date-fns-tz";
 import { isCurrentMonth, isToday } from "../utils";
 // styled-components 정의는 그대로 사용
-// styles.js (또는 Presenter 파일 상단에 함께)
 import styled, { css } from "styled-components";
 
 export const Colors = {
