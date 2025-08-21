@@ -46,27 +46,15 @@ const Label = styled.div`
   top: 50%;
   transform: translateY(-50%);
 `;
-const Center = styled(Label)`
-  left: 59px;
-`;
-const Centername = styled(Label)`
-  left: 193px;
-`;
-const Star = styled(Label)`
-  left: 306px;
-`;
-const Dong = styled(Label)`
-  left: 390px;
-`;
-const Price = styled(Label)`
-  left: 475px;
-`;
-const Rental = styled(Label)`
-  left: 590px;
-`;
-const Review = styled(Label)`
-  left: 705px;
-`;
+
+const Center = styled(Label)`left: 60px;`;
+const Centername = styled(Label)`left: 198px;`;
+const Star = styled(Label)`left: 304px;`;
+const Dong = styled(Label)`left: 380px;`;
+const Price = styled(Label)`left: 507px;`;
+const Rental = styled(Label)`left: 634px;`;
+const Review = styled(Label)`left: 732px;`;
+
 
 const Empty = styled.div`
   position: relative;
@@ -238,26 +226,12 @@ const RemoveBtn = () => (
    Constants
 ========================= */
 
-const API_BASE_URL = "https://www.liketiger.info:443";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 /* =========================
    Helper Components
 ========================= */
 
-const StarIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="15"
-    height="13"
-    viewBox="0 0 15 13"
-    fill="none"
-  >
-    <path
-      d="M7.5 0.223633L9.0716 5.06051H14.1574L10.0429 8.04987L11.6145 12.8868L7.5 9.8974L3.3855 12.8868L4.9571 8.04987L0.842604 5.06051H5.9284L7.5 0.223633Z"
-      fill="#FF658C"
-    />
-  </svg>
-);
 
 function CompareRow({ d, onRemove }) {
   const [imgOk, setImgOk] = useState(Boolean(d?.imgUrl));
@@ -277,34 +251,24 @@ function CompareRow({ d, onRemove }) {
 
       <div>
         <RateWrap>
-          <StarIcon />
-          <div
-            style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}
-          >
-            <span>{d?.score != null ? Number(d.score).toFixed(1) : "-"}</span>
-            <small>({d?.reviewCount ?? 0})</small>
+
+          <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+            <span>{d?.region ?? "-"}</span>
+
           </div>
         </RateWrap>
       </div>
 
-      <DongCol>{d?.region ?? "-"}</DongCol>
+      <DongCol>{d?.price1 ?? "-"} 
+        <a onClick={() => { /* TODO: 가격표 보기 */ }}>가격표 보기</a></DongCol>
 
       <PriceCol>
-        <div>
-          <b>1회 강습료:</b>
-        </div>
-        <div>{d?.price1 ?? "-"}</div>
-        {/*eslint-disable-next-line */}
-        <a
-          onClick={() => {
-            /* TODO: 가격표 보기 */
-          }}
-        >
-          가격표 보기
-        </a>
+
+        <div>{d?.goodPart ?? "-"}</div>
+
       </PriceCol>
 
-      <EquipCol>{d?.price2 ?? "-"}</EquipCol>
+      <EquipCol>{d?.badPart?? "-"}</EquipCol>
 
       <ReviewCol>{d?.aiReview ?? "-"}</ReviewCol>
 
@@ -371,6 +335,22 @@ const ComparePage = () => {
       try {
         setLoading(true);
         setError("");
+        const body = {
+          item1: payload.item1,
+          item2: payload.item2,
+          item3: payload.item3,
+        };
+
+        console.groupCollapsed("[COMPARE] POST /compare/details payload");
+        console.log("baseURL:", client.defaults.baseURL);
+        console.log("url:", "/compare/details");
+        console.log("payload:", body);
+        console.log(
+          "types:",
+          Object.fromEntries(Object.entries(body).map(([k, v]) => [k, typeof v]))
+        );
+        console.groupEnd();
+
         const res = await client.post("/compare/details", {
           item1: payload.item1,
           item2: payload.item2,
@@ -421,10 +401,10 @@ const ComparePage = () => {
       <Category>
         <Center>강습소</Center>
         <Centername>강습소명</Centername>
-        <Star>평점</Star>
-        <Dong>동네</Dong>
-        <Price>대표가격</Price>
-        <Rental>장비보관가</Rental>
+        <Star>동네</Star>
+        <Dong>대표가격</Dong>
+        <Price>장점</Price>
+        <Rental>단점</Rental>
         <Review>리뷰 데이터 분석</Review>
       </Category>
 

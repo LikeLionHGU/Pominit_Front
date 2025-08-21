@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Bg from "../common/signupbg";
 
-const API_BASE_URL = "https://www.liketiger.info:443";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 
 const  Logo=styled.div`
@@ -50,7 +50,6 @@ font-size: 28px;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
-padding-top:26px;
 padding-bottom:26px;
 `;
 const Id=styled.div`
@@ -92,7 +91,6 @@ font-style: normal;
 font-weight: 600;
 line-height: normal;
  justify-content: center; 
-  align-items: center; 
 display: flex;
 width: 430px;
 padding: 16px;
@@ -101,6 +99,43 @@ gap: 10px;
 border-radius: 6px;
 border: 1px solid var(--Foundation-White-white-500, #D9D9D9);
 background: #2F83F3;
+margin-bottom:12px;
+cursor:pointer;
+`;
+
+const Go =styled.div`
+ justify-content: center; 
+text-align: center;
+display: flex;
+width: 430px;
+padding: 16px;
+align-items: center;
+gap: 10px;
+border-radius: 6px;
+border: 1px solid var(--Foundation-main-blue-200, #9FC6F9);
+background: #FAFBFF;
+color: #2F83F3;
+text-align: center;
+font-family: Pretendard;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+margin-top:12px;
+cursor:pointer;
+`;
+
+const Hr=styled.div`
+padding-top:12px;
+padding-bottom:12px;
+display: flex;
+width: 430px;
+height: 1.2px;
+padding: 0 16px;
+align-items: center;
+gap: 10px;
+border-radius: 6px;
+background: var(--Foundation-Blue-blue-500, #B0B9C3);
 `;
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -176,7 +211,8 @@ const LoginPage = () => {
               required
             />
             <Register onClick={onSubmit} disabled={loading}>로그인</Register>
-            <Register onClick={() => navigate("/signup")}>회원가입</Register>
+            <Hr/>
+            <Go onClick={() => navigate("/signup")}>회원가입</Go>
        
         </Box>
 </form>
