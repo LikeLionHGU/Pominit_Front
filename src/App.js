@@ -4,6 +4,7 @@ import CenterDetailPage from "./centerdetailPage/CenterDetailPage";
 import GatherPage from "./gatherPage/GatherPage";
 import ComparePage from "./comparePage/ComparePage";
 import SignupPage from "./signupPage/SignupPage";
+import GatherDetail from "./gatherPage/GatherDetail";
 import LoginPage from "./loginPage/LoginPage";
 import { CompareProvider } from "./common/compareBasket";
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/detail/:id" element={<CenterDetailPage />} />
         <Route path="/gather" element={<GatherPage />} />
         <Route path="/compare" element={<ComparePage />} />
+        <Route path="/gather/detail" element={<GatherDetail />} />
       </Routes>
     </BrowserRouter>
     </CompareProvider>

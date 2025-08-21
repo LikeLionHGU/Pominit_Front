@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
-import styles from "./Dropdown.module.css";
-import useDetectClose from "./useDetectClose";
-import down from "../../asset/img/down.svg";
+import styles from "./styles/Dropdown.module.css";
+import useDetectClose from "../gatherPage/component/useDetectClose";
+import down from "../asset/img/down.svg";
 
 /*dropdown 사용법
     1. 원하는 페이지에 
@@ -32,6 +32,7 @@ function Dropdown({ defaultValue, options }) {
     >
       <span className={styles.selected}>
         {value}
+        {"  "}
         <img
           src={down}
           alt="down"
@@ -39,7 +40,7 @@ function Dropdown({ defaultValue, options }) {
         />
       </span>
 
-      <ul className={styles.optionList}>
+      <ul className={`${styles.optionList} ${isOpen ? styles.open : ""}`}>
         {options.map((option, index) => (
           <li
             key={index}

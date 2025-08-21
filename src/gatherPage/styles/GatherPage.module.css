@@ -1,10 +1,24 @@
 .wrap {
-  margin: 0 0 0 6.9rem;
   display: flex;
   flex-direction: row;
 }
 
 .container {
-  margin-left: 11.25rem;
-  margin-top: 40px;
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.topDrops {
+  margin-bottom: 55px;
+}
+
+.gatherTop {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-bottom: 1.6rem;
 }

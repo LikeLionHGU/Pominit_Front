@@ -1,0 +1,98 @@
+.selectBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+
+  cursor: pointer;
+  align-items: center;
+  align-content: center;
+  border-radius: 6.25rem;
+  border: 1px solid #336dff;
+
+  background: #fff;
+  max-height: 40px; /* 기본 높이 */
+  width: 155px;
+  height: 46px;
+
+  color: #2f83f3;
+  /*글자 스타일*/
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 1.4rem */
+}
+
+.selectBox.open {
+  color: #2f83f3;
+  overflow: visible; /* 잘리지 않게 */
+}
+.optionList {
+  color: black;
+  display: none;
+  flex-direction: column;
+  list-style: none;
+  padding-left: 0;
+}
+
+.optionList.open {
+  margin-top: 200px;
+  margin-left: 250px;
+  display: grid;
+  width: 413px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+
+  padding: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
+
+  z-index: 2;
+}
+
+.selected {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.rotate {
+  transform: rotate(180deg); /* 열리면 화살표 뒤집기 */
+}
+
+.optionList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.optionItem {
+  padding: 6px 8px;
+  cursor: pointer;
+  border-radius: 6.25rem;
+  border: 1px solid #fff;
+  color: #2f83f3;
+}
+
+.optionItem:hover {
+  border: 1px solid #2f83f3;
+  background: #fff;
+}
+.optionItem:active {
+  border: 1px solid #2f83f3;
+  background: #2f83f3;
+  color: #fff;
+}

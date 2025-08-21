@@ -1,0 +1,140 @@
+.cathegory {
+  display: flex;
+  width: 68px;
+  height: 22px;
+  margin-bottom: 8px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 6.25rem;
+  background: #ffecf1;
+
+  color: #ff517e;
+
+  font-family: Pretendard;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.title {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 2.25rem */
+}
+
+.infoFeild {
+  display: flex;
+  width: 55.08588rem;
+  justify-content: space-between;
+}
+
+.infoLeft {
+  display: flex;
+  width: 28.9375rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.infoRaw {
+  display: flex;
+  padding: 0.375rem 0;
+  align-items: center;
+  gap: 1.5rem;
+  align-self: stretch;
+}
+
+.infoRight {
+  display: flex;
+  width: 21.25rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.infoRawBig {
+  display: flex;
+  padding: 0.625rem 1rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 1rem;
+  align-self: stretch;
+
+  border-radius: 0.75rem;
+  border: 1px solid var(--Foundation-main-blue-500, #2f83f3);
+  background: #fff;
+}
+
+.rawTop {
+  align-self: stretch;
+}
+
+.rawContents {
+  display: flex;
+
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.rawDay {
+  display: flex;
+  padding: 0.25rem 0.5rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+
+  border-radius: 0.25rem;
+  background: var(--Foundation-main-blue-500, #2f83f3);
+
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.rawBottom {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.oldPrice {
+  color: var(--Foundation-Blue-blue-500, #b0b9c3);
+  font-family: "Wanted Sans";
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-decoration-line: line-through;
+}
+
+.saleP {
+  color: var(--Foundation-Red-red-500, #ff517e);
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.price {
+  color: var(--Foundation-main-blue-500, #2f83f3);
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-left: 0.25rem;
+}
