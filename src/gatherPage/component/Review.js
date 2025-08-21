@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Review.module.css";
 import axios from "axios";
+import SECRET from "../../asset/img/comment.svg";
 
-const API_BASE_URL = "https://www.liketiger.info:443";
+const API_BASE_URL = "lhttp://liketiger.info:8080";
 
 function TimeFormat(time) {
   const now = new Date();
@@ -17,7 +18,7 @@ function TimeFormat(time) {
 function Review({ userName, isLoggedIn }) {
   // props로 사용자 정보 받기
   const [reviews, setReviews] = useState([]);
-
+  isLoggedIn = true;
   const fetchReviews = async () => {
     try {
       const res = await axios.get(`${API_BASE_URL}/comments`, {
@@ -39,8 +40,13 @@ function Review({ userName, isLoggedIn }) {
 
   return (
     <div className={styles.review}>
-      <div className={styles.top}>댓글</div>
-      <div className={styles.writen}>
+      <div className={styles.top}>
+        <span className={styles.topLeft}>댓글</span>
+      </div>
+      <div
+        className={styles.writen}
+        style={{ display: reviews.length === 0 ? "none" : "block" }}
+      >
         {reviews.map((review, idx) => (
           <div className={styles.reviewItem} key={idx}>
             <div className={styles.reviewHeader}>
@@ -54,7 +60,7 @@ function Review({ userName, isLoggedIn }) {
       <div className={styles.write}>
         {/* 로그인 상태에 따라 사용자 이름 또는 "로그인이 필요합니다" 표시 */}
         <div className={styles.writeHeader}>
-          {isLoggedIn ? `${userName}님` : "로그인이 필요합니다"}
+          {isLoggedIn ? `${userName}님` : ""}
         </div>
         <textarea
           className={styles.textarea}
@@ -67,7 +73,8 @@ function Review({ userName, isLoggedIn }) {
         ></textarea>
         <div className={styles.writeFooter}>
           <button className={styles.sicret} disabled={!isLoggedIn}>
-            비밀댓글
+            <img src={SECRET} alt="icon" className={styles.icon} />
+            <span>비밀댓글</span>
           </button>
           <div
             className={`${styles.submit} ${!isLoggedIn ? styles.disabled : ""}`}
