@@ -10,6 +10,7 @@ const Review = styled.div`
   font-family: Pretendard;
   font-size: 20px;
   font-weight: 600;
+  user-select:none;
 `;
 
 const Write = styled.div`
@@ -20,6 +21,7 @@ const Write = styled.div`
   font-family: Pretendard;
   font-size: 16px;
   font-weight: 600;
+  user-select:none;
 `;
 
 const Nickname = styled.div`
@@ -29,6 +31,7 @@ const Nickname = styled.div`
   font-weight: 600;
   line-height: 140%;
   padding-bottom:4px;
+  user-select:none;
 `;
 
 const Stardate = styled.div`
@@ -40,6 +43,7 @@ const Stardate = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
+  user-select:none;
 `;
 
 const Content = styled.div`
@@ -48,6 +52,7 @@ const Content = styled.div`
   font-size: 14px;
   font-weight: 400;
   line-height: 140%;
+  user-select:none;
 `;
 
 const ReviewList = styled.div`
@@ -58,33 +63,45 @@ const ReviewList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  user-select:none;
+ padding-bottom: 150px; /* 전체 리스트 끝에 여백 */
 `;
 
 const BoxWrapper = styled.div`
   width: 100%;
   padding-bottom: 16px;
   border-bottom: 1px solid #D9D9D9;
+  user-select:none;
+  
+  
 `;
 
 const Rating = styled.span`
   color: #ff517e;
   font-weight: 600;
+  user-select:none;
 `;
 
 /* 더 보기 버튼 */
 const MoreWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 8px;
+    display: inline-flex;
+    margin-bottom:100px;
+    user-select:none;
 `;
 const MoreButton = styled.button`
-  padding: 10px 16px;
-  border-radius: 8px;
-  border: 1px solid #D4D4D4;
-  background: #fff;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 8px 12px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 6px;
+border:none;
+background: var(--Foundation-Blue-blue-200, #DBDFE3);
+color: #000;
+font-family: Pretendard;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
   cursor: pointer;
 `;
 
@@ -180,7 +197,7 @@ export default function Review2({ center }) {
         {!loading && !error && canShowMore && (
           <MoreWrap>
             <MoreButton onClick={handleShowMore}>
-              더 보기 (+10)
+              10개의 후기 더보기
             </MoreButton>
           </MoreWrap>
         )}
