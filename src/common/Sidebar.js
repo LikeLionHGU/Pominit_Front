@@ -1,4 +1,6 @@
+// Sidebar.jsx
 import styled from "styled-components";
+import Workmodal from "../common/workmodal"; // ← 대문자 컴포넌트명
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,11 +8,13 @@ const SidebarWrap = styled.div`
   transform: translateX(-16px);
   user-select: none;
 `;
+
 const Icon = styled.div`
   width: 16px;
   height: 15px;
   flex-shrink: 0;
   opacity: 0.9;
+
   svg path {
     fill: ${({ active }) => (active ? "#fff" : "#B7D8F7")};
   }
@@ -38,13 +42,11 @@ const Btn = styled.button`
   flex-shrink: 0;
   border-radius: 7px;
 
-  /* 선택 상태에 따라 배경/글자색 */
   background: ${({ active }) => (active ? "#2F83F3" : "white")};
   color: ${({ active }) => (active ? "#fff" : "black")};
 
   font-family: Pretendard;
   font-size: 14px;
-  font-style: normal;
   font-weight: 500;
   line-height: 140%;
 
@@ -72,10 +74,12 @@ const Banner = styled.div`
 `;
 
 export default function Sidebar() {
-  const [activeIndex, setActiveIndex] = useState(0); // 기본 선택 인덱스
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+
   return (
-    <div>
+    <>
       <SidebarWrap>
         <Backbtn>
           <svg
@@ -134,7 +138,7 @@ export default function Sidebar() {
             </defs>
           </svg>
 
-          {/* 버튼을 Backbtn 위에 겹치게 */}
+          {/* 버튼 그룹 (카드 위에 겹치게) */}
           <BtnGroup>
             {/* 홈 */}
             <Btn $active={activeIndex === 0} onClick={() => navigate("/")}>

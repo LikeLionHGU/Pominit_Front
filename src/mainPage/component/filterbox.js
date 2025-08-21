@@ -19,10 +19,27 @@ const Trigger = styled.button`
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #336DFF;
-  background: #fff;
+ border-radius: 6px;
+border: 1px solid var(--Foundation-main-blue-500, #2F83F3);
+background: #FFF;
   cursor: pointer;
+
+    &:hover {
+    border-radius: 6px;
+border: 2px solid var(--Foundation-main-blue-500, #2F83F3);
+background: #FFF;
+  }
+&:focus{
+border-radius: 6px;
+border: 2px solid var(--Foundation-main-blue-500, #2F83F3);
+background: #FFF;
+}
+
+&:active{
+border-radius: 6px;
+border: 2px solid var(--Foundation-main-blue-500, #2F83F3);
+background: #FFF;
+}
 `;
 
 const LabelFocus = styled.span`
@@ -44,7 +61,6 @@ const Menu = styled.div`
   width: 100%;         
   border-radius: 6px;
   background: #fff;
-  border: 1px solid #c5c5c5;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   z-index: 1000;  
@@ -68,7 +84,7 @@ const Item = styled.button`
   font-weight: ${({ $selected }) => ($selected ? 600 : 400)};
 
   &:hover {
-    background: ${({ $selected }) => ($selected ? "#2F83F3" : "#F5F8FF")};
+    background: ${({ $selected }) => ($selected ? "#2F83F3" : "#EAF3FE")};
   }
 `;
 export default function FilterBox({
