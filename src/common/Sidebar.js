@@ -224,6 +224,6 @@ export default function Sidebar() {
 
         <Banner />
       </SidebarWrap>
-    </div>
+    </>
   );
 }
