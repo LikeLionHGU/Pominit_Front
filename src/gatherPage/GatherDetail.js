@@ -4,6 +4,7 @@ import Sidebar from "../common/Sidebar";
 
 import Info from "./component/Info";
 import Member from "./component/Member";
+import Review from "./component/Review";
 
 import styles from "./styles/GatherDetail.module.css";
 
@@ -16,6 +17,7 @@ function GatherDetail() {
         <div className={styles.container}>
           <Info />
           <Member />
+          <Review />
         </div>
       </div>
     </div>

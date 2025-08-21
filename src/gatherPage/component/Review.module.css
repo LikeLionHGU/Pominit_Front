@@ -1,0 +1,74 @@
+.contents {
+  display: flex;
+  width: 55.0625rem;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+
+  border-radius: 0.75rem;
+  border: 1px solid #2f83f3;
+  background: #fff;
+}
+
+.reviewItem {
+  display: flex;
+  padding-bottom: 1rem;
+  align-items: flex-start;
+  gap: 0.5rem;
+  align-self: stretch;
+}
+
+.name {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 1.4rem */
+}
+
+.date {
+  color: #9a9a9a;
+  font-family: Pretendard;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.content {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 1.225rem */
+}
+
+.write {
+  background: #eaf5ff;
+  padding: 0.5rem 1rem;
+}
+
+.writeHeader {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 1.4rem */
+}
+
+.textarea {
+  color: #9a9a9a;
+  font-family: Pretendard;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 1.225rem */
+}
+
+.textarea:active {
+  color: #000;
+}
