@@ -1,48 +1,52 @@
 import styled from "styled-components";
-import { useLocation, matchPath } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, matchPath, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const LogoWrapper = styled.div`
   padding-top: 17px;
   padding-left: 0px;
 `;
 
+// ✅ $blue 프롭으로 보더 색 분기
 const Loginbtn = styled.div`
-display: flex;
-padding: 8px 12px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-align-self: stretch;
   display: inline-flex;
   position: absolute;
   top: 11px;
   left: 954px;
+  padding: 8px 12px;
   gap: 10px;
-border-radius: 6px;
-border: 1px solid var(--Foundation-main-blue-50, #EAF3FE);
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 6px;
+  border: 1px solid
+    ${({ $blue }) => ($blue ? "#2F83F3" : "var(--Foundation-main-blue-50, #EAF3FE)")};
   cursor: pointer;
   caret-color: transparent;
+
+  &:hover {
+    background: ${({ $blue }) => ($blue ? "#F5F8FF" : "transparent")};
+  }
 `;
 
+// ✅ $blue 프롭으로 글자 색 분기
 const Login = styled.div`
-color: var(--Foundation-main-blue-50, #EAF3FE);
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  color: ${({ $blue }) => ($blue ? "#2F83F3" : "var(--Foundation-main-blue-50, #EAF3FE)")};
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
 `;
 
 const Logo = styled.svg`
   color: ${({ $blue }) => ($blue ? "#336DFF" : "#FFFFFF")};
 `;
 
-
-const BLUE_PATTERNS = [
-  "/detail/*",   
-  "/compare/*", 
-];
+const BLUE_PATTERNS = ["/detail/*", "/compare/*"];
 
 function isOneOf(pathname, patterns) {
   return patterns.some((p) =>
@@ -54,6 +58,34 @@ export default function Header() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isBlueLogo = isOneOf(pathname, BLUE_PATTERNS);
+
+  // ✅ 홈('/')만 제외하고 버튼을 파란 테마로
+  const isBlueBtn = pathname !== "/";
+
+  const [isAuthed, setIsAuthed] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthed(Boolean(token));
+    const onStorage = () => {
+      const t = localStorage.getItem("token");
+      setIsAuthed(Boolean(t));
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await axios.put(`${API_BASE_URL}/logout`, {}, { withCredentials: true });
+    } catch (e) {
+      // 무시
+    } finally {
+      localStorage.removeItem("token");
+      setIsAuthed(false);
+      navigate("/");
+    }
+  };
 
   return (
     <div>
@@ -73,8 +105,12 @@ export default function Header() {
       </LogoWrapper>
 
       {pathname !== "/signup" && (
-        <Loginbtn>
-          <Login onClick={() => navigate("/login")}>로그인</Login>
+        <Loginbtn
+          $blue={isBlueBtn}
+          onClick={isAuthed ? handleLogout : () => navigate("/login")}
+          aria-label={isAuthed ? "로그아웃" : "로그인"}
+        >
+          <Login $blue={isBlueBtn}>{isAuthed ? "로그아웃" : "로그인"}</Login>
         </Loginbtn>
       )}
     </div>

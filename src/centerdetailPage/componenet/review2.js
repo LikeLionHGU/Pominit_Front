@@ -105,7 +105,7 @@ line-height: normal;
   cursor: pointer;
 `;
 
-const API_BASE_URL = "https://www.liketiger.info:443";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 function normalizeCenter(raw) {
   if (!raw || raw.id == null) return null;

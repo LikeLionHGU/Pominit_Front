@@ -4,7 +4,7 @@ import axios from "axios";
 import data from "../../data/sufferingcenter.json";
 import styled from "styled-components";
 
-const API_BASE_URL = "https://www.liketiger.info:443";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const Grid = styled.div`
   position: absolute;

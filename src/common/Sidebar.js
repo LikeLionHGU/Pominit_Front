@@ -146,7 +146,6 @@ export default function Sidebar() {
             <Btn
               active={activeIndex === 2}
               onClick={() => {
-                setActiveIndex(2);
                 setShowModal(true);
               }}
             >
@@ -165,7 +164,6 @@ export default function Sidebar() {
             <Btn
               active={activeIndex === 3}
               onClick={() => {
-                setActiveIndex(3);
                 setShowModal(true);
               }}
             >

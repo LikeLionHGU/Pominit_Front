@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Lottie from "lottie-react";
-import loadingAnim from "../common/loading.json";
+//import Lottie from "lottie-react";
+//import loadingAnim from "../common/loading.json";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 import styled from "styled-components";
@@ -52,8 +52,9 @@ const LoaderBox = styled.div`
   height: 200px;
 `;
 
-const API_BASE_URL = "https://www.liketiger.info:443";
-const MIN_SPINNER_MS = 2000;
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+//const MIN_SPINNER_MS = 2000;
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -69,15 +70,15 @@ const DetailPage = () => {
         setLoading(true);
         setError("");
 
-        const startedAt = Date.now();
+        //const startedAt = Date.now();
         const res = await axios.get(`${API_BASE_URL}/location/detail/${id}`, {
           signal: ctrl.signal,
         });
 
-        const elapsed = Date.now() - startedAt;
-        if (elapsed < MIN_SPINNER_MS) {
-          await new Promise((r) => setTimeout(r, MIN_SPINNER_MS - elapsed));
-        }
+        //const elapsed = Date.now() - startedAt;
+        //if (elapsed < MIN_SPINNER_MS) {
+          //await new Promise((r) => setTimeout(r, MIN_SPINNER_MS - elapsed));
+        //}
 
         setCenter(res.data);
       } catch (e) {
@@ -119,16 +120,16 @@ const DetailPage = () => {
 
       <ContentWrap />
       {center && <Bar center={center} />}
-
-      {loading && (
-        <LoadingOverlay>
-          <LoaderBox>
-            <Lottie animationData={loadingAnim} loop />
-          </LoaderBox>
-        </LoadingOverlay>
-      )}
     </Page>
   );
 };
 
 export default DetailPage;
+
+     /* {loading && (
+        <LoadingOverlay>
+          <LoaderBox>
+            <Lottie animationData={loadingAnim} loop />
+          </LoaderBox>
+        </LoadingOverlay>
+      )}*/
