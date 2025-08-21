@@ -126,17 +126,17 @@
 .members {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.26rem;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0.625rem 1.26rem;
 }
 
 .memberItem {
   display: flex;
   padding: 0.625rem 1rem;
-  width: 15rem;
+  width: 15.625rem;
   height: 3.75rem;
   flex-direction: raw;
   align-items: flex-start;
-  gap: 0.625rem;
   align-self: stretch;
 
   border-radius: 0.75rem;

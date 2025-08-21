@@ -1,0 +1,59 @@
+/* 공통 변수(이미 쓰는 값과 맞추세요) */
+:root {
+  --content-width: 1080px; /* 콘텐츠 폭 */
+  --side-gutter: 100px; /* 좌우 여백 */
+  --gutter: 20px; /* 컬럼 사이 */
+}
+
+/* 화면 전체 폭을 덮는 고정 바 */
+.floatingBar {
+  position: fixed;
+  left: 0;
+  right: 0; /* = width: 100vw 와 동일 효과 */
+  bottom: 0;
+  background: #9ec1f0; /* 파란 영역 배경 */
+  padding: 12px 0; /* 상하 여백 (필요 시 조절) */
+  z-index: 1000;
+  /* 노치/홈버튼 대응 */
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+}
+
+/* 내부 컨테이너: 페이지의 .container와 같은 폭/정렬 */
+.floatingInner {
+  width: min(var(--content-width), calc(100vw - (var(--side-gutter) * 2)));
+  margin-inline: auto; /* 가운데 정렬 */
+  display: flex;
+  justify-content: flex-end; /* 버튼을 오른쪽 끝으로 */
+  align-items: center;
+}
+
+/* 버튼 스타일 예시 */
+.submit {
+  display: flex;
+  width: 15.625rem;
+  padding: 0.75rem 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  border-radius: 0.375rem;
+  background: var(--Foundation-main-blue-500, #2f83f3);
+  border: none;
+
+  color: #fff;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 1.4rem */
+  cursor: pointer;
+}
+
+.submit:active {
+  background: var(--Foundation-main-blue-600, #2b77dd);
+}

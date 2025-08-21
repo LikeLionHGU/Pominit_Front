@@ -6,7 +6,6 @@ import SMILE from "../../asset/img/red_smile.svg";
 
 import styles from "./Member.module.css";
 
-const API_BASE_URL = "http://liketiger.info:8080";
 function Member() {
   const [members, setMembers] = useState([]);
 
@@ -15,10 +14,13 @@ function Member() {
 
     (async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/members`, {
-          signal: controller.signal,
-          timeout: 10000,
-        });
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/gather/members`,
+          {
+            signal: controller.signal,
+            timeout: 10000,
+          }
+        );
 
         const normalized = (res.data || []).map((m) => ({
           name: m.name ?? "",
@@ -64,7 +66,7 @@ function Member() {
           </div>
         </div>
 
-        {/* <div className={styles.members}>
+        <div className={styles.members}>
           {members.map((member, idx) => (
             <div className={styles.memberItem} key={idx}>
               <div>
@@ -76,9 +78,9 @@ function Member() {
               </div>
             </div>
           ))}
-        </div> */}
+        </div>
 
-        <div className={styles.members}>
+        {/* <div className={styles.members}>
           <div className={styles.memberItem}>
             <img src={MEMBER} alt="Pic" className={styles.memberPic} />
 
@@ -96,7 +98,34 @@ function Member() {
               <div className={styles.memCon}>모임원</div>
             </div>
           </div>
-        </div>
+          <div className={styles.memberItem}>
+            <div>
+              <img src={MEMBER} alt="Pic" className={styles.memberPic} />
+            </div>
+            <div className={styles.memberInfo}>
+              <div className={styles.memName}>바다의 해삼</div>
+              <div className={styles.memCon}>모임원</div>
+            </div>
+          </div>
+          <div className={styles.memberItem}>
+            <div>
+              <img src={MEMBER} alt="Pic" className={styles.memberPic} />
+            </div>
+            <div className={styles.memberInfo}>
+              <div className={styles.memName}>바다의 해삼</div>
+              <div className={styles.memCon}>모임원</div>
+            </div>
+          </div>
+          <div className={styles.memberItem}>
+            <div>
+              <img src={MEMBER} alt="Pic" className={styles.memberPic} />
+            </div>
+            <div className={styles.memberInfo}>
+              <div className={styles.memName}>바다의 해삼</div>
+              <div className={styles.memCon}>모임원</div>
+            </div>
+          </div>
+        </div> */}
       </div>
     </div>
   );

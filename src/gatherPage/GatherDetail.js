@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
+import Floating from "./component/Floating";
 
 import Info from "./component/Info";
 import Member from "./component/Member";
@@ -65,6 +66,7 @@ function GatherDetail() {
           <Location />
         </div>
       </div>
+      <Floating />
     </div>
   );
 }

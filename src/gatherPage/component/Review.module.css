@@ -129,6 +129,10 @@
 .sicret:active {
   background: var(--Foundation-Blue-blue-100, #e7e9ec);
 }
+.disabled {
+  border-radius: 0.375rem;
+  background: var(--Foundation-Blue-blue-300, #cad0d7);
+}
 
 .submit {
   display: flex;
@@ -147,4 +151,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.submit:active {
+  background: var(--Foundation-main-blue-600, #1f6ed8);
 }
