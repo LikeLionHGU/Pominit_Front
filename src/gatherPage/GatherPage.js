@@ -12,12 +12,14 @@ import "../index.css";
 function GatherPage() {
   const [gathers, setGathers] = useState([]);
   const [sport, setSport] = useState(""); // "서핑" 등, 미선택이면 ""
+  // eslint-disable-next-line
   const [date, setDate] = useState(""); // "yyyy-MM-dd", 미선택이면 ""
 
   const fetchGathers = useCallback(async () => {
     try {
       const payload = { sport: sport || "", date: date || "" };
       const { data } = await axios.post(
+        // eslint-disable-next-line
         `${process.env.REACT_APP_API_BASE_URL}/home/gather/list`,
         payload
       );
@@ -27,6 +29,7 @@ function GatherPage() {
       // 실패 시 데이터는 그냥 빈 상태로 두고 화면은 그대로
       setGathers([]);
     }
+    // eslint-disable-next-line
   }, [process.env.REACT_APP_API_BASE_URL, sport, date]);
 
   useEffect(() => {

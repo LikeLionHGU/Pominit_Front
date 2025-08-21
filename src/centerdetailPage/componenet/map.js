@@ -91,6 +91,7 @@ export default function Map({ center }) {
       s.onerror = () => console.error("카카오 SDK 로드 오류");
       document.head.appendChild(s);
     }
+    // eslint-disable-next-line
   }, [c?.latitude, c?.longitude]); // ✅ 의존성은 안전하게 optional chaining
 
   // ✅ 렌더링은 여기서 가드 (Hook 이후에 조건부 return)
