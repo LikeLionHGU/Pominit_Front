@@ -16,6 +16,18 @@ border-radius: 100px;
 border: 1px solid #336DFF;
 background: #FFF;
 cursor: pointer;
+
+&:hover{
+border-radius: 100px;
+border: 2px solid var(--Foundation-main-blue-500, #2F83F3);
+background: #FFF;
+}
+
+&:active{
+border-radius: 100px;
+border: 2px solid var(--Foundation-main-blue-500, #2F83F3);
+background: #FFF;
+}
 `;
 
 const Label = styled.span`
@@ -59,13 +71,15 @@ padding: 12px 16px;
 align-items: left;
 gap: 6px;
 
-border: 1px solid transparent;
 border-radius: 100px;
+border: 1px solid var(--Foundation-main-blue-100, #BFD9FB);
 background: ;
 border-radius: 100px;
 
  &:hover {
-    border-color: #2F83F3;
+    border-radius: 100px;
+border: 1px solid var(--Foundation-main-blue-100, #BFD9FB);
+background: var(--Foundation-main-blue-50, #EAF3FE);
      cursor: pointer;
   }
 
