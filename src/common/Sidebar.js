@@ -1,5 +1,6 @@
 // Sidebar.jsx
 import styled from "styled-components";
+// eslint-disable-next-line
 import Workmodal from "../common/workmodal"; // ← 대문자 컴포넌트명
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -75,6 +76,7 @@ const Banner = styled.div`
 
 export default function Sidebar() {
   const [activeIndex, setActiveIndex] = useState(0);
+  // eslint-disable-next-line
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 

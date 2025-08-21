@@ -9,9 +9,11 @@ const API_BASE_URL = "http://liketiger.info:8080";
 
 function Location() {
   // props로 사용자 정보 받기
+  // eslint-disable-next-line
   const [location, setLocation] = useState([]);
   const fetchReviews = async () => {
     try {
+      // eslint-disable-next-line
       const res = await axios.get(`${API_BASE_URL}/location`, {
         timeout: 10000,
       });
@@ -44,13 +46,13 @@ function Location() {
           <div className={styles.infoBottom}>
             <div className={styles.row}>
               <span>
-                <img src={LOCATION} />
+                <img src={LOCATION} alt="icon" />
               </span>
               <span>포항시 북구 흥해읍 흥해로 123</span>
             </div>
             <div className={styles.row}>
               <span>
-                <img src={DATE} />
+                <img src={DATE} alt="icon" />
               </span>
               <span>매일 11:00-20:00</span>
             </div>
