@@ -138,6 +138,7 @@ border:none;
 `;
 
 export default function Workmodal({ id, onClose }) {
+  console.log("[Workmodal render] id:", id);
     const [text, setText] = useState("");
     const [rating, setRating] = useState(0);
     const [submitted, setSubmitted] = useState(false);

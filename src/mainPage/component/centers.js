@@ -13,7 +13,7 @@ const Grid = styled.div`
   left: 190px;
   display: grid;
   grid-template-columns: repeat(3, 284px);
-  gap: 14px;
+  gap: 28px 14px;
 `;
 
 const Card = styled.div`
