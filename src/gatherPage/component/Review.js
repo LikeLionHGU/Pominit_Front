@@ -159,7 +159,6 @@ function Review({ userName, isLoggedIn }) {
           </button>
           <div
             className={`${styles.submit} ${!isLoggedIn ? styles.disabled : ""}`}
-            style={!isLoggedIn ? { opacity: 0.5, cursor: "not-allowed" } : {}}
             onClick={handleSubmit}
           >
             {posting ? "등록 중…" : "등록하기"}{" "}
