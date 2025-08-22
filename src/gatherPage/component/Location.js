@@ -24,7 +24,6 @@ function Location() {
   const [place, setPlace] = useState(null);
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const locationId = id; // id가 locationId로 사용됨
   useEffect(() => {
     // 검색어가 없으면 호출하지 않음 (불필요한 네트워크 요청 방지)
@@ -41,12 +40,14 @@ function Location() {
           signal: controller.signal,
         });
 
+        console.log("강습소 정보:", data);
+
         // data 예시를 넉넉히 커버 (필드명 다를 수 있어 폴백)
         const normalized = {
           locationId: data?.id ?? id,
           name: data?.name ?? data?.title ?? "이름 미정",
           description: data?.description ?? data?.desc ?? "",
-          imgUrl: data?.imgUrl ?? data?.imageUrl ?? "",
+          imgUrl: data?.image ?? data?.imageUrl ?? "",
           address: data?.address ?? data?.addr ?? "",
           hours: data?.hours ?? data?.openHours ?? "",
           detailUrl: data?.detailUrl ?? data?.url ?? "",

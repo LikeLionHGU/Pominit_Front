@@ -19,6 +19,7 @@
   border-radius: 0.75rem;
   background: #fff;
   box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
 }
 
 .locationCard > img {
