@@ -143,8 +143,8 @@ export default function Sidebar() {
           {/* 버튼 그룹 (카드 위에 겹치게) */}
           <BtnGroup>
             {/* 홈 */}
-            <Btn $active={activeIndex === 0} onClick={() => navigate("/")}>
-              <Icon $active={activeIndex === 0}>
+            <Btn active={activeIndex === 0} onClick={() => navigate("/")}>
+              <Icon active={activeIndex === 0}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -164,10 +164,10 @@ export default function Sidebar() {
 
             {/* 모임 */}
             <Btn
-              $active={activeIndex === 1}
+              active={activeIndex === 1}
               onClick={() => navigate("/gather")}
             >
-              <Icon $active={activeIndex === 1}>
+              <Icon active={activeIndex === 1}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="19"
@@ -185,9 +185,8 @@ export default function Sidebar() {
             </Btn>
 
             {/* 챌린지 */}
-
-            <Btn $active={activeIndex === 2} onClick={() => setActiveIndex(2)}>
-              <Icon $active={activeIndex === 2}>
+            <Btn onClick={() => setShowModal(true)}>
+              <Icon active={activeIndex === 2}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="15"
@@ -207,8 +206,8 @@ export default function Sidebar() {
 
             {/* 마이페이지 */}
 
-            <Btn $active={activeIndex === 3} onClick={() => setActiveIndex(3)}>
-              <Icon $active={activeIndex === 3}>
+            <Btn onClick={() => setShowModal(true)}>
+              <Icon active={activeIndex === 3}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="17"
@@ -230,6 +229,7 @@ export default function Sidebar() {
 
         <Banner />
       </SidebarWrap>
+      {showModal && <Workmodal onClose={() => setShowModal(false)} />}
     </>
   );
 }

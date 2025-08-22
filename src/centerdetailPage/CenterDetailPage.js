@@ -5,7 +5,7 @@ import axios from "axios";
 //import loadingAnim from "../common/loading.json";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import Review1 from "./componenet/review1";
 import CenterInfo from "./componenet/centerinfo";
 import Map from "./componenet/map";
@@ -13,13 +13,19 @@ import Meeting from "./componenet/meeting";
 import Review2 from "./componenet/review2";
 import Bar from "./componenet/Bar";
 
+
+const LocalGlobalStyle = createGlobalStyle`
+  body { 
+    background: #fafbff;   /* ✅ 스크롤해도 항상 꽉 차게 배경 */
+  }
+`;
+
 const Page = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   background: #fafbff;
   padding-bottom: calc(72px + 16px + env(safe-area-inset-bottom));
-  min-height: 100vh;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
 `;
 const SidebarWrapper = styled.div`
@@ -94,6 +100,8 @@ const DetailPage = () => {
   }, [id]);
 
   return (
+    <>
+    <LocalGlobalStyle />
     <Page>
       <div className="container">
         <HeaderWrapper>
@@ -110,17 +118,19 @@ const DetailPage = () => {
         {center && (
           <>
             <CenterInfo center={center} />
-            <Review1 />
+            <Review1 center={center} />
             <Map center={center} />
             <Meeting center={center} />
             <Review2 center={center} />
           </>
         )}
       </div>
+  
 
       <ContentWrap />
       {center && <Bar center={center} />}
     </Page>
+    </>
   );
 };
 

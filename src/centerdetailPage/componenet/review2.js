@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import ReviewModal from "../../common/ReviewModal";
 
 const Review = styled.div`
   position: absolute;
@@ -22,6 +23,7 @@ const Write = styled.div`
   font-size: 16px;
   font-weight: 600;
   user-select: none;
+  cursor:pointer;
 `;
 
 const Nickname = styled.div`
@@ -111,13 +113,19 @@ function normalizeCenter(raw) {
 }
 
 export default function Review2({ center }) {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
   const [reviews, setReviews] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(10); // ✅ 추가
+  const [visibleCount, setVisibleCount] = useState(10);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const c = normalizeCenter(center);
 
+  const handleOpenModal = (id) => {
+    setSelectedId(id);
+    setShowModal(true);
+  };
   const fetchReviewData = useCallback(async (centerId) => {
     try {
       setLoading(true);
@@ -157,33 +165,32 @@ export default function Review2({ center }) {
 
   if (!c) return null;
 
-  const visibleReviews = reviews.slice(0, visibleCount); // ✅ 잘라서 표시
-  const canShowMore = visibleCount < reviews.length; // ✅ 더 보기가 가능한지
-
-  const handleShowMore = () => {
-    setVisibleCount((n) => Math.min(n + 10, reviews.length)); // ✅ 10개씩 증가
-  };
+  const visibleReviews = reviews.slice(0, visibleCount);
+  const canShowMore = visibleCount < reviews.length;
+  const handleShowMore = () => setVisibleCount((n) => Math.min(n + 10, reviews.length));
 
   return (
     <div>
       <Review>방문자 리뷰 ({loading ? "…" : reviews.length})</Review>
-      <Write>
+      <Write
+        onClick={() => handleOpenModal(c.id)}
+        role="button"
+        aria-disabled={!c?.id}
+        style={{ opacity: c?.id ? 1 : 0.5, pointerEvents: c?.id ? "auto" : "none" }}
+      >
         리뷰 작성하기{" "}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="8"
-          height="12"
-          viewBox="0 0 8 12"
-          fill="none"
-        >
-          <path
-            d="M0.625977 11.001L6.62598 6.00098L0.625976 1.00098"
-            stroke="#9A9A9A"
-            strokeWidth="1.4"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" fill="none">
+          <path d="M0.625977 11.001L6.62598 6.00098L0.625976 1.00098" stroke="#9A9A9A" strokeWidth="1.4" />
         </svg>
       </Write>
 
+      {/* ✅ 모달은 하나만, 그리고 id를 props로 전달 */}
+      {showModal && (
+        <ReviewModal
+          id={selectedId}
+          onClose={() => setShowModal(false)}
+        />
+      )}
       <ReviewList>
         {loading && (
           <BoxWrapper>
@@ -232,6 +239,7 @@ export default function Review2({ center }) {
           </MoreWrap>
         )}
       </ReviewList>
+      {showModal && <ReviewModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }
