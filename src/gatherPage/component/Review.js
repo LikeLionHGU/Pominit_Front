@@ -40,6 +40,7 @@ function parseJwt(token) {
 
 function Review({ userName, isLoggedIn }) {
   const { id } = useParams();
+  const PAGE = 10; // 한 번에 보여줄 개수
 
   // 표시용 이름: prop 없으면 토큰에서 꺼냄
   const [displayName, setDisplayName] = useState(userName || "");
@@ -48,6 +49,7 @@ function Review({ userName, isLoggedIn }) {
   );
 
   const [reviews, setReviews] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(PAGE);
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -102,6 +104,10 @@ function Review({ userName, isLoggedIn }) {
     fetchReviews(controller.signal);
     return () => controller.abort();
   }, [fetchReviews]);
+
+  useEffect(() => {
+    setVisibleCount((prev) => Math.min(PAGE, reviews.length || PAGE));
+  }, [reviews]);
 
   // 등록(POST에만 토큰 수동 첨부)
   const handleSubmit = async () => {
@@ -161,7 +167,7 @@ function Review({ userName, isLoggedIn }) {
         className={styles.writen}
         style={{ display: reviews.length === 0 ? "none" : "block" }}
       >
-        {reviews.map((review) => (
+        {reviews.slice(0, visibleCount).map((review) => (
           <div className={styles.reviewItem} key={review.id}>
             <div className={styles.reviewHeader}>
               <span className={styles.name}>{review.name}</span>
@@ -170,6 +176,30 @@ function Review({ userName, isLoggedIn }) {
             <div className={styles.comment}>{review.comment}</div>
           </div>
         ))}
+        {/* 더보기 / 접기 */}
+        {reviews.length > PAGE && (
+          <div className={styles.more}>
+            {visibleCount < reviews.length ? (
+              <button
+                type="button"
+                className={styles.moreBtn}
+                onClick={() =>
+                  setVisibleCount((v) => Math.min(v + PAGE, reviews.length))
+                }
+              >
+                더보기 ({reviews.length - visibleCount}개 남음)
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={styles.moreBtn}
+                onClick={() => setVisibleCount(PAGE)}
+              >
+                접기
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       {loading && <div className={styles.loading}>리뷰 불러오는 중…</div>}
