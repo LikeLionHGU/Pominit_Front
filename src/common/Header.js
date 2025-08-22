@@ -3,7 +3,6 @@ import { useLocation, matchPath, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const LogoWrapper = styled.div`
@@ -24,7 +23,8 @@ const Loginbtn = styled.div`
 
   border-radius: 6px;
   border: 1px solid
-    ${({ $blue }) => ($blue ? "#2F83F3" : "var(--Foundation-main-blue-50, #EAF3FE)")};
+    ${({ $blue }) =>
+      $blue ? "#2F83F3" : "var(--Foundation-main-blue-50, #EAF3FE)"};
   cursor: pointer;
   caret-color: transparent;
 
@@ -35,7 +35,8 @@ const Loginbtn = styled.div`
 
 // ✅ $blue 프롭으로 글자 색 분기
 const Login = styled.div`
-  color: ${({ $blue }) => ($blue ? "#2F83F3" : "var(--Foundation-main-blue-50, #EAF3FE)")};
+  color: ${({ $blue }) =>
+    $blue ? "#2F83F3" : "var(--Foundation-main-blue-50, #EAF3FE)"};
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 600;
@@ -44,7 +45,7 @@ const Login = styled.div`
 
 const Logo = styled.svg`
   color: ${({ $blue }) => ($blue ? "#336DFF" : "#FFFFFF")};
-  cursor:pointer;
+  cursor: pointer;
 `;
 
 const BLUE_PATTERNS = ["/detail/*", "/compare/*"];
@@ -84,6 +85,7 @@ export default function Header() {
     } finally {
       localStorage.removeItem("token");
       setIsAuthed(false);
+      window.location.reload();
       navigate("/");
     }
   };
