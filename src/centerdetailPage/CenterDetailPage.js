@@ -53,8 +53,7 @@ const DetailPage = () => {
   const { id } = useParams();
   const [center, setCenter] = useState(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
-
+  const [, setLoading] = useState(false);
   useEffect(() => {
     const ctrl = new AbortController();
 
