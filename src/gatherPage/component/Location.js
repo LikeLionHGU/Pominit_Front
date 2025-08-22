@@ -67,11 +67,6 @@ function Location() {
     return () => controller.abort();
   }, [id]);
 
-  const goDetail = () => {
-    if (!place?.locationId) return;
-    navigate(`/detail/${place.locationId}`);
-  };
-
   return (
     <div className={styles.location}>
       <div className={styles.top}>
