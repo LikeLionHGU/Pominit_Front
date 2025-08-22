@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { loadIdsFromLocalStorage } from "../common/compareStorage";
 
@@ -167,7 +167,7 @@ const FALLBACK_THUMB =
       })();
     
       return () => { cancelled = true; };
-    }, [payload, API_BASE_URL]);
+    }, [payload]);
     
   
     // 특정 경로에서 숨길 경우
@@ -177,7 +177,7 @@ const FALLBACK_THUMB =
     const toggle = () => setOpen(v => !v);
     const goCompare = (e) => { e.stopPropagation(); navigate("/compare"); };
     const onKey = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } };
-    const handleRemove = (e, i) => { e.stopPropagation(); /* TODO: 제거 로직 */ };
+    //const handleRemove = (e, i) => { e.stopPropagation(); /* TODO: 제거 로직 */ };
     const imgs = Array.isArray(thumbs) ? thumbs : []; 
     return (
       <Wrapper
