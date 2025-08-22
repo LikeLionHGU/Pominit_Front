@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-// eslint-disable-next-line
-import data from "../../data/sufferingcenter.json";
+
 import styled from "styled-components";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -267,7 +266,8 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
 
               <InfoItem>
                 <IconStar14 />
-                <span>{list.score}</span>
+                <span>{list.score.toFixed(1)}</span>
+
                 <Dot />
                 후기
                 <span style={{ color: "#6D6D6D" }}>{list.reviewCount}개</span>
