@@ -7,7 +7,7 @@ import styles from "./List.module.css";
 import DateIcon from "../../asset/img/date.svg";
 import LocationIcon from "../../asset/img/location.svg";
 import MemberIcon from "../../asset/img/member.svg";
-import Arrow from "../../asset/img/>>>.svg";
+import Arrow from "../../asset/img/pointer.svg";
 
 function List({ lists: propLists = [] }) {
   const [lists, setList] = useState([]);
