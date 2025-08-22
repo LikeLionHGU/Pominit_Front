@@ -5,16 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const Bar = styled.div`
   position: fixed;
-  left:0;
-  bottom:0;
-  right:0;
-  width: 100%;
-  height: 72px;
-  background: #D6EBFF;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 16px;
+  left:0; bottom:0; right:0;
+  width: 100%; height: 72px;
+  background: #BFD9FB;
+  display: flex; justify-content: flex-end; align-items: center; gap: 16px;
   padding: 0 max(120px, env(safe-area-inset-right)) 
            calc(8px + env(safe-area-inset-bottom))
            max(16px, env(safe-area-inset-left));
@@ -24,48 +18,43 @@ const Bar = styled.div`
 `;
 
 const Comparebtn = styled.button`
-  display: flex;
-  width: 160px;
-  padding: 12px 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 6px;
-  background: white;
-  border: none;
-  color: #2285E3;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 140%;
+  display: flex; width: 160px; padding: 12px 16px;
+  justify-content: center; align-items: center; gap: 8px;
+  border-radius: 6px; background: #fff; border: none;
+  color: #2285E3; font-family: Pretendard; font-size: 16px; font-weight: 600; line-height: 140%;
   cursor: pointer;
+  &:active { background:#EAF3FE; }
 `;
 
 const Register = styled.button`
-  display: flex;
-  width: 250px;
-  padding: 12px 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  border-radius: 6px;
-  background: #2285E3;
-  color: #FFF;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 140%;
+  display: flex; width: 250px; padding: 12px 16px;
+  justify-content: center; align-items: center; gap: 8px;
+  border: none; border-radius: 6px; background: #2285E3;
+  color: #FFF; text-align: center;
+  font-family: Pretendard; font-size: 16px; font-weight: 600; line-height: 140%;
   cursor: pointer;
+  &:active { background:#2B77DD; }
+  &:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
 `;
 
 function normalizeCenter(raw) {
   if (!raw) return null;
   const id = raw.id ?? raw.centerId ?? raw.locationId;
-  return { id: Number.isFinite(Number(id)) ? Number(id) : null };
+  return {
+    id: Number.isFinite(Number(id)) ? Number(id) : null,
+    reserveLink: raw.reserveLink ?? raw["예약링크"],
+  };
 }
+
+// https 없으면 자동으로 붙여 절대 URL로
+const toAbsUrl = (u) => {
+  if (!u || typeof u !== "string") return null;
+  if (/^https?:\/\//i.test(u)) return u;
+  return `https://${u.replace(/^\/*/, "")}`;
+};
 
 const BarComponent = ({ center }) => {
   const navigate = useNavigate();
@@ -73,30 +62,29 @@ const BarComponent = ({ center }) => {
   const c = normalizeCenter(center);
 
   const onClickCompare = () => {
-    if (!c?.id) return; // 안전 가드
-
-    // 이미 담겨 있으면 바로 이동
-    if (items.includes(c.id)) {
+    if (!c?.id) return;
+    if (items.includes(c.id) || items.length >= 3) {
       navigate("/compare");
       return;
     }
-
-    // 최대 3개 제한
-    if (items.length >= 3) {
-      // 정책: 꽉 차 있으면 그냥 비교 페이지로만 이동 (UI 변화 없음)
-      navigate("/compare");
-      return;
-    }
-
-    // 담고 이동
     add(c.id);
     navigate("/compare");
   };
 
+  const onClickReserve = () => {
+    const url = toAbsUrl(c?.reserveLink);
+    if (!url) return; // 버튼이 disabled라서 보통 여기 안 옴
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const hasReserve = Boolean(toAbsUrl(c?.reserveLink));
+
   return (
     <Bar>
       <Comparebtn type="button" onClick={onClickCompare}>비교하기</Comparebtn>
-      <Register type="button">예약하기</Register>
+      <Register type="button" onClick={onClickReserve} disabled={!hasReserve}>
+        예약하기
+      </Register>
     </Bar>
   );
 };

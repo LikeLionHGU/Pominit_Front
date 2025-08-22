@@ -4,8 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
-// ❌ compareStorage 제거
-// import { loadIdsFromLocalStorage } from "../common/compareStorage";
+import Delete from "../common/Deletemodal";           // ✅ 삭제 확인 모달
 import { useCompareBasket } from "../common/compareBasket";
 
 /* =========================
@@ -292,8 +291,13 @@ function CompareRow({ d, onRemove }) {
 
 const ComparePage = () => {
   const navigate = useNavigate();
-  // ✅ compareBasket 훅 사용 (로컬스토리지 + 동기화 일원화)
+
+  // ✅ compareBasket 훅 (로컬스토리지 + 동기화)
   const { items = [], remove } = useCompareBasket();
+
+  // 삭제 모달 state
+  const [showDelete, setShowDelete] = useState(false);
+  const [pending, setPending] = useState({ idx: null, id: null, name: "" });
 
   const [data, setData] = useState(null);
   const API = axios.create({
@@ -353,12 +357,16 @@ const ComparePage = () => {
     return Array.isArray(data) ? data : [data];
   }, [data]);
 
-  // ✅ 삭제: 바스켓/로컬스토리지에서 제거 + UI 즉시 반영(낙관적)
-  const handleRemove = (idx) => {
+  /* =========================
+     삭제 동작: 모달 + 실제 제거
+  ========================= */
+
+  // 실제 삭제 수행
+  const doRemove = (idx) => {
     const idToRemove = payload.allIds[idx];
     if (idToRemove == null) return;
 
-    // 1) UI 낙관적 업데이트(해당 행만 제거)
+    // 1) UI 낙관적 업데이트
     setData(prev => {
       if (!prev) return prev;
       const arr = Array.isArray(prev) ? [...prev] : [prev];
@@ -366,8 +374,27 @@ const ComparePage = () => {
       return arr;
     });
 
-    // 2) 실제 바스켓에서 제거(효과로 validCount/payload 갱신 → 필요 시 재요청)
+    // 2) 바스켓에서 제거 → items 변경 → payload/validCount 갱신
     remove(idToRemove);
+  };
+
+  // 아이콘 클릭 시: 모달 열기
+  const askRemove = (idx) => {
+    const id = payload.allIds[idx] ?? null;
+    const name = (list[idx]?.name) || "";
+    setPending({ idx, id, name });
+    setShowDelete(true);
+  };
+
+  const confirmDelete = () => {
+    if (pending.idx != null) doRemove(pending.idx);
+    setShowDelete(false);
+    setPending({ idx: null, id: null, name: "" });
+  };
+
+  const cancelDelete = () => {
+    setShowDelete(false);
+    setPending({ idx: null, id: null, name: "" });
   };
 
   return (
@@ -418,7 +445,7 @@ const ComparePage = () => {
           {!loading && !error && list.length > 0 && (
             <>
               {list.slice(0, validCount).map((d, i) => (
-                <CompareRow key={i} d={d} onRemove={() => handleRemove(i)} />
+                <CompareRow key={i} d={d} onRemove={() => askRemove(i)} />
               ))}
               {[...Array(3 - validCount)].map((_, k) => (
                 <Empty key={`ph-${k}`}>
@@ -451,11 +478,21 @@ const ComparePage = () => {
           {!loading && !error && list.length > 0 && (
             <>
               {list.slice(0, 3).map((d, i) => (
-                <CompareRow key={i} d={d} onRemove={() => handleRemove(i)} />
+                <CompareRow key={i} d={d} onRemove={() => askRemove(i)} />
               ))}
             </>
           )}
         </>
+      )}
+
+      {/* ✅ 삭제 확인 모달 */}
+      {showDelete && (
+        <Delete
+          onClose={cancelDelete}
+          onConfirm={confirmDelete}
+          title="삭제하시겠어요?"
+          description={`"${pending.name || "선택한 항목"}"을(를) 비교 목록에서 제거합니다.`}
+        />
       )}
     </div>
   );

@@ -34,46 +34,65 @@ function normalizeCenter(raw) {
 }
 
 export default function Map({ center }) {
-  // ✅ Hook들은 무조건 최상단에서 호출
   const mapRef = useRef(null);
   const mapObjRef = useRef(null);
   const markerRef = useRef(null);
+  const infoRef = useRef(null); // ⭐ 이름 라벨(InfoWindow) 참조
 
-  const c = normalizeCenter(center); // 파생값은 Hook 다음에 계산
+  const c = normalizeCenter(center);
 
   useEffect(() => {
-    // 좌표가 없으면 아무 것도 안 함 (하지만 Hook은 호출됨)
     if (!c) return;
     if (typeof window === "undefined") return;
 
+    const buildLabelHtml = (name) => `
+      <div style="
+        padding:6px 10px;
+        border:1px solid #E5E7EB;
+        background:#fff;
+        border-radius:6px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.12);
+        font-family: Pretendard, system-ui, -apple-system, sans-serif;
+        font-size:12px; color:#111; white-space:nowrap;">
+        ${name ? String(name).replace(/[<>&]/g, (m)=>({ '<':'&lt;','>':'&gt;','&':'&amp;' }[m])) : '강습소'}
+      </div>
+    `;
+
     const onLoad = () => {
       window.kakao.maps.load(() => {
-        // 맵 생성 (최초 1회)
+        // 맵 최초 생성
         if (!mapObjRef.current) {
           const map = new window.kakao.maps.Map(mapRef.current, {
-            center: new window.kakao.maps.LatLng(c.latitude, c.longitude), // (lat, lng)
-            level: 7,
+            center: new window.kakao.maps.LatLng(c.latitude, c.longitude),
+            level: 10, // ⭐ 더 확대해서 시작
           });
           const zoomControl = new window.kakao.maps.ZoomControl();
           map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
           mapObjRef.current = map;
         }
 
-        // 중심 좌표/마커 갱신
+        const map = mapObjRef.current;
         const latlng = new window.kakao.maps.LatLng(c.latitude, c.longitude);
-        mapObjRef.current.setCenter(latlng);
 
+        // 중심/줌 재설정(이미 만들어진 뒤에도 더 확대)
+        map.setCenter(latlng);
+        map.setLevel(3); // ⭐ 항상 확대 유지(필요시 2~4 사이에서 조절)
+
+        // 마커 생성/갱신
         if (!markerRef.current) {
           markerRef.current = new window.kakao.maps.Marker({
             position: latlng,
-            map: mapObjRef.current,
+            map,
+            title: c.name || "강습소", // 마우스오버 툴팁
           });
         } else {
           markerRef.current.setPosition(latlng);
         }
 
+      
+
         // 레이아웃 보정
-        setTimeout(() => mapObjRef.current?.relayout(), 0);
+        setTimeout(() => map.relayout(), 0);
       });
     };
 
@@ -91,10 +110,9 @@ export default function Map({ center }) {
       s.onerror = () => console.error("카카오 SDK 로드 오류");
       document.head.appendChild(s);
     }
-    // eslint-disable-next-line
-  }, [c?.latitude, c?.longitude]); // ✅ 의존성은 안전하게 optional chaining
+  // 이름 변경시 라벨 텍스트도 즉시 갱신되도록 name까지 의존성 포함
+  }, [c?.latitude, c?.longitude, c?.name]);
 
-  // ✅ 렌더링은 여기서 가드 (Hook 이후에 조건부 return)
   if (!c) return null;
 
   return (

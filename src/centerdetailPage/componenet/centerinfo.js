@@ -115,10 +115,54 @@ font-style: normal;
 font-weight: 400;
 line-height: normal;
 `;
-const Address = styled.span`
-  white-space: normal;
-`;
 
+const Price=styled.div`
+text-decoration-line: underline;
+text-decoration-style: solid;
+text-decoration-skip-ink: auto;
+text-decoration-thickness: auto;
+text-underline-offset: auto;
+text-underline-position: from-font;
+`;
+const Address = styled.span`
+  a {
+    color: #336DFF;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  a:hover { opacity: .9; }
+`;
+function labelFromURL(u, idx = 0) {
+  try {
+    // tel:, sms: 같은 프로토콜 먼저 처리
+    if (u.startsWith("tel:")) return "전화하기";
+    if (u.startsWith("sms:")) return "문자 보내기";
+
+    const url = new URL(u);
+    const host = url.hostname.replace(/^www\./i, "");
+    const href = url.href;
+
+    if (/instagram\.com/i.test(host)) return "인스타그램";
+    if (/youtu\.be|youtube\.com/i.test(host)) return "유튜브";
+    if (/map\.naver\.com/i.test(host)) return "네이버 지도";
+    if (/place\.naver\.com/i.test(host)) return "네이버 플레이스";
+    if (/map\.kakao\.com|kakao\.com/i.test(host)) return "카카오맵";
+    if (/blog\.naver\.com|tistory\.com|medium\.com/i.test(host)) return "블로그";
+    if (/forms\.gle|docs\.google\.com\/forms/i.test(host)) return "신청 폼";
+    if (/(reserve|booking|book|reservation|reser?v)/i.test(href)) return "예약하기";
+    if (/linktr\.ee|page\.link/i.test(host)) return "링크 모음";
+
+    // 도메인 기반 기본값
+    if (/naver\.com/i.test(host)) return "네이버";
+    if (/kakao\.com|daum\.net/i.test(host)) return "카카오";
+    if (/facebook\.com/i.test(host)) return "페이스북";
+    if (/x\.com|twitter\.com/i.test(host)) return "X(트위터)";
+
+    return "공식 사이트";
+  } catch {
+    return idx === 0 ? "외부 링크" : `외부 링크 ${idx + 1}`;
+  }
+}
 function SummaryText({ text }) {
   const formatted = (text || "").replace(/([.?!])\s*/g, "$1\n").trim();
   return <Summary>{formatted}</Summary>;
@@ -206,7 +250,7 @@ export default function CenterInfo({ center }) {
               <path d="M5.3 8.67289C3.03 8.08289 2.3 7.47289 2.3 6.52289C2.3 5.43289 3.31 4.67289 5 4.67289C6.42 4.67289 7.13 5.21289 7.39 6.07289C7.51 6.47289 7.84 6.77289 8.26 6.77289H8.56C9.22 6.77289 9.69 6.12289 9.46 5.50289C9.04 4.32289 8.06 3.34289 6.5 2.96289V2.27289C6.5 1.44289 5.83 0.772888 5 0.772888C4.17 0.772888 3.5 1.44289 3.5 2.27289V2.93289C1.56 3.35289 0 4.61289 0 6.54289C0 8.85289 1.91 10.0029 4.7 10.6729C7.2 11.2729 7.7 12.1529 7.7 13.0829C7.7 13.7729 7.21 14.8729 5 14.8729C3.35 14.8729 2.5 14.2829 2.17 13.4429C2.02 13.0529 1.68 12.7729 1.27 12.7729H0.99C0.32 12.7729 -0.15 13.4529 0.0999999 14.0729C0.67 15.4629 2 16.2829 3.5 16.6029V17.2729C3.5 18.1029 4.17 18.7729 5 18.7729C5.83 18.7729 6.5 18.1029 6.5 17.2729V16.6229C8.45 16.2529 10 15.1229 10 13.0729C10 10.2329 7.57 9.26289 5.3 8.67289Z" fill="#FF517E"/>
             </svg>
           </Icon>
-          <Address>{c.priceImgUrl ? "가격표 이미지로 보기" : "가격 정보 없음"}</Address>
+          <Address><Price>{c.priceImgUrl ? "가격표 이미지로 보기" : "가격 정보 없음"}</Price></Address>
         </InfoRow>
 
         {/* 웹사이트 / SNS */}
@@ -216,17 +260,31 @@ export default function CenterInfo({ center }) {
   <path d="M10.869 1.00635L8.49519 2.64644C8.06 2.94712 7.94994 3.54921 8.25062 3.9844C8.5513 4.4196 9.15339 4.52965 9.58858 4.22897L11.9624 2.58889C13.268 1.68684 15.0742 2.01701 15.9763 3.3226C16.8783 4.62819 16.5481 6.43443 15.2426 7.33648L12.8688 8.97657C12.4336 9.27725 12.3235 9.87933 12.6242 10.3145C12.9249 10.7497 13.527 10.8598 13.9621 10.5591L16.3359 8.91901C18.5198 7.41013 19.0677 4.4131 17.5588 2.22921C16.0499 0.0453114 13.0529 -0.502527 10.869 1.00635ZM6.48107 9.88294C6.78176 10.3181 7.38384 10.4282 7.81904 10.1275L12.5666 6.84734C13.0018 6.54666 13.1119 5.94458 12.8112 5.50938C12.5105 5.07418 11.9084 4.96413 11.4732 5.26481L6.72564 8.54498C6.29045 8.84566 6.18039 9.44775 6.48107 9.88294ZM9.70369 11.1634L7.32989 12.8034C6.02431 13.7055 4.21806 13.3753 3.31601 12.0697C2.41396 10.7641 2.74413 8.95789 4.04972 8.05584L6.42352 6.41575C6.85872 6.11507 6.96877 5.51299 6.66809 5.07779C6.36741 4.6426 5.76532 4.53254 5.33013 4.83322L2.95633 6.47331C0.772436 7.98219 0.224598 10.9792 1.73348 13.1631C3.24236 15.347 6.23939 15.8948 8.42329 14.386L10.7971 12.7459C11.2323 12.4452 11.3423 11.8431 11.0417 11.4079C10.741 10.9727 10.1389 10.8627 9.70369 11.1634Z" fill="#FF517E"/>
 </svg>
           </Icon>
-          <Address>
-            {socialLinks.length > 0
-              ? socialLinks
-                  .map((link, i) => (
-                    <a key={i} href={link.trim()} target="_blank" rel="noreferrer" style={{ color: "#336DFF" }}>
-                      {i === 0 ? "링크" : `링크${i + 1}`}
-                    </a>
-                  ))
-                  .reduce((prev, curr) => [prev, " · ", curr])
-              : "링크 없음"}
-          </Address>
+      
+<Address>
+  {socialLinks.length > 0
+    ? socialLinks
+        .map((raw, i) => {
+          const href = (raw || "").trim();
+          if (!href) return null;
+          const label = labelFromURL(href, i);
+          return (
+            <a
+              key={i}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${label} 새 창 열기`}
+            >
+              {label}
+            </a>
+          );
+        })
+        .filter(Boolean)
+        .reduce((prev, curr) => [prev, " · ", curr])
+    : "링크 없음"}
+</Address>
+
         </InfoRow>
       </InfoWrapper>
 

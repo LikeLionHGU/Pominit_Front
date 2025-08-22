@@ -1,7 +1,34 @@
 import { createPortal } from "react-dom";
+import Xbox from "../asset/img/xbox.svg";
 import axios from "axios";
 import styled from "styled-components";
 import { useEffect,useState, useMemo } from "react";
+import Modal from "../common/loginmodal";
+
+// 스타일 수정
+const Wrapper = styled.div`
+  position: relative;             /* ⭐ 자식 절대배치 기준 */
+  border-radius: 12px;
+  background: #FFF;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  max-width: 420px;
+  width: calc(100% - 48px);
+  display: inline-flex;
+  padding: 24px;
+  flex-direction: column;
+`;
+
+const Xboxd = styled.div`
+  position: absolute;
+  top: 20px;                      /* ⭐ 오른쪽 상단 */
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  img { width: 100%; height: 100%; display: block; }
+`;
+
+
 
 const Overlay = styled.div`
   position: fixed;
@@ -15,22 +42,7 @@ const Overlay = styled.div`
 `;
 
 
-const Wrapper = styled.div`
-border-radius: 12px;
-background: #FFF;
-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  max-width: 420px;
-  width: calc(100% - 48px);
-
-
-  display: inline-flex;
-padding: 24px;
-flex-direction: column;
-`;
-
 const Title = styled.h2`
-  margin-top:0px;
-  margin-bottom:28px;
 color: #000;
 text-align: center;
 font-family: Pretendard;
@@ -38,6 +50,8 @@ font-size: 28px;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
+  margin-top:0px;
+  margin-bottom:28px;
 `;
 
 const Q1 = styled.p`
@@ -135,6 +149,11 @@ font-style: normal;
 font-weight: 600;
 line-height: normal;
 border:none;
+&:active{
+background:#2B77DD;}
+ &:disabled {
+    background: #CAD0D7;
+  }
 `;
 
 export default function Workmodal({ id, onClose, onSuccess }) {
@@ -145,8 +164,16 @@ export default function Workmodal({ id, onClose, onSuccess }) {
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const [submitting, setSubmitting] = useState(false);
   
-    // 상태 계산
-    const hasText = text.trim().length > 0;
+  // 상태 계산
+const hasText = text.trim().length > 0;
+
+
+// ✅ 버튼 활성화 조건: 텍스트 있고, 별점 1~5, 전송 중 아님
+const canSubmit = useMemo(
+  () => hasText && rating >= 1 && rating <= 5 && !submitting,
+  [hasText, rating, submitting]
+);
+
     const state = useMemo(
       () => (submitted ? "done" : hasText ? "typing" : "idle"),
       [submitted, hasText]
@@ -231,6 +258,9 @@ await axios.post(url, body, {
     return createPortal(
       <Overlay onClick={onClose}>
         <Wrapper onClick={(e) => e.stopPropagation()}>
+  <Xboxd onClick={onClose} aria-label="닫기">
+    <img src={Xbox} alt="닫기" />
+  </Xboxd>
           <Title>리뷰 작성</Title>
           <Q1>강습소는 어떠셨나요?</Q1>
           <StarGroup>
@@ -257,10 +287,18 @@ await axios.post(url, body, {
         />
     
     <Btn
-          type="button"
-          onClick={onSubmit}                 // ✅ onSubmit 호출
-          disabled={submitting}
-        >등록하기</Btn>
+  type="button"
+  onClick={onSubmit}
+  disabled={!canSubmit}                 // ✅ 비활성화
+  aria-disabled={!canSubmit}
+  title={
+    !hasText ? "후기를 입력해 주세요" :
+    rating < 1 ? "별점을 선택해 주세요" : ""
+  }
+>
+  등록하기
+</Btn>
+
         </Wrapper>
       </Overlay>,
       document.body // ← 콤마 필수!
