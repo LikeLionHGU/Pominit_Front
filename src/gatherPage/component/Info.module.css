@@ -24,6 +24,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: 150%; /* 2.25rem */
+  margin-bottom: 1.25rem;
 }
 
 .infoFeild {
@@ -41,11 +42,13 @@
 }
 
 .infoRaw {
-  display: flex;
+  display: grid;
+  height: 2.19rem;
   padding: 0.375rem 0;
   align-items: center;
   gap: 1.5rem;
   align-self: stretch;
+  grid-template-columns: 6rem 20rem;
 }
 
 .infoRight {
@@ -72,6 +75,12 @@
 
 .rawTop {
   align-self: stretch;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .rawContents {

@@ -19,6 +19,7 @@
   border-radius: 0.75rem;
   background: #fff;
   box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
 }
 
 .locationCard > img {
@@ -87,6 +88,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  text-decoration: none;
 }
 .infoTopRight:active {
   background: var(--Foundation-Blue-blue-100, #e7e9ec);

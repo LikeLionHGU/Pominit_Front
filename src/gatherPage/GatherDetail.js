@@ -1,4 +1,6 @@
+// GatherDetail.jsx
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 import Floating from "./component/Floating";
@@ -8,9 +10,10 @@ import Member from "./component/Member";
 import Review from "./component/Review";
 import Location from "./component/Location";
 
+import { useParams } from "react-router-dom";
 import styles from "./styles/GatherDetail.module.css";
 
-// JWT 디코딩 함수 (main.js에서 가져온 것과 동일)
+// JWT 디코딩 함수 (기존 유지)
 function parseJwt(token) {
   try {
     const base64Url = token.split(".")[1];
@@ -18,9 +21,7 @@ function parseJwt(token) {
     const jsonPayload = decodeURIComponent(
       atob(base64)
         .split("")
-        .map(function (c) {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
         .join("")
     );
     return JSON.parse(jsonPayload);
@@ -30,21 +31,30 @@ function parseJwt(token) {
   }
 }
 
+/** ===== axios 인스턴스 (Info.jsx와 동일한 방식) ===== */
+const API_BASE = (process.env.REACT_APP_API_BASE_URL || "").replace(/\/+$/, "");
+const api = axios.create({
+  baseURL: API_BASE,
+  timeout: 10000,
+  headers: { Accept: "application/json" },
+  withCredentials: false,
+});
 function GatherDetail() {
+  const { id } = useParams(); // /gather/:id
+
   const [userName, setUserName] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // 사용자 이름 관련
+  const [gather, setGather] = useState(null); // 상세 응답
+  const [fetchError, setFetchError] = useState(null); // 필요시 화면에 노출 가능
+
+  // 사용자 이름 관련 (기존 유지)
   useEffect(() => {
-    const token = localStorage.getItem("token"); // 로컬스토리지에서 token으로 저장된 jwt 문자열 읽기
-
-    // 토큰이 존재하면,
+    const token = localStorage.getItem("token");
     if (token) {
-      const payload = parseJwt(token); // 디코딩으로 페이로드 객체 얻기
-
-      // 페이로드가 존재하고, 그 안에 username 속성이 있을때 진행하기
-      if (payload?.username) {
-        setUserName(payload.username); // 가져온 사용자명 상태로 저장하기
+      const payload = parseJwt(token);
+      if (payload?.name) {
+        setUserName(payload.name);
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -54,16 +64,61 @@ function GatherDetail() {
     }
   }, []);
 
+  // ✅ axios로 상세 조회 (Info.jsx 방식과 동일 스타일)
+  useEffect(() => {
+    if (!id) return;
+    const controller = new AbortController();
+
+    (async () => {
+      try {
+        setFetchError(null);
+
+        const { data } = await api.get(`/gather/detail/${id}`, {
+          signal: controller.signal,
+        });
+
+        setGather({});
+      } catch (e) {
+        if (!axios.isCancel(e)) {
+          console.error("상세 조회 실패:", e);
+          setFetchError(e.message || "데이터를 가져오지 못했습니다.");
+        }
+      }
+    })();
+
+    return () => controller.abort();
+  }, [id]);
+
   return (
     <div className="container">
       <Header />
       <div className={styles.wrap}>
         <Sidebar />
+
         <div className={styles.container}>
-          <Info />
-          <Member />
-          <Review userName={userName} isLoggedIn={isLoggedIn} />
-          <Location />
+          {/* 필요하면 fetchError 노출 */}
+          {/* {fetchError && <div className={styles.error}>{fetchError}</div>} */}
+
+          {gather && (
+            <>
+              {/* Info/Member/Review/Location은 각자 내부에서 필요한 API를 호출하거나,
+                  여기서 받은 데이터를 prop으로 내려도 됩니다. */}
+
+              <Info />
+
+              <Member
+                leader={{
+                  imageUrl: gather.makerImage,
+                  name: gather.makerName,
+                  contact: gather.makerContact,
+                  statement: gather.makerStatement,
+                }}
+              />
+
+              <Review userName={userName} isLoggedIn={isLoggedIn} />
+              <Location />
+            </>
+          )}
         </div>
       </div>
       <Floating />

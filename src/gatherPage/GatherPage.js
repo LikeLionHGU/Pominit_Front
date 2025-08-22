@@ -1,40 +1,16 @@
-import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
-
+// GatherPage.jsx
+import React, { useState } from "react";
 import styles from "./styles/GatherPage.module.css";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
-
 import Dropdown from "../common/Dropdown";
 import GatherList from "./component/List";
+import Calendar from "../common/Calendar/Calendar";
 import "../index.css";
 
 function GatherPage() {
-  const [gathers, setGathers] = useState([]);
-  const [sport, setSport] = useState(""); // "서핑" 등, 미선택이면 ""
-  // eslint-disable-next-line
-  const [date, setDate] = useState(""); // "yyyy-MM-dd", 미선택이면 ""
-
-  const fetchGathers = useCallback(async () => {
-    try {
-      const payload = { sport: sport || "", date: date || "" };
-      const { data } = await axios.post(
-        // eslint-disable-next-line
-        `${process.env.REACT_APP_API_BASE_URL}/home/gather/list`,
-        payload
-      );
-      setGathers(Array.isArray(data) ? data : []);
-    } catch (e) {
-      console.error("[GatherPage] API 연결 실패:", e);
-      // 실패 시 데이터는 그냥 빈 상태로 두고 화면은 그대로
-      setGathers([]);
-    }
-    // eslint-disable-next-line
-  }, [process.env.REACT_APP_API_BASE_URL, sport, date]);
-
-  useEffect(() => {
-    fetchGathers();
-  }, [fetchGathers]);
+  const [sport, setSport] = useState(""); // 카테고리(스포츠)
+  const [date, setDate] = useState(""); // yyyy-MM-dd
 
   return (
     <div className="container">
@@ -67,13 +43,14 @@ function GatherPage() {
                 )
               }
             />
-            {/* 날짜 선택 UI 생기면 setDate('yyyy-MM-dd') 추가 */}
+            <Calendar onDateChange={(val) => setDate(val)} />
           </div>
 
           <div className={styles.gathers}>
             <div className={styles.gatherTop}>이런 모임은 어때요?</div>
             <div className={styles.gatherList}>
-              <GatherList lists={gathers} />
+              {/* ⬇️ 이제 List가 직접 API 호출 */}
+              <GatherList category={sport} date={date} />
             </div>
           </div>
         </div>
@@ -81,5 +58,4 @@ function GatherPage() {
     </div>
   );
 }
-
 export default GatherPage;
