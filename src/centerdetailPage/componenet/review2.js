@@ -189,6 +189,10 @@ export default function Review2({ center }) {
         <ReviewModal
           id={selectedId}
           onClose={() => setShowModal(false)}
+          onSuccess={()=>{
+            fetchReviewData(c.id);
+            setShowModal(false);
+          }}
         />
       )}
       <ReviewList>

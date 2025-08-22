@@ -105,7 +105,7 @@ const TextArea = styled.textarea`
     ${({ $state }) =>
       $state === "done" ? "#F5F5F5"     /* ✅ 완료 → 연회색 배경 */
       : $state === "typing" ? "#F9FBFF" /* ✅ 입력 중 → 아주 옅은 파랑 */
-      : "#F5F5F5"};                     /* ✅ 기본 → 연회색 배경 */
+      : "#E7E9EC"};                     /* ✅ 기본 → 연회색 배경 */
 
   &:focus {
     border: 1px solid #2F83F3;          /* 포커스 시 파란색 */
@@ -137,7 +137,7 @@ line-height: normal;
 border:none;
 `;
 
-export default function Workmodal({ id, onClose }) {
+export default function Workmodal({ id, onClose, onSuccess }) {
   console.log("[Workmodal render] id:", id);
     const [text, setText] = useState("");
     const [rating, setRating] = useState(0);
@@ -204,10 +204,9 @@ await axios.post(url, body, {
                 withCredentials: true,
                 timeout: 15000,
               });
-            
         
-            // 성공 시: 잠깐 보여주고 닫기 (원하면 주석 해제)
-            // setTimeout(onClose, 700);
+              if (typeof onSuccess === "function") onSuccess();
+             else onClose();
           } catch (err) {
             // 실패했으니 완료 상태 되돌리기
             setSubmitted(false);
