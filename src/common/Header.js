@@ -85,8 +85,8 @@ export default function Header() {
     } finally {
       localStorage.removeItem("token");
       setIsAuthed(false);
-      window.location.reload();
       navigate("/");
+      window.location.reload();
     }
   };
 
