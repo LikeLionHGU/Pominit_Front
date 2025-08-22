@@ -139,7 +139,11 @@
   border-radius: 0.375rem;
   background: var(--Foundation-Blue-blue-100, #e7e9ec);
 }
-.sicret:active {
+.pressed {
+  display: flex;
+  padding: 0.375rem 0.5rem;
+  align-items: center;
+  gap: 0.5rem;
   background: var(--Foundation-Blue-blue-100, #dbdfe3);
 }
 .disabled {

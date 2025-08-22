@@ -201,13 +201,13 @@ function Review({ userName, isLoggedIn }) {
         <div className={styles.writeFooter}>
           <button
             type="button"
-            className={styles.sicret}
+            className={`${styles.sicret} ${secret === 1 ? styles.pressed : ""}`}
             disabled={posting}
             aria-pressed={secret === 1}
             onClick={() => setSecret(secret === 1 ? 0 : 1)}
           >
             <img src={SECRET} alt="icon" className={styles.icon} />
-            <span>{secret === 1 ? "비밀댓글 ON" : "비밀댓글"}</span>
+            <span>비밀댓글</span>
           </button>
 
           {/* 클릭은 항상 되게 두고, 내부에서 가드 */}
