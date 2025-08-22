@@ -24,36 +24,22 @@ const HeaderWrapper = styled.div`
 `;
 
 const Category = styled.div`
-  position: relative;
+  margin-left: 175px;
   width: 880px;
   height: 60px;
-  flex-shrink: 0;
-  border-radius: 12px 12px 0 0;
   background: #2f83f3;
-  margin-top: 35px;
-  margin-left: 175px;
-  user-select: none;
+  border-radius: 12px 12px 0 0;
+  display: grid;
+  grid-template-columns: 160px 127px 90px 80px 120px 110px 1fr 30px;
+  align-items: center;
   color: #fff;
-  text-align: center;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
   font-size: 16px;
   font-weight: 600;
-  line-height: 140%;
+  user-select: none;
+  padding: 0 8px 0 0;
 `;
 
-const Label = styled.div`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-`;
-
-const Center = styled(Label)`left: 60px;`;
-const Centername = styled(Label)`left: 198px;`;
-const Star = styled(Label)`left: 304px;`;
-const Dong = styled(Label)`left: 380px;`;
-const Price = styled(Label)`left: 507px;`;
-const Rental = styled(Label)`left: 634px;`;
-const Review = styled(Label)`left: 732px;`;
 
 
 const Empty = styled.div`
@@ -80,17 +66,11 @@ const Box = styled.div`
   border: 1px dashed #2f83f3;
   background: #fff;
   cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  &:hover {
-    background: #f7fbff;
-  }
-  &:active {
-    transform: scale(0.98);
-  }
+  &:hover { background: #f7fbff; }
+  &:active { transform: scale(0.98); }
 `;
 
 const Plus = styled.div`
@@ -122,6 +102,9 @@ const Row = styled.div`
   align-items: center;
   border-bottom: 1px solid #d9d9d9;
   background: #fff;
+  padding-right: 8px;
+  transition: background .15s ease;
+  &:hover { background: #fafcff; }
 `;
 
 const Img = styled.img`
@@ -130,6 +113,7 @@ const Img = styled.img`
   object-fit: cover;
   background: #e5e7eb;
   color: #9ca3af;
+  border-radius: 4px;
 `;
 
 const PlaceholderImg = styled.div`
@@ -141,22 +125,28 @@ const PlaceholderImg = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 12px;
+  border-radius: 4px;
+`;
+
+const HeadCell = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Name = styled.div`
-  color: #000;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 19.6px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const RateWrap = styled.div`
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: px;
   font-size: 16px;
   color: #111827;
   & small {
@@ -168,73 +158,88 @@ const RateWrap = styled.div`
 `;
 
 const DongCol = styled.div`
+
++  display: flex;
++  flex-direction: column;   /* 세로 배치 */
++  align-items: center;      /* 가운데 정렬 */
++  gap: 4px;                 /* 위아래 간격 */
   font-size: 14px;
   color: #111827;
+  min-width: 0;
+
+  span { white-space: nowrap; }
+  a {
+    text-decoration: underline;
+    color: inherit;
+    cursor: pointer;
+    white-space: nowrap;
++   font-size: 13px;         /* 링크는 살짝 작게 */
+  }
 `;
 
 const PriceCol = styled.div`
   font-size: 14px;
   color: #111827;
   line-height: 1.5;
-  & b {
-    font-weight: 600;
-  }
-  & a {
-    text-decoration: underline;
-    color: #111827;
-    cursor: pointer;
-  }
+  min-width: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;          /* 최대 3줄 */
+  -webkit-box-orient: vertical;
+  & b { font-weight: 600; }
 `;
 
 const EquipCol = styled.div`
   font-size: 16px;
   color: #111827;
+  min-width: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 `;
 
 const ReviewCol = styled.div`
   color: #000;
-  text-align: center;
+  text-align: left;
   font-family: Pretendard;
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
-  line-height: 140%; /* 19.6px */
-  padding-right: 16px;
-  white-space: pre-line;
+  line-height: 1.5;
+  padding-right: 8px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;          /* 리뷰 2줄만 보이기 */
+  -webkit-box-orient: vertical;
 `;
 
-const RemoveBtn = () => (
-  <svg
-    width="24"
-    height="25"
-    viewBox="0 0 24 25"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect y="0.723633" width="24" height="24" rx="5" fill="#FF658C" />
-    <path
-      d="M7 7.6814L17 17.7655M7 17.7655L17 7.6814"
-      stroke="white"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-  </svg>
-);
+const RemoveBtn = styled.button`
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 auto;
+  &:hover { transform: scale(1.02); }
+  &:active { transform: scale(0.98); }
+`;
 
 /* =========================
    Constants
 ========================= */
-
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 /* =========================
    Helper Components
 ========================= */
 
-
 function CompareRow({ d, onRemove }) {
   const [imgOk, setImgOk] = useState(Boolean(d?.imgUrl));
+
   return (
     <Row>
       {imgOk ? (
@@ -251,28 +256,35 @@ function CompareRow({ d, onRemove }) {
 
       <div>
         <RateWrap>
-
           <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-            <span>{d?.region ?? "-"}</span>
-
+          {d?.region ?? "-"}
           </div>
         </RateWrap>
       </div>
 
-      <DongCol>{d?.price1 ?? "-"} 
-        <a onClick={() => { /* TODO: 가격표 보기 */ }}>가격표 보기</a></DongCol>
+      <DongCol>
+        <span>{d?.price1 ?? "-"}</span>
+        <a onClick={() => { /* TODO: 가격표 모달/페이지로 이동 */ }}>
+          가격표 보기
+        </a>
+      </DongCol>
 
       <PriceCol>
-
         <div>{d?.goodPart ?? "-"}</div>
-
       </PriceCol>
 
-      <EquipCol>{d?.badPart?? "-"}</EquipCol>
+      <EquipCol>{d?.badPart ?? "-"}</EquipCol>
 
       <ReviewCol>{d?.aiReview ?? "-"}</ReviewCol>
 
-      <RemoveBtn onClick={onRemove}>×</RemoveBtn>
+      <RemoveBtn onClick={onRemove} aria-label="비교 목록에서 삭제">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+             xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <rect width="24" height="24" rx="5" fill="#FF658C"/>
+          <path d="M7 7L17 17M7 17L17 7" stroke="white" strokeWidth="2"
+                strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </RemoveBtn>
     </Row>
   );
 }
@@ -335,22 +347,6 @@ const ComparePage = () => {
       try {
         setLoading(true);
         setError("");
-        const body = {
-          item1: payload.item1,
-          item2: payload.item2,
-          item3: payload.item3,
-        };
-
-        console.groupCollapsed("[COMPARE] POST /compare/details payload");
-        console.log("baseURL:", client.defaults.baseURL);
-        console.log("url:", "/compare/details");
-        console.log("payload:", body);
-        console.log(
-          "types:",
-          Object.fromEntries(Object.entries(body).map(([k, v]) => [k, typeof v]))
-        );
-        console.groupEnd();
-
         const res = await client.post("/compare/details", {
           item1: payload.item1,
           item2: payload.item2,
@@ -371,9 +367,7 @@ const ComparePage = () => {
       }
     })();
 
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [payload.item1, payload.item2, payload.item3, validCount]);
 
   // 데이터 표준화: 배열로 맞추기
@@ -382,10 +376,11 @@ const ComparePage = () => {
     return Array.isArray(data) ? data : [data];
   }, [data]);
 
-  // 삭제 버튼 클릭 시 (필요하면 compareStorage에 맞춰 저장 로직 추가)
+  // 삭제 버튼 클릭 (TODO: 로컬스토리지와 연동)
   const handleRemove = (idx) => {
     console.log("remove clicked at index:", idx);
-    // TODO: 로컬스토리지 비교함에서 제거하고 setLocal로 갱신
+    // 1) 현재 allIds에서 idx의 항목 제거 -> compareStorage에 반영
+    // 2) setLocal(loadIdsFromLocalStorage()) 호출하여 갱신
   };
 
   return (
@@ -399,13 +394,14 @@ const ComparePage = () => {
       </SidebarWrapper>
 
       <Category>
-        <Center>강습소</Center>
-        <Centername>강습소명</Centername>
-        <Star>동네</Star>
-        <Dong>대표가격</Dong>
-        <Price>장점</Price>
-        <Rental>단점</Rental>
-        <Review>리뷰 데이터 분석</Review>
+        <HeadCell>강습소</HeadCell>
+        <HeadCell>강습소명</HeadCell>
+        <HeadCell>동네</HeadCell>
+        <HeadCell>대표가격</HeadCell>
+        <HeadCell>장점</HeadCell>
+        <HeadCell>단점</HeadCell>
+        <HeadCell>리뷰 데이터 분석</HeadCell>
+        <HeadCell></HeadCell>
       </Category>
 
       {/* 0개: 파란 안내 상자 3개 */}
@@ -423,17 +419,8 @@ const ComparePage = () => {
                 aria-label="강습소 선택하러 가기"
               >
                 <Plus>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="34"
-                    height="33"
-                    viewBox="0 0 34 33"
-                    fill="none"
-                  >
-                    <path
-                      d="M25.1008 18.0705H18.3508V24.8205C18.3508 25.1785 18.2086 25.5219 17.9554 25.7751C17.7022 26.0283 17.3588 26.1705 17.0008 26.1705C16.6427 26.1705 16.2994 26.0283 16.0462 25.7751C15.793 25.5219 15.6508 25.1785 15.6508 24.8205V18.0705H8.90078C8.54274 18.0705 8.19936 17.9283 7.94619 17.6751C7.69301 17.4219 7.55078 17.0786 7.55078 16.7205C7.55078 16.3625 7.69301 16.0191 7.94619 15.7659C8.19936 15.5127 8.54274 15.3705 8.90078 15.3705H15.6508V8.62051C15.6508 8.26247 15.793 7.91909 16.0462 7.66591C16.2994 7.41274 16.6427 7.27051 17.0008 7.27051C17.3588 7.27051 17.7022 7.41274 17.9554 7.66591C18.2086 7.91909 18.3508 8.26247 18.3508 8.62051V15.3705H25.1008C25.4588 15.3705 25.8022 15.5127 26.0554 15.7659C26.3086 16.0191 26.4508 16.3625 26.4508 16.7205C26.4508 17.0786 26.3086 17.4219 26.0554 17.6751C25.8022 17.9283 25.4588 18.0705 25.1008 18.0705Z"
-                      fill="#2F83F3"
-                    />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="34" height="33" viewBox="0 0 34 33" fill="none">
+                    <path d="M25.1008 18.0705H18.3508V24.8205C18.3508 25.1785 18.2086 25.5219 17.9554 25.7751C17.7022 26.0283 17.3588 26.1705 17.0008 26.1705C16.6427 26.1705 16.2994 26.0283 16.0462 25.7751C15.793 25.5219 15.6508 25.1785 15.6508 24.8205V18.0705H8.90078C8.54274 18.0705 8.19936 17.9283 7.94619 17.6751C7.69301 17.4219 7.55078 17.0786 7.55078 16.7205C7.55078 16.3625 7.69301 16.0191 7.94619 15.7659C8.19936 15.5127 8.54274 15.3705 8.90078 15.3705H15.6508V8.62051C15.6508 8.26247 15.793 7.91909 16.0462 7.66591C16.2994 7.41274 16.6427 7.27051 17.0008 7.27051C17.3588 7.27051 17.7022 7.41274 17.9554 7.66591C18.2086 7.91909 18.3508 8.26247 18.3508 8.62051V15.3705H25.1008C25.4588 15.3705 25.8022 15.5127 26.0554 15.7659C26.3086 16.0191 26.4508 16.3625 26.4508 16.7205C26.4508 17.0786 26.3086 17.4219 26.0554 17.6751C25.8022 17.9283 25.4588 18.0705 25.1008 18.0705Z" fill="#2F83F3"/>
                   </svg>
                 </Plus>
               </Box>
@@ -443,7 +430,7 @@ const ComparePage = () => {
         </>
       )}
 
-      {/* 1~2개: 데이터 행 + 빈 자리(파란 박스)로 3칸 맞추기 */}
+      {/* 1~2개: 데이터 행 + 빈자리 채우기 */}
       {validCount > 0 && validCount < 3 && (
         <>
           {loading && <Empty>불러오는 중…</Empty>}
@@ -466,17 +453,8 @@ const ComparePage = () => {
                     aria-label="강습소 선택하러 가기"
                   >
                     <Plus>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="34"
-                        height="33"
-                        viewBox="0 0 34 33"
-                        fill="none"
-                      >
-                        <path
-                          d="M25.1008 18.0705H18.3508V24.8205C18.3508 25.1785 18.2086 25.5219 17.9554 25.7751C17.7022 26.0283 17.3588 26.1705 17.0008 26.1705C16.6427 26.1705 16.2994 26.0283 16.0462 25.7751C15.793 25.5219 15.6508 25.1785 15.6508 24.8205V18.0705H8.90078C8.54274 18.0705 8.19936 17.9283 7.94619 17.6751C7.69301 17.4219 7.55078 17.0786 7.55078 16.7205C7.55078 16.3625 7.69301 16.0191 7.94619 15.7659C8.19936 15.5127 8.54274 15.3705 8.90078 15.3705H15.6508V8.62051C15.6508 8.26247 15.793 7.91909 16.0462 7.66591C16.2994 7.41274 16.6427 7.27051 17.0008 7.27051C17.3588 7.27051 17.7022 7.41274 17.9554 7.66591C18.2086 7.91909 18.3508 8.26247 18.3508 8.62051V15.3705H25.1008C25.4588 15.3705 25.8022 15.5127 26.0554 15.7659C26.3086 16.0191 26.4508 16.3625 26.4508 16.7205C26.4508 17.0786 26.3086 17.4219 26.0554 17.6751C25.8022 17.9283 25.4588 18.0705 25.1008 18.0705Z"
-                          fill="#2F83F3"
-                        />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="33" viewBox="0 0 34 33" fill="none">
+                        <path d="M25.1008 18.0705H18.3508V24.8205C18.3508 25.1785 18.2086 25.5219 17.9554 25.7751C17.7022 26.0283 17.3588 26.1705 17.0008 26.1705C16.6427 26.1705 16.2994 26.0283 16.0462 25.7751C15.793 25.5219 15.6508 25.1785 15.6508 24.8205V18.0705H8.90078C8.54274 18.0705 8.19936 17.9283 7.94619 17.6751C7.69301 17.4219 7.55078 17.0786 7.55078 16.7205C7.55078 16.3625 7.69301 16.0191 7.94619 15.7659C8.19936 15.5127 8.54274 15.3705 8.90078 15.3705H15.6508V8.62051C15.6508 8.26247 15.793 7.91909 16.0462 7.66591C16.2994 7.41274 16.6427 7.27051 17.0008 7.27051C17.3588 7.27051 17.7022 7.41274 17.9554 7.66591C18.2086 7.91909 18.3508 8.26247 18.3508 8.62051V15.3705H25.1008C25.4588 15.3705 25.8022 15.5127 26.0554 15.7659C26.3086 16.0191 26.4508 16.3625 26.4508 16.7205C26.4508 17.0786 26.3086 17.4219 26.0554 17.6751C25.8022 17.9283 25.4588 18.0705 25.1008 18.0705Z" fill="#2F83F3"/>
                       </svg>
                     </Plus>
                   </Box>

@@ -239,7 +239,7 @@ export default function Review2({ center }) {
           </MoreWrap>
         )}
       </ReviewList>
-      {showModal && <ReviewModal onClose={() => setShowModal(false)} />}
+
     </div>
   );
 }
