@@ -44,19 +44,6 @@ const ContentWrap = styled.div`
   position: relative;
   padding-bottom: calc(72px + 16px + env(safe-area-inset-bottom));
 `;
-const LoadingOverlay = styled.div`
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(250, 251, 255, 0.6);
-  z-index: 2000;
-`;
-const LoaderBox = styled.div`
-  width: 200px;
-  height: 200px;
-`;
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 

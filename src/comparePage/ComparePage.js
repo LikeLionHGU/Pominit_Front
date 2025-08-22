@@ -264,9 +264,18 @@ function CompareRow({ d, onRemove }) {
 
       <DongCol>
         <span>{d?.price1 ?? "-"}</span>
-        <a onClick={() => { /* TODO: 가격표 모달/페이지로 이동 */ }}>
-          가격표 보기
-        </a>
+        <button
+   type="button"
+   onClick={() => { /* TODO: 가격표 보기 */ }}
+   style={{
+     all: "unset",
+     cursor: "pointer",
+     textDecoration: "underline",
+     color: "inherit",
+   }}
+ >
+   가격표 보기
+ </button>
       </DongCol>
 
       <PriceCol>

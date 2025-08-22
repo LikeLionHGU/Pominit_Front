@@ -75,7 +75,7 @@ const Banner = styled.div`
 `;
 
 export default function Sidebar() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex] = useState(0);
   // eslint-disable-next-line
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
