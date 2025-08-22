@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Lottie from "lottie-react";
-import loadingAnim from "../common/loading.json";
+//import Lottie from "lottie-react";
+//import loadingAnim from "../common/loading.json";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import Review1 from "./componenet/review1";
 import CenterInfo from "./componenet/centerinfo";
 import Map from "./componenet/map";
@@ -13,13 +13,19 @@ import Meeting from "./componenet/meeting";
 import Review2 from "./componenet/review2";
 import Bar from "./componenet/Bar";
 
+
+const LocalGlobalStyle = createGlobalStyle`
+  body { 
+    background: #fafbff;   /* ✅ 스크롤해도 항상 꽉 차게 배경 */
+  }
+`;
+
 const Page = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   background: #fafbff;
   padding-bottom: calc(72px + 16px + env(safe-area-inset-bottom));
-  min-height: 100vh;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
 `;
 const SidebarWrapper = styled.div`
@@ -38,29 +44,16 @@ const ContentWrap = styled.div`
   position: relative;
   padding-bottom: calc(72px + 16px + env(safe-area-inset-bottom));
 `;
-const LoadingOverlay = styled.div`
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(250, 251, 255, 0.6);
-  z-index: 2000;
-`;
-const LoaderBox = styled.div`
-  width: 200px;
-  height: 200px;
-`;
 
-const API_BASE_URL = "https://www.liketiger.info:443";
-const MIN_SPINNER_MS = 2000;
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+//const MIN_SPINNER_MS = 2000;
 
 const DetailPage = () => {
   const { id } = useParams();
   const [center, setCenter] = useState(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
-
+  const [, setLoading] = useState(false);
   useEffect(() => {
     const ctrl = new AbortController();
 
@@ -69,15 +62,15 @@ const DetailPage = () => {
         setLoading(true);
         setError("");
 
-        const startedAt = Date.now();
+        //const startedAt = Date.now();
         const res = await axios.get(`${API_BASE_URL}/location/detail/${id}`, {
           signal: ctrl.signal,
         });
 
-        const elapsed = Date.now() - startedAt;
-        if (elapsed < MIN_SPINNER_MS) {
-          await new Promise((r) => setTimeout(r, MIN_SPINNER_MS - elapsed));
-        }
+        //const elapsed = Date.now() - startedAt;
+        //if (elapsed < MIN_SPINNER_MS) {
+          //await new Promise((r) => setTimeout(r, MIN_SPINNER_MS - elapsed));
+        //}
 
         setCenter(res.data);
       } catch (e) {
@@ -93,6 +86,8 @@ const DetailPage = () => {
   }, [id]);
 
   return (
+    <>
+    <LocalGlobalStyle />
     <Page>
       <div className="container">
         <HeaderWrapper>
@@ -109,26 +104,28 @@ const DetailPage = () => {
         {center && (
           <>
             <CenterInfo center={center} />
-            <Review1 />
+            <Review1 center={center} />
             <Map center={center} />
             <Meeting center={center} />
             <Review2 center={center} />
           </>
         )}
       </div>
+  
 
       <ContentWrap />
       {center && <Bar center={center} />}
+    </Page>
+    </>
+  );
+};
 
-      {loading && (
+export default DetailPage;
+
+     /* {loading && (
         <LoadingOverlay>
           <LoaderBox>
             <Lottie animationData={loadingAnim} loop />
           </LoaderBox>
         </LoadingOverlay>
-      )}
-    </Page>
-  );
-};
-
-export default DetailPage;
+      )}*/

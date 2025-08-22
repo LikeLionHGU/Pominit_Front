@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Bg from "../common/signupbg";
 
-const API_BASE_URL = "https://www.liketiger.info:443";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 
 const  Logo=styled.div`
