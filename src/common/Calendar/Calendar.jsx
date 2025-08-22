@@ -1,16 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { utcToZonedTime } from "date-fns-tz";
+import { toZonedTime } from "date-fns-tz";
 import Presenter from "./Presenter";
-import { getTimestampListForCalendar } from "../utils";
+import { getTimestampListForCalendar } from "./utils";
 
 const TIMEZONE = "Asia/Seoul";
 
 const Calendar = () => {
   // 최초 nowDate 계산 1회만
-  const initialNowDate = useMemo(
-    () => utcToZonedTime(new Date(), TIMEZONE),
-    []
-  );
+  const initialNowDate = useMemo(() => toZonedTime(new Date(), TIMEZONE), []);
   const [selectedYearAndMonth, setSelectedYearAndMonth] = useState({
     year: initialNowDate.getFullYear(),
     month: initialNowDate.getMonth(),
@@ -50,7 +47,7 @@ const Calendar = () => {
 
   // '오늘' 클릭 시
   const handleTodayClick = useCallback(() => {
-    const now = utcToZonedTime(new Date(), TIMEZONE);
+    const now = toZonedTime(new Date(), TIMEZONE);
     const ts = now.setHours(0, 0, 0, 0);
     setSelectedTimestamp(ts);
     setSelectedYearAndMonth({
@@ -61,7 +58,7 @@ const Calendar = () => {
 
   // 선택된 날짜 바뀌면 연/월 동기화
   useEffect(() => {
-    const selectedDate = utcToZonedTime(selectedTimestamp, TIMEZONE);
+    const selectedDate = toZonedTime(selectedTimestamp, TIMEZONE);
     setSelectedYearAndMonth({
       year: selectedDate.getFullYear(),
       month: selectedDate.getMonth(),

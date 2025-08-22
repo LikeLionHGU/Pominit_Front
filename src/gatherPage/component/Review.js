@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import styles from "./Review.module.css";
 import axios from "axios";
 import SECRET from "../../asset/img/comment.svg";
 
-const API_BASE_URL = "http://liketiger.info:8080";
+/**
+ * 배포: .env에 REACT_APP_API_URL=https://api.liketiger.info 같은 절대 URL 권장
+ * 개발: dev server proxy(/api -> http://localhost:8080) 쓰면 REACT_APP_API_URL 비워둬도 됨
+ */
+const API_BASE = (process.env.REACT_APP_API_BASE_URL || "").replace(/\/+$/, "");
+
+const api = axios.create({
+  baseURL: API_BASE,
+  timeout: 10000,
+  headers: { Accept: "application/json" },
+  withCredentials: false, // 쿠키 인증이면 true
+});
 
 function TimeFormat(time) {
   const now = new Date();
@@ -16,39 +28,60 @@ function TimeFormat(time) {
 }
 
 function Review({ userName, isLoggedIn }) {
-  // props로 사용자 정보 받기
-  const [reviews, setReviews] = useState([]);
-  isLoggedIn = true;
-  const fetchReviews = async () => {
-    try {
-      const res = await axios.get(`${API_BASE_URL}/comments`, {
-        timeout: 10000,
-      });
-      const normalized = (res.data || []).map((r) => ({
-        ...r,
-        comment: r.comment ?? r.content ?? "",
-      }));
-      setReviews(normalized);
-    } catch (e) {
-      console.error("리뷰 불러오기 실패:", e);
-    }
-  };
+  const { id } = useParams(); // /gather/:id 같은 라우트에서 id 추출
 
+  const [reviews, setReviews] = useState([]);
+  const [err, setErr] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // ✅ 댓글 목록 불러오기
   useEffect(() => {
-    fetchReviews();
-  }, []);
+    // (서버가 전체 댓글을 주는 /comments만 있다면 아래 if문 제거)
+    const controller = new AbortController();
+    (async () => {
+      try {
+        setLoading(true);
+        setErr(null);
+
+        // 서버 라우트에 맞춰 하나만 남기세요.
+        // 1) 보편적인 패턴
+        let url = `/gather/comments/${id}`;
+
+        const { data } = await api.get(url, { signal: controller.signal });
+
+        const normalized = (Array.isArray(data) ? data : []).map((r) => ({
+          id: r.id ?? `${r.name || "review"}-${Math.random()}`,
+          name: r.name ?? r.username ?? "익명",
+          time: r.time ?? r.createdAt ?? new Date().toISOString(),
+          comment: r.comment ?? r.content ?? "",
+        }));
+        setReviews(normalized);
+      } catch (e) {
+        if (!axios.isCancel(e)) {
+          console.error("리뷰 불러오기 실패:", e);
+          setErr(e.message || "리뷰를 가져오지 못했습니다.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    })();
+
+    return () => controller.abort();
+  }, [id]);
 
   return (
     <div className={styles.review}>
       <div className={styles.top}>
         <span className={styles.topLeft}>댓글</span>
       </div>
+
+      {/* 목록 */}
       <div
         className={styles.writen}
         style={{ display: reviews.length === 0 ? "none" : "block" }}
       >
-        {reviews.map((review, idx) => (
-          <div className={styles.reviewItem} key={idx}>
+        {reviews.map((review) => (
+          <div className={styles.reviewItem} key={review.id}>
             <div className={styles.reviewHeader}>
               <span className={styles.name}>{review.name}</span>
               <span className={styles.date}>{TimeFormat(review.time)}</span>
@@ -57,8 +90,12 @@ function Review({ userName, isLoggedIn }) {
           </div>
         ))}
       </div>
+
+      {loading && <div className={styles.loading}>리뷰 불러오는 중…</div>}
+      {err && <div className={styles.error}>리뷰 로드 실패: {err}</div>}
+
+      {/* 작성 영역 */}
       <div className={styles.write}>
-        {/* 로그인 상태에 따라 사용자 이름 또는 "로그인이 필요합니다" 표시 */}
         <div className={styles.writeHeader}>
           {isLoggedIn ? `${userName}님` : ""}
         </div>
@@ -69,8 +106,8 @@ function Review({ userName, isLoggedIn }) {
               ? "댓글을 통해 모임원들과 소통해보세요!"
               : "로그인 후 댓글을 작성할 수 있습니다"
           }
-          disabled={!isLoggedIn} // 로그인하지 않으면 비활성화
-        ></textarea>
+          disabled={!isLoggedIn}
+        />
         <div className={styles.writeFooter}>
           <button className={styles.sicret} disabled={!isLoggedIn}>
             <img src={SECRET} alt="icon" className={styles.icon} />
