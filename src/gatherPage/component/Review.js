@@ -34,6 +34,11 @@ function Review({ userName, isLoggedIn }) {
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const [content, setContent] = useState("");
+  const [secret, setSecret] = useState(0);
+  const [posting, setPosting] = useState(false);
+  isLoggedIn = true;
+
   // ✅ 댓글 목록 불러오기
   useEffect(() => {
     // (서버가 전체 댓글을 주는 /comments만 있다면 아래 if문 제거)
@@ -56,6 +61,7 @@ function Review({ userName, isLoggedIn }) {
           comment: r.comment ?? r.content ?? "",
         }));
         setReviews(normalized);
+        console.log("리뷰 목록:", normalized);
       } catch (e) {
         if (!axios.isCancel(e)) {
           console.error("리뷰 불러오기 실패:", e);
@@ -68,6 +74,40 @@ function Review({ userName, isLoggedIn }) {
 
     return () => controller.abort();
   }, [id]);
+
+  // ✅ 댓글 등록 핸들러
+  const handleSubmit = async () => {
+    if (!isLoggedIn || !content.trim()) return;
+    try {
+      setPosting(true);
+      setErr(null);
+      const payload = {
+        id: Number(id), // 모임 아이디
+        content: content.trim(),
+        secrete: secret, // 0 or 1
+      };
+
+      const { data } = await api.post("/user/comment", payload);
+
+      // 새 댓글을 목록에 추가 (서버에서 새 객체 반환 시 data로 교체)
+      setReviews((prev) => [
+        {
+          id: data.id ?? `${userName}-${Date.now()}`,
+          name: userName,
+          time: new Date().toISOString(),
+          comment: content.trim(),
+        },
+        ...prev,
+      ]);
+      setContent(""); // 입력창 초기화
+      setSecret(0);
+    } catch (e) {
+      console.error("댓글 등록 실패:", e);
+      setErr(e.message || "댓글 등록 실패");
+    } finally {
+      setPosting(false);
+    }
+  };
 
   return (
     <div className={styles.review}>
@@ -109,15 +149,20 @@ function Review({ userName, isLoggedIn }) {
           disabled={!isLoggedIn}
         />
         <div className={styles.writeFooter}>
-          <button className={styles.sicret} disabled={!isLoggedIn}>
+          <button
+            className={styles.sicret}
+            disabled={!isLoggedIn}
+            onClick={() => setSecret(secret === 1 ? 0 : 1)}
+          >
             <img src={SECRET} alt="icon" className={styles.icon} />
             <span>비밀댓글</span>
           </button>
           <div
             className={`${styles.submit} ${!isLoggedIn ? styles.disabled : ""}`}
             style={!isLoggedIn ? { opacity: 0.5, cursor: "not-allowed" } : {}}
+            onClick={handleSubmit}
           >
-            등록하기
+            {posting ? "등록 중…" : "등록하기"}{" "}
           </div>
         </div>
       </div>

@@ -50,7 +50,6 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
           },
           signal: controller.signal,
           validateStatus: () => true,
@@ -58,7 +57,6 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
         });
 
         if (r.status === 401) {
-          localStorage.removeItem("token");
           setErrMsg("로그인이 필요합니다.");
           setList(useFallbackWhenEmpty ? fallbackData : []);
           return;

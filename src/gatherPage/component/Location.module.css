@@ -87,6 +87,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  text-decoration: none;
 }
 .infoTopRight:active {
   background: var(--Foundation-Blue-blue-100, #e7e9ec);

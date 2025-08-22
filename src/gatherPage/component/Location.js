@@ -5,6 +5,7 @@ import axios from "axios";
 import POSTER from "../../asset/img/poster.jpg";
 import LOCATION from "../../asset/img/location.svg";
 import DATE from "../../asset/img/date.svg";
+import { useNavigate, Link } from "react-router-dom";
 
 /**
  * 배포: .env에 REACT_APP_API_URL=https://api.yourdomain.com
@@ -23,7 +24,8 @@ function Location() {
   const [place, setPlace] = useState(null);
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
+  const locationId = id; // id가 locationId로 사용됨
   useEffect(() => {
     // 검색어가 없으면 호출하지 않음 (불필요한 네트워크 요청 방지)
 
@@ -41,6 +43,7 @@ function Location() {
 
         // data 예시를 넉넉히 커버 (필드명 다를 수 있어 폴백)
         const normalized = {
+          locationId: data?.id ?? id,
           name: data?.name ?? data?.title ?? "이름 미정",
           description: data?.description ?? data?.desc ?? "",
           imgUrl: data?.imgUrl ?? data?.imageUrl ?? "",
@@ -50,6 +53,7 @@ function Location() {
         };
 
         setPlace(normalized);
+        console.log("강습소 정보:", normalized);
       } catch (e) {
         if (!axios.isCancel(e)) {
           console.error("강습소 불러오기 실패:", e);
@@ -63,8 +67,10 @@ function Location() {
     return () => controller.abort();
   }, [id]);
 
-  // 표시용 안전값
-  const imgSrc = place?.imgUrl || POSTER;
+  const goDetail = () => {
+    if (!place?.locationId) return;
+    navigate(`/detail/${place.locationId}`);
+  };
 
   return (
     <div className={styles.location}>
@@ -76,7 +82,7 @@ function Location() {
       {err && <div className={styles.error}>로드 실패: {err}</div>}
 
       <div className={styles.locationCard}>
-        <img src={imgSrc} alt="img" />
+        <img src={place?.imgUrl || POSTER} alt="img" />
         <div className={styles.locationInfo}>
           <div className={styles.infoTop}>
             <div className={styles.infoTopLeft}>
@@ -89,11 +95,19 @@ function Location() {
             </div>
             <div className={styles.infoTopRight}>
               {place?.detailUrl ? (
-                <a href={place.detailUrl} target="_blank" rel="noreferrer">
+                <Link
+                  to={`/detail/${place?.locationId}`}
+                  className={styles.infoTopRight}
+                >
                   상세보기 {" >"}
-                </a>
+                </Link>
               ) : (
-                <span className={styles.dimmed}>상세보기 {" >"}</span>
+                <Link
+                  to={`/detail/${place?.locationId}`}
+                  className={styles.infoTopRight}
+                >
+                  상세보기 {" >"}
+                </Link>
               )}
             </div>
           </div>

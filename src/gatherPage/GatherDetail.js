@@ -1,4 +1,6 @@
+// GatherDetail.jsx
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 import Floating from "./component/Floating";
@@ -8,7 +10,7 @@ import Member from "./component/Member";
 import Review from "./component/Review";
 import Location from "./component/Location";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./styles/GatherDetail.module.css";
 
 // JWT 디코딩 함수 (기존 유지)
@@ -19,9 +21,7 @@ function parseJwt(token) {
     const jsonPayload = decodeURIComponent(
       atob(base64)
         .split("")
-        .map(function (c) {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
         .join("")
     );
     return JSON.parse(jsonPayload);
@@ -31,24 +31,30 @@ function parseJwt(token) {
   }
 }
 
+/** ===== axios 인스턴스 (Info.jsx와 동일한 방식) ===== */
+const API_BASE = (process.env.REACT_APP_API_BASE_URL || "").replace(/\/+$/, "");
+const api = axios.create({
+  baseURL: API_BASE,
+  timeout: 10000,
+  headers: { Accept: "application/json" },
+  withCredentials: false,
+});
 function GatherDetail() {
   const { id } = useParams(); // /gather/:id
-  const navigate = useNavigate();
 
   const [userName, setUserName] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const [gather, setGather] = useState(null);
-  // eslint-disable-next-line
-  const [fetchError, setFetchError] = useState(null);
+  const [gather, setGather] = useState(null); // 상세 응답
+  const [fetchError, setFetchError] = useState(null); // 필요시 화면에 노출 가능
 
   // 사용자 이름 관련 (기존 유지)
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const payload = parseJwt(token);
-      if (payload?.username) {
-        setUserName(payload.username);
+      if (payload?.name) {
+        setUserName(payload.name);
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -58,85 +64,30 @@ function GatherDetail() {
     }
   }, []);
 
-  // 공용: Authorization/쿠키 옵션 구성
-  function buildAuthOptions() {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Accept: "application/json",
-    };
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
-    return {
-      method: "GET",
-      headers,
-      // 세션/쿠키 기반 인증이면 필요 (Spring Security 세션 등)
-      // 토큰만 쓰고 쿠키를 안 쓰면 그래도 두어도 무방
-      credentials: "include",
-    };
-  }
-
-  // ✅ 서버에서 GET으로 데이터 받아오기
+  // ✅ axios로 상세 조회 (Info.jsx 방식과 동일 스타일)
   useEffect(() => {
-    let ignore = false;
-    async function fetchGather() {
-      setFetchError(null);
-      setGather(null); // 이전 상세 잔상 방지
+    if (!id) return;
+    const controller = new AbortController();
 
-      const API_BASE = (process.env.REACT_APP_API_BASE_URL || "").replace(
-        /\/+$/,
-        ""
-      );
-      const url = `${API_BASE}/gather/detail/${encodeURIComponent(id)}`;
-
+    (async () => {
       try {
-        const res = await fetch(url, buildAuthOptions());
+        setFetchError(null);
 
-        if (!res.ok) {
-          if (res.status === 401) {
-            localStorage.removeItem("token");
-            navigate("/login", { replace: true });
-            return;
-          }
-          const body = await res.text();
-          throw new Error(
-            `Failed (status ${res.status}) ${res.url}\n${
-              body?.slice(0, 300) || ""
-            }`
-          );
-        }
+        const { data } = await api.get(`/gather/detail/${id}`, {
+          signal: controller.signal,
+        });
 
-        const ct = res.headers.get("content-type") || "";
-        if (!ct.includes("application/json")) {
-          const body = await res.text();
-          throw new SyntaxError(
-            `Expected JSON but got ${ct}\n${body.slice(0, 200)}`
-          );
+        setGather({});
+      } catch (e) {
+        if (!axios.isCancel(e)) {
+          console.error("상세 조회 실패:", e);
+          setFetchError(e.message || "데이터를 가져오지 못했습니다.");
         }
-
-        const data = await res.json();
-        if (!ignore) {
-          setGather({
-            ...data,
-            originalPriceNum: data.originalPrice
-              ? Number(data.originalPrice)
-              : null,
-            currentPriceNum: data.currentPrice
-              ? Number(data.currentPrice)
-              : null,
-          });
-        }
-      } catch (err) {
-        if (!ignore)
-          setFetchError(err.message || "데이터를 가져오지 못했습니다.");
       }
-    }
+    })();
 
-    if (id) fetchGather();
-    return () => {
-      ignore = true;
-    };
-  }, [id, navigate]);
+    return () => controller.abort();
+  }, [id]);
 
   return (
     <div className="container">
@@ -145,10 +96,25 @@ function GatherDetail() {
         <Sidebar />
 
         <div className={styles.container}>
+          {/* 필요하면 fetchError 노출 */}
+          {/* {fetchError && <div className={styles.error}>{fetchError}</div>} */}
+
           {gather && (
             <>
+              {/* Info/Member/Review/Location은 각자 내부에서 필요한 API를 호출하거나,
+                  여기서 받은 데이터를 prop으로 내려도 됩니다. */}
+
               <Info />
-              <Member />
+
+              <Member
+                leader={{
+                  imageUrl: gather.makerImage,
+                  name: gather.makerName,
+                  contact: gather.makerContact,
+                  statement: gather.makerStatement,
+                }}
+              />
+
               <Review userName={userName} isLoggedIn={isLoggedIn} />
               <Location />
             </>

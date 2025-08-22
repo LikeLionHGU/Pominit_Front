@@ -11,7 +11,7 @@ import styles from "./Member.module.css";
  * props
  * - gatherId?: number | string  (모임별 멤버를 받는다면 쿼리로 전달; 서버에서 무시하면 전체 멤버)
  */
-function Member() {
+function Member({ leader }) {
   const { id } = useParams(); // /gather/:id 같은 라우트에서 id 추출
 
   const [members, setMembers] = useState([]);
@@ -53,6 +53,7 @@ function Member() {
         }));
 
         setMembers(normalized);
+        console.log("멤버 목록:", normalized);
       } catch (e) {
         if (axios.isCancel(e)) return;
         console.error("멤버 불러오기 실패:", e);
@@ -76,21 +77,30 @@ function Member() {
         {/* 모임장 블록: 서버에서 별도 제공되면 치환하세요 */}
         <div className={styles.leader}>
           <div className={styles.leaderTop}>
-            <img src={MEMBER} alt="Pic" className={styles.leaderPic} />
+            {/* 전달받은 이미지가 있으면 사용, 없으면 기본 아이콘 */}
+            {leader?.imageUrl ? (
+              <img
+                src={leader.imageUrl}
+                alt={leader?.name || "Pic"}
+                className={styles.leaderPic}
+              />
+            ) : (
+              <img src={MEMBER} alt="Pic" className={styles.leaderPic} />
+            )}{" "}
             <span className={styles.badge}>모임장</span>
           </div>
           <div className={styles.leaderInfo}>
-            <div className={styles.name}>섭섭 핑핑이</div>
+            <div className={styles.name}>{leader?.name || "모임장"}</div>
             <div className={styles.raw}>
               <span>
                 <img src={PHONE} alt="icon" className={styles.iconImg} />
-                010-2770-4990
+                {leader?.contact || "연락처"}
               </span>
             </div>
             <div className={styles.raw}>
               <span>
                 <img src={SMILE} alt="icon" className={styles.iconImg} />
-                서핑 1년차
+                {leader?.statement || "경력"}
               </span>
             </div>
           </div>
@@ -117,7 +127,7 @@ function Member() {
                   )}
                 </div>
                 <div className={styles.memberInfo}>
-                  <div className={styles.name}>{m.name || "이름 미상"}</div>
+                  <div className={styles.memName}>{m.name || "이름 미상"}</div>
                   <div className={styles.raw}>
                     {m.statement ? m.statement : "모임원"}
                   </div>

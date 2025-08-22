@@ -17,6 +17,59 @@ const api = axios.create({
   withCredentials: false,
 });
 
+function calcDday(deadlineStr) {
+  if (!deadlineStr || typeof deadlineStr !== "string") return null;
+
+  // "yyyy-MM-dd" 부분만 안전하게 추출
+  const m = deadlineStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return null;
+  const [_, y, mo, d] = m.map(Number);
+
+  const today = new Date();
+  const todayDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+  const deadlineDate = new Date(y, mo - 1, d);
+
+  const MS_PER_DAY = 24 * 60 * 60 * 1000;
+  const diffDays = Math.floor((deadlineDate - todayDate) / MS_PER_DAY);
+
+  return diffDays >= 0 ? diffDays : null; // 마감 지난 경우 null
+}
+
+function formatDeadline(deadlineStr) {
+  if (!deadlineStr || typeof deadlineStr !== "string") return "마감일 미정";
+
+  const [datePart, timePart] = deadlineStr.split(" ");
+  if (!datePart || !timePart) return "마감일 미정";
+
+  const [year, month, day] = datePart.split("-").map(Number);
+  const [hour, minute] = timePart.split(":").map(Number);
+
+  const dateObj = new Date(year, month - 1, day, hour, minute);
+
+  const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+  const weekday = weekdays[dateObj.getDay()];
+
+  // 오전/오후 변환
+  let period = "오전";
+  let displayHour = hour;
+  if (hour === 0) {
+    displayHour = 12;
+  } else if (hour === 12) {
+    period = "오후";
+  } else if (hour > 12) {
+    period = "오후";
+    displayHour = hour - 12;
+  }
+
+  return `${month}/${day}(${weekday}) ${period} ${displayHour}:${minute
+    .toString()
+    .padStart(2, "0")}`;
+}
+
 function Info() {
   const { id } = useParams(); // /gather/detail/:id 에서 id 추출
   const [gather, setGather] = useState(null);
@@ -38,7 +91,7 @@ function Info() {
 
         // 데이터 정규화(백엔드 응답 필드에 따라 조정 가능)
         const normalized = {
-          category: data?.category ?? "",
+          sport: data?.sport ?? "",
           title: data?.title ?? "제목 없음",
           date: data?.date ?? "날짜 미정",
           location: data?.location ?? "장소 미정",
@@ -47,11 +100,12 @@ function Info() {
           price: data?.price ?? 0,
           oldPrice: data?.oldPrice ?? null,
           salePercent: data?.salePercent ?? null,
-          deadline: data?.deadline ?? "마감일 미정",
-          dday: data?.dday ?? null, // D-3 이런 값
+          deadline: formatDeadline(data?.deadline),
+          dday: calcDday(data?.deadline), // ✅ 여기서 계산해서 넣음
         };
 
         setGather(normalized);
+        console.log("모임 정보:", normalized);
       } catch (e) {
         if (!axios.isCancel(e)) {
           console.error("모임 정보 불러오기 실패:", e);
@@ -71,7 +125,7 @@ function Info() {
 
   return (
     <div className={styles.info}>
-      <div className={styles.cathegory}>{gather.category}</div>
+      <div className={styles.cathegory}>{gather.sport}</div>
       <div className={styles.title}>{gather.title}</div>
 
       <div className={styles.infoFeild}>
@@ -97,7 +151,7 @@ function Info() {
             <span
               style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
             >
-              <img src={PEOPLE} alt="icon" />
+              <img src={PEOPLE} alt="icon" style={{ width: "16px" }} />
               모집정원
             </span>
             <span>{gather.capacity}명</span>
@@ -134,7 +188,7 @@ function Info() {
               {gather.dday && (
                 <div className={styles.rawDay}>마감까지 D-{gather.dday}</div>
               )}
-              <div className={styles.rawBottom}>{gather.deadline}</div>
+              <div className={styles.rawBottom}>~ {gather.deadline}</div>
             </div>
           </div>
         </div>
