@@ -6,7 +6,8 @@ import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 import Delete from "../common/Deletemodal";           // ✅ 삭제 확인 모달
 import { useCompareBasket } from "../common/compareBasket";
-
+import PriceImageModal from "../common/PriceImageModal";
+import { toAbsUrl } from "../common/url";
 /* =========================
    Styled Components
 ========================= */
@@ -30,8 +31,9 @@ const Category = styled.div`
   height: 60px;
   background: #2f83f3;
   border-radius: 12px 12px 0 0;
+  padding: 0 8px 0 16px;  
   display: grid;
-  grid-template-columns: 160px 127px 90px 80px 120px 110px 1fr 30px;
+  grid-template-columns:170px 100px 75px 104px 120px 110px 1fr 30px;
   align-items: center;
   color: #fff;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
@@ -88,18 +90,17 @@ const Ment = styled.div`
   line-height: 140%;
   text-align: center;
 `;
-
-/* ===== Row (표 한 줄) ===== */
-const Row = styled.div`
-  margin-left: 175px;
-  width: 880px;
-  height: 220px;
-  display: grid;
-  grid-template-columns: 160px 127px 90px 80px 120px 110px 1fr 30px;
+const HeadCell = styled.div`
+  display: flex;
   align-items: center;
+  justify-content: center;
+`;
+
+const Row = styled.div`
+display:flex;
+margin-left: 175px;
+height:220px;
   border-bottom: 1px solid #d9d9d9;
-  background: #fff;
-  padding-right: 8px;
   transition: background .15s ease;
   &:hover { background: #fafcff; }
 `;
@@ -114,6 +115,7 @@ const Img = styled.img`
 `;
 
 const PlaceholderImg = styled.div`
+position:absolute;
   width: 160px;
   height: 220px;
   background: #e5e7eb;
@@ -125,83 +127,154 @@ const PlaceholderImg = styled.div`
   border-radius: 4px;
 `;
 
-const HeadCell = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+const Namebox=styled.div`
+width:115px;
+padding:15px;
+
+`;
+const Name = styled.div`
+
+  overflow-wrap:break-word;
+  display:flex;
+  width:100px;
+ 
+  text-align:center;
+  padding-top:75px;
+  padding-left:10px;
+  color: #000;
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: 140%; /* 19.6px */
 `;
 
-const Name = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
+const Region = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
+  width:75px;
+  text-align:center;
+  padding-left:0px;
+  padding-top:92.5px;
+  color: #000;
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: 140%; /* 19.6px */
 `;
 
-const RateWrap = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 16px;
-  color: #111827;
-  & small { display: block; margin-top: 4px; color: #f472b6; font-size: 12px; }
+const PracticePrice=styled.div`
+user-select:none;
+overflow: hidden;
+  text-overflow: ellipsis;
+  width:200px;
+  padding-top:30px;
+
+  text-align:center;
+  color: #000;
+text-align: center;
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: 140%; /* 19.6px */
 `;
 
-const DongCol = styled.div`
+const Space=styled.div`
+padding-top:3px;
+ padding-left:35px;
+`;
+
+const PriceWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
   font-size: 14px;
   color: #111827;
   min-width: 0;
-
-  span { white-space: nowrap; }
-  a {
-    text-decoration: underline;
-    color: inherit;
-    cursor: pointer;
-    white-space: nowrap;
-    font-size: 13px;
-  }
 `;
-
-const PriceCol = styled.div`
-  font-size: 14px;
-  color: #111827;
+const GoodList = styled.ol`
+  margin: 0;
+  padding-left: 18px;     /* 번호 들여쓰기 */
   line-height: 1.5;
-  min-width: 0;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  & b { font-weight: 600; }
+  white-space: normal;
+  overflow-wrap: anywhere; /* 긴 단어 줄바꿈 */
+    text-align: left;
+  white-space: normal;     /* 자동 줄바꿈 허용 */
+  overflow-wrap: anywhere; /* 긴 단어도 강제 줄바꿈 */
+  word-break: keep-all;    /* 한글 단어 중간 끊김 최소화 */
+  width: 100%;
+
 `;
 
-const EquipCol = styled.div`
-  font-size: 16px;
-  color: #111827;
-  min-width: 0;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+
+const Good = styled.div`
+justify-content: flex-start; /* 수평(주축) 왼쪽 */
+  align-items: flex-start;  
+overflow: hidden;
+  text-overflow: ellipsis;
+  width:300px;
+  text-align:left;
+
+padding-top:20px;
+padding-bottom:20px;
+padding-left:20px;
+padding-right:0px;
+  color: #000;
+text-align: center;
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: 140%; /* 19.6px */
 `;
+const BadList = styled.ol`
+  margin: 0;
+  padding-left: 18px;     /* 번호 들여쓰기 */
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: anywhere; /* 긴 단어 줄바꿈 */
+    text-align: left;
+  white-space: normal;     /* 자동 줄바꿈 허용 */
+  overflow-wrap: anywhere; /* 긴 단어도 강제 줄바꿈 */
+  word-break: keep-all;    /* 한글 단어 중간 끊김 최소화 */
+  width: 100%;
+
+`;
+const Bad = styled.div`
+justify-content: flex-start; /* 수평(주축) 왼쪽 */
+  align-items: flex-start;  
+overflow: hidden;
+  text-overflow: ellipsis;
+  width:300px;
+  text-align:left;
+padding-left:5px;
+padding-right:0px;
+padding-bottom:20px;
+padding-top:20px;
+  color: #000;
+text-align: center;
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 400;
+line-height: 140%; /* 19.6px */
+`;
+
+
 
 const ReviewCol = styled.div`
+padding:10px;
   color: #000;
-  text-align: left;
+  text-align: center;
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 1.5;
   padding-right: 8px;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 `;
 
 const RemoveBtn = styled.button`
@@ -230,6 +303,15 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 function CompareRow({ d, onRemove }) {
   const [imgOk, setImgOk] = useState(Boolean(d?.imgUrl));
+  const hasPriceImg = Boolean(d?.priceImgUrl);
+  const [openPrice, setOpenPrice] = useState(false);
+const priceImgUrl = hasPriceImg ? toAbsUrl(d.priceImgUrl) : null;
+
+  const items = (d?.goodPart || "")
+  .split(/\s*,\s*/).filter(Boolean);
+
+  const items2 = (d?.badPart || "")
+  .split(/\s*,\s*/).filter(Boolean);
 
   return (
     <Row>
@@ -242,35 +324,77 @@ function CompareRow({ d, onRemove }) {
       ) : (
         <PlaceholderImg>(image)</PlaceholderImg>
       )}
-
-      <Name>{d?.name ?? "-"}</Name>
+      <Namebox><Name>{d?.name ?? "-"}</Name></Namebox>
+      
 
       <div>
-        <RateWrap>
+        <Region>
           <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
             {d?.region ?? "-"}
           </div>
-        </RateWrap>
+        </Region>
       </div>
 
-      <DongCol>
-        <span>{d?.price1 ?? "-"}</span>
-        <button
-          type="button"
-          onClick={() => { /* TODO: 가격표 보기 */ }}
-          style={{
-            all: "unset",
-            cursor: "pointer",
-            textDecoration: "underline",
-            color: "inherit",
-          }}
-        >
-          가격표 보기
-        </button>
-      </DongCol>
+      <PriceWrapper>
+      <PracticePrice>
+  강습가
+<Space />
+  {d?.price1 ?? "-"}원
+  <Space />
+  <svg width="60" height="2" viewBox="0 0 60 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect y="0.223633" width="60" height="1" fill="#E7E9EC"/>
+</svg>
+<Space />
+<Space />
+장비렌탈가
+<Space />
+{d?.price2 ?? "-"}원
+<Space />
 
-      <PriceCol><div>{d?.goodPart ?? "-"}</div></PriceCol>
-      <EquipCol>{d?.badPart ?? "-"}</EquipCol>
+<button
+  type="button"
+  disabled={!hasPriceImg}
+  onClick={() => hasPriceImg && setOpenPrice(true)}
+  style={{
+    all: "unset",
+    textDecoration: hasPriceImg ? "underline" : "none",
+    cursor: hasPriceImg ? "pointer" : "default",
+  }}
+>
+  {hasPriceImg ? "가격표 보기" : "가격 정보 없음"}
+</button>
+
+{openPrice && (
+  <PriceImageModal
+    src={priceImgUrl}
+    onClose={() => setOpenPrice(false)}
+  />
+)}
+
+
+</PracticePrice>
+      </PriceWrapper>
+
+      <Good>
+  {items.length ? (
+    <GoodList>
+      {items.map((t, i) => <li key={i}>{t}</li>)}
+    </GoodList>
+  ) : (
+    "-"   
+  )}
+</Good>
+
+<Bad>
+  {items2.length ? (
+    <BadList>
+      {items2.map((t, i) => <li key={i}>{t}</li>)}
+    </BadList>
+  ) : (
+    "-"   
+  )}
+</Bad>
+
       <ReviewCol>{d?.aiReview ?? "-"}</ReviewCol>
 
       <RemoveBtn onClick={onRemove} aria-label="비교 목록에서 삭제">
@@ -499,3 +623,5 @@ const ComparePage = () => {
 };
 
 export default ComparePage;
+
+
