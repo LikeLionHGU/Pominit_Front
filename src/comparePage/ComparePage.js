@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
-import Delete from "../common/Deletemodal";           // ✅ 삭제 확인 모달
+import Delete from "../common/Deletemodal"; // ✅ 삭제 확인 모달
 import { useCompareBasket } from "../common/compareBasket";
 
 /* =========================
@@ -53,7 +53,9 @@ const Empty = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  &:last-of-type { margin-bottom: 100px; }
+  &:last-of-type {
+    margin-bottom: 100px;
+  }
 `;
 
 const Box = styled.div`
@@ -66,8 +68,12 @@ const Box = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  &:hover { background: #f7fbff; }
-  &:active { transform: scale(0.98); }
+  &:hover {
+    background: #f7fbff;
+  }
+  &:active {
+    transform: scale(0.98);
+  }
 `;
 
 const Plus = styled.div`
@@ -100,8 +106,10 @@ const Row = styled.div`
   border-bottom: 1px solid #d9d9d9;
   background: #fff;
   padding-right: 8px;
-  transition: background .15s ease;
-  &:hover { background: #fafcff; }
+  transition: background 0.15s ease;
+  &:hover {
+    background: #fafcff;
+  }
 `;
 
 const Img = styled.img`
@@ -146,7 +154,12 @@ const RateWrap = styled.div`
   gap: 4px;
   font-size: 16px;
   color: #111827;
-  & small { display: block; margin-top: 4px; color: #f472b6; font-size: 12px; }
+  & small {
+    display: block;
+    margin-top: 4px;
+    color: #f472b6;
+    font-size: 12px;
+  }
 `;
 
 const DongCol = styled.div`
@@ -158,7 +171,9 @@ const DongCol = styled.div`
   color: #111827;
   min-width: 0;
 
-  span { white-space: nowrap; }
+  span {
+    white-space: nowrap;
+  }
   a {
     text-decoration: underline;
     color: inherit;
@@ -177,7 +192,9 @@ const PriceCol = styled.div`
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  & b { font-weight: 600; }
+  & b {
+    font-weight: 600;
+  }
 `;
 
 const EquipCol = styled.div`
@@ -215,8 +232,12 @@ const RemoveBtn = styled.button`
   cursor: pointer;
   padding: 0;
   margin: 0 auto;
-  &:hover { transform: scale(1.02); }
-  &:active { transform: scale(0.98); }
+  &:hover {
+    transform: scale(1.02);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
 `;
 
 /* =========================
@@ -247,7 +268,9 @@ function CompareRow({ d, onRemove }) {
 
       <div>
         <RateWrap>
-          <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}
+          >
             {d?.region ?? "-"}
           </div>
         </RateWrap>
@@ -257,7 +280,9 @@ function CompareRow({ d, onRemove }) {
         <span>{d?.price1 ?? "-"}</span>
         <button
           type="button"
-          onClick={() => { /* TODO: 가격표 보기 */ }}
+          onClick={() => {
+            /* TODO: 가격표 보기 */
+          }}
           style={{
             all: "unset",
             cursor: "pointer",
@@ -269,16 +294,30 @@ function CompareRow({ d, onRemove }) {
         </button>
       </DongCol>
 
-      <PriceCol><div>{d?.goodPart ?? "-"}</div></PriceCol>
+      <PriceCol>
+        <div>{d?.goodPart ?? "-"}</div>
+      </PriceCol>
       <EquipCol>{d?.badPart ?? "-"}</EquipCol>
       <ReviewCol>{d?.aiReview ?? "-"}</ReviewCol>
 
       <RemoveBtn onClick={onRemove} aria-label="비교 목록에서 삭제">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-             xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
-          <rect width="24" height="24" rx="5" fill="#FF658C"/>
-          <path d="M7 7L17 17M7 17L17 7" stroke="white" strokeWidth="2"
-                strokeLinecap="round" strokeLinejoin="round"/>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-hidden="true"
+        >
+          <rect width="24" height="24" rx="5" fill="#FF658C" />
+          <path
+            d="M7 7L17 17M7 17L17 7"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </RemoveBtn>
     </Row>
@@ -326,7 +365,10 @@ const ComparePage = () => {
   // 유효 id가 1개 이상일 때만 호출
   useEffect(() => {
     let cancelled = false;
-    if (validCount === 0) { setData(null); return; }
+    if (validCount === 0) {
+      setData(null);
+      return;
+    }
 
     (async () => {
       try {
@@ -342,13 +384,20 @@ const ComparePage = () => {
         if (cancelled) return;
         const status = err?.response?.status;
         const d = err?.response?.data;
-        setError(typeof d === "string" ? d : d?.message || `요청 실패 (status: ${status ?? "unknown"})`);
+        setError(
+          typeof d === "string"
+            ? d
+            : d?.message || `요청 실패 (status: ${status ?? "unknown"})`
+        );
       } finally {
         if (!cancelled) setLoading(false);
       }
     })();
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line
   }, [payload.item1, payload.item2, payload.item3, validCount]); // items 변하면 재요청
 
   // 데이터 표준화: 배열로 맞추기
@@ -367,7 +416,7 @@ const ComparePage = () => {
     if (idToRemove == null) return;
 
     // 1) UI 낙관적 업데이트
-    setData(prev => {
+    setData((prev) => {
       if (!prev) return prev;
       const arr = Array.isArray(prev) ? [...prev] : [prev];
       arr.splice(idx, 1);
@@ -381,7 +430,7 @@ const ComparePage = () => {
   // 아이콘 클릭 시: 모달 열기
   const askRemove = (idx) => {
     const id = payload.allIds[idx] ?? null;
-    const name = (list[idx]?.name) || "";
+    const name = list[idx]?.name || "";
     setPending({ idx, id, name });
     setShowDelete(true);
   };
@@ -399,8 +448,12 @@ const ComparePage = () => {
 
   return (
     <div className="container">
-      <HeaderWrapper><Header /></HeaderWrapper>
-      <SidebarWrapper><Sidebar /></SidebarWrapper>
+      <HeaderWrapper>
+        <Header />
+      </HeaderWrapper>
+      <SidebarWrapper>
+        <Sidebar />
+      </SidebarWrapper>
 
       <Category>
         <HeadCell>강습소</HeadCell>
@@ -422,12 +475,23 @@ const ComparePage = () => {
                 onClick={() => navigate("/")}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") navigate("/"); }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") navigate("/");
+                }}
                 aria-label="강습소 선택해 주세요"
               >
                 <Plus>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="34" height="33" viewBox="0 0 34 33" fill="none">
-                    <path d="M25.1008 18.0705H18.3508V24.8205C18.3508 25.1785 18.2086 25.5219 17.9554 25.7751C17.7022 26.0283 17.3588 26.1705 17.0008 26.1705C16.6427 26.1705 16.2994 26.0283 16.0462 25.7751C15.793 25.5219 15.6508 25.1785 15.6508 24.8205V18.0705H8.90078C8.54274 18.0705 8.19936 17.9283 7.94619 17.6751C7.69301 17.4219 7.55078 17.0786 7.55078 16.7205C7.55078 16.3625 7.69301 16.0191 7.94619 15.7659C8.19936 15.5127 8.54274 15.3705 8.90078 15.3705H15.6508V8.62051C15.6508 8.26247 15.793 7.91909 16.0462 7.66591C16.2994 7.41274 16.6427 7.27051 17.0008 7.27051C17.3588 7.27051 17.7022 7.41274 17.9554 7.66591C18.2086 7.91909 18.3508 8.26247 18.3508 8.62051V15.3705H25.1008C25.4588 15.3705 25.8022 15.5127 26.0554 15.7659C26.3086 16.0191 26.4508 16.3625 26.4508 16.7205C26.4508 17.0786 26.3086 17.4219 26.0554 17.6751C25.8022 17.9283 25.4588 18.0705 25.1008 18.0705Z" fill="#2F83F3"/>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="34"
+                    height="33"
+                    viewBox="0 0 34 33"
+                    fill="none"
+                  >
+                    <path
+                      d="M25.1008 18.0705H18.3508V24.8205C18.3508 25.1785 18.2086 25.5219 17.9554 25.7751C17.7022 26.0283 17.3588 26.1705 17.0008 26.1705C16.6427 26.1705 16.2994 26.0283 16.0462 25.7751C15.793 25.5219 15.6508 25.1785 15.6508 24.8205V18.0705H8.90078C8.54274 18.0705 8.19936 17.9283 7.94619 17.6751C7.69301 17.4219 7.55078 17.0786 7.55078 16.7205C7.55078 16.3625 7.69301 16.0191 7.94619 15.7659C8.19936 15.5127 8.54274 15.3705 8.90078 15.3705H15.6508V8.62051C15.6508 8.26247 15.793 7.91909 16.0462 7.66591C16.2994 7.41274 16.6427 7.27051 17.0008 7.27051C17.3588 7.27051 17.7022 7.41274 17.9554 7.66591C18.2086 7.91909 18.3508 8.26247 18.3508 8.62051V15.3705H25.1008C25.4588 15.3705 25.8022 15.5127 26.0554 15.7659C26.3086 16.0191 26.4508 16.3625 26.4508 16.7205C26.4508 17.0786 26.3086 17.4219 26.0554 17.6751C25.8022 17.9283 25.4588 18.0705 25.1008 18.0705Z"
+                      fill="#2F83F3"
+                    />
                   </svg>
                 </Plus>
               </Box>
@@ -453,12 +517,23 @@ const ComparePage = () => {
                     onClick={() => navigate("/")}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") navigate("/"); }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") navigate("/");
+                    }}
                     aria-label="강습소 선택해 주세요"
                   >
                     <Plus>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="33" viewBox="0 0 34 33" fill="none">
-                        <path d="M25.1008 18.0705H18.3508V24.8205C18.3508 25.1785 18.2086 25.5219 17.9554 25.7751C17.7022 26.0283 17.3588 26.1705 17.0008 26.1705C16.6427 26.1705 16.2994 26.0283 16.0462 25.7751C15.793 25.5219 15.6508 25.1785 15.6508 24.8205V18.0705H8.90078C8.54274 18.0705 8.19936 17.9283 7.94619 17.6751C7.69301 17.4219 7.55078 17.0786 7.55078 16.7205C7.55078 16.3625 7.69301 16.0191 7.94619 15.7659C8.19936 15.5127 8.54274 15.3705 8.90078 15.3705H15.6508V8.62051C15.6508 8.26247 15.793 7.91909 16.0462 7.66591C16.2994 7.41274 16.6427 7.27051 17.0008 7.27051C17.3588 7.27051 17.7022 7.41274 17.9554 7.66591C18.2086 7.91909 18.3508 8.26247 18.3508 8.62051V15.3705H25.1008C25.4588 15.3705 25.8022 15.5127 26.0554 15.7659C26.3086 16.0191 26.4508 16.3625 26.4508 16.7205C26.4508 17.0786 26.3086 17.4219 26.0554 17.6751C25.8022 17.9283 25.4588 18.0705 25.1008 18.0705Z" fill="#2F83F3"/>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="34"
+                        height="33"
+                        viewBox="0 0 34 33"
+                        fill="none"
+                      >
+                        <path
+                          d="M25.1008 18.0705H18.3508V24.8205C18.3508 25.1785 18.2086 25.5219 17.9554 25.7751C17.7022 26.0283 17.3588 26.1705 17.0008 26.1705C16.6427 26.1705 16.2994 26.0283 16.0462 25.7751C15.793 25.5219 15.6508 25.1785 15.6508 24.8205V18.0705H8.90078C8.54274 18.0705 8.19936 17.9283 7.94619 17.6751C7.69301 17.4219 7.55078 17.0786 7.55078 16.7205C7.55078 16.3625 7.69301 16.0191 7.94619 15.7659C8.19936 15.5127 8.54274 15.3705 8.90078 15.3705H15.6508V8.62051C15.6508 8.26247 15.793 7.91909 16.0462 7.66591C16.2994 7.41274 16.6427 7.27051 17.0008 7.27051C17.3588 7.27051 17.7022 7.41274 17.9554 7.66591C18.2086 7.91909 18.3508 8.26247 18.3508 8.62051V15.3705H25.1008C25.4588 15.3705 25.8022 15.5127 26.0554 15.7659C26.3086 16.0191 26.4508 16.3625 26.4508 16.7205C26.4508 17.0786 26.3086 17.4219 26.0554 17.6751C25.8022 17.9283 25.4588 18.0705 25.1008 18.0705Z"
+                          fill="#2F83F3"
+                        />
                       </svg>
                     </Plus>
                   </Box>
@@ -491,7 +566,9 @@ const ComparePage = () => {
           onClose={cancelDelete}
           onConfirm={confirmDelete}
           title="삭제하시겠어요?"
-          description={`"${pending.name || "선택한 항목"}"을(를) 비교 목록에서 제거합니다.`}
+          description={`"${
+            pending.name || "선택한 항목"
+          }"을(를) 비교 목록에서 제거합니다.`}
         />
       )}
     </div>

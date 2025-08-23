@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+// eslint-disable-next-line
 import ReviewModal from "../../common/ReviewModal";
 import LoginModal1 from "../../common/loginmodal"; // ✅ 네가 만든 로그인 모달
 

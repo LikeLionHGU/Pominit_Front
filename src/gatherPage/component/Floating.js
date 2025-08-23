@@ -37,7 +37,7 @@ function Floating() {
 
   const navigate = useNavigate();
   const { id } = useParams();
-
+  // eslint-disable-next-line
   const [userId, setUserId] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const token = localStorage.getItem("token");
@@ -76,7 +76,7 @@ function Floating() {
         }
       );
 
-      if (res.data.message == "duplicated") {
+      if (res.data.message === "duplicated") {
         setAlreadyModalOpen(true); // 이미 가입 모달
       } else if (res.status >= 200 && res.status < 300) {
         setJoinedModalOpen(true); // 성공 모달

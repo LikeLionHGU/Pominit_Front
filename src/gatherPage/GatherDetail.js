@@ -47,6 +47,7 @@ function GatherDetail() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [gather, setGather] = useState(null); // 상세 응답
+  // eslint-disable-next-line
   const [fetchError, setFetchError] = useState(null); // 필요시 화면에 노출 가능
 
   // 사용자 이름 관련 (기존 유지)
@@ -73,7 +74,7 @@ function GatherDetail() {
     (async () => {
       try {
         setFetchError(null);
-
+        // eslint-disable-next-line
         const { data } = await api.get(`/gather/detail/${id}`, {
           signal: controller.signal,
         });

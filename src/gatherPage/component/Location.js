@@ -5,7 +5,7 @@ import axios from "axios";
 import POSTER from "../../asset/img/poster.jpg";
 import LOCATION from "../../asset/img/location.svg";
 import DATE from "../../asset/img/date.svg";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 /**
  * 배포: .env에 REACT_APP_API_URL=https://api.yourdomain.com
@@ -24,6 +24,7 @@ function Location() {
   const [place, setPlace] = useState(null);
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line
   const locationId = id; // id가 locationId로 사용됨
   useEffect(() => {
     // 검색어가 없으면 호출하지 않음 (불필요한 네트워크 요청 방지)
