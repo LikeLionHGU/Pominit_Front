@@ -33,7 +33,7 @@ const Category = styled.div`
   border-radius: 12px 12px 0 0;
   padding: 0 8px 0 16px;
   display: grid;
-  grid-template-columns: 170px 100px 75px 104px 120px 110px 1fr 30px;
+  grid-template-columns:  160px 101px 100px 280px 200px 40px;
   align-items: center;
   color: #fff;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
@@ -105,12 +105,9 @@ const HeadCell = styled.div`
 const Row = styled.div`
   display: flex;
   margin-left: 175px;
+  width:880px;
   height: 220px;
-  border-bottom: 1px solid #d9d9d9;
-  transition: background 0.15s ease;
-  &:hover {
-    background: #fafcff;
-  }
+   background: ${({ $isEdge }) => ($isEdge ? "#F1F7FF" : "transparent")};
 `;
 
 const Img = styled.img`
@@ -119,7 +116,6 @@ const Img = styled.img`
   object-fit: cover;
   background: #e5e7eb;
   color: #9ca3af;
-  border-radius: 4px;
 `;
 
 const PlaceholderImg = styled.div`
@@ -132,74 +128,67 @@ const PlaceholderImg = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  border-radius: 4px;
 `;
 
-const Namebox = styled.div`
-  width: 115px;
-  padding: 15px;
-`;
-const Name = styled.div`
-  overflow-wrap: break-word;
-  display: flex;
+
+
+const RegionWrapper = styled.div`
   width: 100px;
-
+  height: 100%;            
+  display: flex;
+  align-items: center;     
+  justify-content: center;  
+  box-sizing: border-box;
   text-align: center;
-  padding-top: 75px;
-  padding-left: 10px;
-  color: #000;
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 19.6px */
+  line-height: 1.4;
+  border-right: 1px solid #E7E9EC;
 `;
 
-const Region = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 75px;
+const PriceWrapper = styled.div`
+  width: 100px;
+  height: 100%;            
+  display: flex;
+  align-items: center;     
+  justify-content: center;  
+  box-sizing: border-box;
   text-align: center;
-  padding-left: 0px;
-  padding-top: 92.5px;
-  color: #000;
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 19.6px */
+  line-height: 1.4;
+
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #111827;
+  min-width: 0;
+  border-right: 1px solid #E7E9EC;
 `;
-
-const PracticePrice = styled.div`
-  user-select: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 200px;
-  padding-top: 30px;
-
-  text-align: center;
-  color: #000;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 19.6px */
-`;
-
 const Space = styled.div`
   padding-top: 3px;
   padding-left: 35px;
 `;
 
-const PriceWrapper = styled.div`
+const GBbox=styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  font-size: 14px;
-  color: #111827;
-  min-width: 0;
+  color: #000;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 140%; /* 19.6px */
 `;
+
+const GoodWrapper=styled.div`
+width: 280px;
+  height: 50%;
+   display: flex;    
+  justify-content:left;  
+  padding-top:38.5px;
+  padding-right:22px;
+  padding-left:22px;
+  border-right: 1px solid #E7E9EC;
+  flex-direction: column;
+`;
+
 const GoodList = styled.ol`
   margin: 0;
   padding-left: 18px; /* 번호 들여쓰기 */
@@ -211,27 +200,6 @@ const GoodList = styled.ol`
   overflow-wrap: anywhere; /* 긴 단어도 강제 줄바꿈 */
   word-break: keep-all; /* 한글 단어 중간 끊김 최소화 */
   width: 100%;
-`;
-
-const Good = styled.div`
-  justify-content: flex-start; /* 수평(주축) 왼쪽 */
-  align-items: flex-start;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 300px;
-  text-align: left;
-
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 0px;
-  color: #000;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 19.6px */
 `;
 const BadList = styled.ol`
   margin: 0;
@@ -245,48 +213,55 @@ const BadList = styled.ol`
   word-break: keep-all; /* 한글 단어 중간 끊김 최소화 */
   width: 100%;
 `;
-const Bad = styled.div`
-  justify-content: flex-start; /* 수평(주축) 왼쪽 */
-  align-items: flex-start;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 300px;
-  text-align: left;
-  padding-left: 5px;
-  padding-right: 0px;
-  padding-bottom: 20px;
-  padding-top: 20px;
-  color: #000;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 19.6px */
+const BadWrapper=styled.div`
+padding-bottom:20px;
+width: 280px;
+  height: 50%;
+   display: flex;    
+  justify-content:left;  
+  padding-top:38.5px;
+  padding-right:22px;
+  padding-left:22px;
+  border-right: 1px solid #E7E9EC;
+  flex-direction: column;
 `;
 
-const ReviewCol = styled.div`
-  padding: 10px;
-  color: #000;
+const ReviewWrapper=styled.div`
+width: 100px;
+  height: 100%;            
+  display: flex;
+  align-items: center;     
+  justify-content: center;  
+  box-sizing: border-box;
   text-align: center;
-  font-family: Pretendard;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.5;
-  padding-right: 8px;
-  overflow: hidden;
+  padding-right:22px;
+  padding-left:22px;
+width: 200px; 
+  border-right: 1px solid #E7E9EC;
+  flex-direction: column;
+
+  color: #000;
+text-align: center;
+font-family: Pretendard;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 140%; /* 19.6px */
 `;
+
 
 const RemoveBtn = styled.button`
-  width: 24px;
-  height: 24px;
+  width: 49px;
+  height: 100%;            
+  display: flex;
+  align-items: center;     
+  box-sizing: border-box;
+  text-align: center;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
   border: 0;
   background: transparent;
   cursor: pointer;
-  padding: 0;
+  padding-left: 13px;
   margin: 0 auto;
   &:hover {
     transform: scale(1.02);
@@ -305,7 +280,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
    Helper Components
 ========================= */
 
-function CompareRow({ d, onRemove }) {
+function CompareRow({ d, onRemove, isEdge }) {
   const [imgOk, setImgOk] = useState(Boolean(d?.imgUrl));
   const hasPriceImg = Boolean(d?.priceImgUrl);
   const [openPrice, setOpenPrice] = useState(false);
@@ -313,10 +288,10 @@ function CompareRow({ d, onRemove }) {
 
   const items = (d?.goodPart || "").split(/\s*,\s*/).filter(Boolean);
 
-  const items2 = (d?.badPart || "").split(/\s*,\s*/).filter(Boolean);
+
 
   return (
-    <Row>
+    <Row $isEdge={isEdge}>
       {imgOk ? (
         <Img
           src={d.imgUrl}
@@ -326,22 +301,13 @@ function CompareRow({ d, onRemove }) {
       ) : (
         <PlaceholderImg>(image)</PlaceholderImg>
       )}
-      <Namebox>
-        <Name>{d?.name ?? "-"}</Name>
-      </Namebox>
 
-      <div>
-        <Region>
-          <div
-            style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}
-          >
+      <RegionWrapper>
             {d?.region ?? "-"}
-          </div>
-        </Region>
-      </div>
+      </RegionWrapper>
 
+     
       <PriceWrapper>
-        <PracticePrice>
           강습가
           <Space />
           {d?.price1 ?? "-"}원
@@ -379,11 +345,12 @@ function CompareRow({ d, onRemove }) {
               onClose={() => setOpenPrice(false)}
             />
           )}
-        </PracticePrice>
+    
       </PriceWrapper>
-
-      <Good>
-        {items.length ? (
+      
+      <GBbox>
+      <GoodWrapper>
+      {items.length ? (
           <GoodList>
             {items.map((t, i) => (
               <li key={i}>{t}</li>
@@ -392,21 +359,29 @@ function CompareRow({ d, onRemove }) {
         ) : (
           "-"
         )}
-      </Good>
+      </GoodWrapper>
 
-      <Bad>
-        {items2.length ? (
+      <BadWrapper>
+      {items.length ? (
           <BadList>
-            {items2.map((t, i) => (
+            {items.map((t, i) => (
               <li key={i}>{t}</li>
             ))}
           </BadList>
         ) : (
           "-"
         )}
-      </Bad>
+      </BadWrapper>
+      </GBbox>
 
-      <ReviewCol>{d?.aiReview ?? "-"}</ReviewCol>
+      <ReviewWrapper>
+        {d?.aiReview ?? "-"}
+      </ReviewWrapper>
+
+    
+
+
+
 
       <RemoveBtn onClick={onRemove} aria-label="비교 목록에서 삭제">
         <svg
@@ -439,7 +414,7 @@ function CompareRow({ d, onRemove }) {
 const ComparePage = () => {
   const navigate = useNavigate();
 
-  // ✅ compareBasket 훅 (로컬스토리지 + 동기화)
+  // ✅ compareBasket 훅 (로컬스토리지  동기화)
   const { items = [], remove } = useCompareBasket();
 
   // 삭제 모달 state
@@ -565,11 +540,9 @@ const ComparePage = () => {
 
       <Category>
         <HeadCell>강습소</HeadCell>
-        <HeadCell>강습소명</HeadCell>
         <HeadCell>동네</HeadCell>
         <HeadCell>대표가격</HeadCell>
-        <HeadCell>장점</HeadCell>
-        <HeadCell>단점</HeadCell>
+        <HeadCell>장/단점</HeadCell>
         <HeadCell>리뷰 데이터 분석</HeadCell>
         <HeadCell></HeadCell>
       </Category>
@@ -660,9 +633,9 @@ const ComparePage = () => {
           {!!error && <Empty style={{ color: "crimson" }}>에러: {error}</Empty>}
           {!loading && !error && list.length > 0 && (
             <>
-              {list.slice(0, 3).map((d, i) => (
-                <CompareRow key={i} d={d} onRemove={() => askRemove(i)} />
-              ))}
+            {list.slice(0, 3).map((d, i) => (
+   <CompareRow key={i} d={d} onRemove={() => askRemove(i)} isEdge={i === 0 || i === 2} />
+ ))}
             </>
           )}
         </>
