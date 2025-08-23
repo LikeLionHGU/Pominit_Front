@@ -47,6 +47,7 @@ const Rt = styled.div`
 `;
 const LeftThumb = styled.img`
   position: absolute;
+  top: 10px;
   left: 180px;
   width: 520px;
   height: 297px;
@@ -60,7 +61,7 @@ const RightCol = styled.div`
   right: 60px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 `;
 const Title = styled.h1`
   margin: 0;
@@ -73,6 +74,8 @@ const Summary = styled.p`
   color: #000;
   font-family: Pretendard;
   font-size: 16px;
+  margin-top: 0px;
+  margin-bottom:0px;
   font-weight: 400;
   line-height: 150%;
   align-self: stretch;
@@ -107,7 +110,7 @@ const Icon = styled.div`
 `;
 const InfoWrapper = styled.div`
   position: absolute;
-  top: 248.22px;
+  top: 240.22px;
   left: 720.37px;
   right: 60px;
   display: flex;
@@ -147,14 +150,14 @@ const ThumbnailWrapper = styled.div`
 
 const Tag = styled.div`
   position: absolute;
-  top: 10px; /* 이미지 top + 여백 */
+  top: 20px; /* 이미지 top + 여백 */
   left: 192px; /* 이미지 left + 여백 */
   display: flex;
   padding: 4px 10px;
   align-items: center;
   gap: 8px;
   border-radius: 100px;
-  background: rgba(255, 81, 126, 0.12);
+  background:#FFEAF0;
   color: var(--Foundation-Red-red-500, #ff517e);
   text-align: center;
   font-family: Pretendard;

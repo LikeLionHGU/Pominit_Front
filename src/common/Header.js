@@ -15,7 +15,7 @@ const Loginbtn = styled.div`
   display: inline-flex;
   position: absolute;
   top: 11px;
-  left: 954px;
+  left: 988px;
   padding: 8px 12px;
   gap: 10px;
   justify-content: center;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   position: absolute;
   top: 465.28px;
-  left: 936.58px;
+  left: 959.58px;
   display: inline-block; 
   color: #000;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;

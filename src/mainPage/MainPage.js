@@ -11,7 +11,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   position: absolute;  
    top:471.28px;
-    left: 180px;
+    left: 190px;
     color: #000;
     font-family: Pretendard;
     font-size: 20px;
