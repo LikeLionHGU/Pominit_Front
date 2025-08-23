@@ -214,7 +214,7 @@ const LoginPage = () => {
               autoComplete="new-password"
               required
             />
-            <Register onClick={onSubmit} disabled={loading}>
+            <Register onClick={onSubmit} disabled={loading} autoFocus>
               로그인
             </Register>
             <Hr />
