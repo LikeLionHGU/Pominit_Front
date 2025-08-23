@@ -10,6 +10,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 const SidebarWrap = styled.div`
   transform: translateX(-16px);
   user-select: none;
+   position: relative;
+   z-index: 100;
 `;
 
 const Icon = styled.div`
@@ -28,6 +30,7 @@ const Backbtn = styled.div`
   width: 153px;
   height: 186px;
   flex-shrink: 0;
+   z-index: 2;
 `;
 
 const BtnGroup = styled.div`
@@ -37,6 +40,7 @@ const BtnGroup = styled.div`
   display: flex;
   flex-direction: column;
   padding: 25px;
+  z-index: 3;
 `;
 
 const Btn = styled.button`
@@ -82,11 +86,14 @@ const Banner = styled.div`
   width: 153px;
   height: 260px;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 
   img {
     display: block;
     width: 100%;
     height: 100%;
+    pointer-events: none;
   }
 `;
 
