@@ -64,7 +64,17 @@ const Btn = styled.button`
   &:last-of-type {
     margin-bottom: 24px;
   }
+
+  /* active가 false일 때만 hover 적용 */
+  ${({ active }) =>
+    !active &&
+    `
+      &:hover {
+        background: #EAF3FE;
+      }
+    `}
 `;
+
 
 const Banner = styled.div`
   margin-left: 15px;

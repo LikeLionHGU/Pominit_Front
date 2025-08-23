@@ -22,7 +22,10 @@ const Card = styled.div`
   gap: 4px;
   cursor: pointer;
 `;
-
+const ThumbnailWrapper = styled.div`
+  position: relative;
+  display: inline-block; /* 크기 맞춰주기 */
+`;
 const Thumbnail = styled.img`
   width: 100%;
   height: 160px;
@@ -148,6 +151,25 @@ const IconBtn = styled.button`
   line-height: 0;
 `;
 
+const Tag=styled.div`
+position: absolute;
+  top: 8px;   /* 이미지 위에서 8px */
+  left: 8px;  /* 이미지 왼쪽에서 8px */
+display: flex;
+padding: 4px 10px;
+align-items: center;
+gap: 8px;
+border-radius: 100px;
+background: rgba(255, 81, 126, 0.12);
+color: var(--Foundation-Red-red-500, #FF517E);
+text-align: center;
+font-family: Pretendard;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+`;
+
 //부모로부터 sorting, sport를 props로 받고 기본값 설정함
 export default function Centerlist({ sorting = 0, sport = "" }) {
   const [searchTerm, setSearchTerm] = useState(""); //검색어 상태
@@ -252,7 +274,11 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
       <Grid>
         {lists.map((list) => (
           <Card key={list.id} onClick={() => navigate(`/detail/${list.id}`)}>
-            <Thumbnail src={list.thumbnail} alt={list.thumbnail} />
+            <ThumbnailWrapper>
+  <Thumbnail src={list.thumbnail} alt={list.thumbnail} />
+  <Tag>{list.sport}</Tag>
+</ThumbnailWrapper>
+
             <Name>{list.name}</Name>
             <Script>{list.description}</Script>
 

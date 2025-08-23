@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import React, { useState } from "react";
+import PriceImageModal from "../../common/PriceImageModal";
+import { toAbsUrl } from "../../common/url";
 
 const Rbox=styled.div`
 position: absolute;
@@ -44,7 +47,6 @@ padding: 35px;
 `;
 const LeftThumb = styled.img`
   position: absolute;
-  top: 83.72px;
   left: 180px;
   width: 520px;
   height: 297px;
@@ -132,6 +134,32 @@ const Address = styled.span`
   }
   a:hover { opacity: .9; }
 `;
+const ThumbnailWrapper = styled.div`
+  position: relative;
+  display: inline-block; /* 크기 맞춰주기 */
+`;
+
+const Tag = styled.div`
+  position: absolute;
+  top: 10px;   /* 이미지 top + 여백 */
+  left: 192px; /* 이미지 left + 여백 */
+ display: flex;
+padding: 4px 10px;
+align-items: center;
+gap: 8px;
+border-radius: 100px;
+background: rgba(255, 81, 126, 0.12);
+color: var(--Foundation-Red-red-500, #FF517E);
+text-align: center;
+font-family: Pretendard;
+ white-space: nowrap;            /* ✅ 줄바꿈 금지 */
+  writing-mode: horizontal-tb;  
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+`;
+
 function labelFromURL(u, idx = 0) {
   try {
     // tel:, sms: 같은 프로토콜 먼저 처리
@@ -181,10 +209,12 @@ function normalizeCenter(raw) {
     socialLink: raw.socialLink ?? raw["웹사이트/SNS"],
     priceImgUrl: raw.priceImgUrl ?? raw["가격표 이미지 URL"] ?? raw["가격 이미지"],
     aiReview:raw.aiReview??raw["리뷰"],
+    sport: raw.sport ?? raw["종목"] ?? raw["카테고리"],
   };
 }
 
 export default function CenterInfo({ center }) {
+  const [openPrice, setOpenPrice] = useState(false);
   if (!center) return null;
 
   const c = normalizeCenter(center);
@@ -195,10 +225,18 @@ export default function CenterInfo({ center }) {
     : typeof c.socialLink === "string" && c.socialLink.length > 0
     ? c.socialLink.split(",")
     : [];
+    const hasPriceImg = Boolean(c?.priceImgUrl);
+ 
+  const priceImgUrl = hasPriceImg ? toAbsUrl(c.priceImgUrl) : null;
 
   return (
     <div>
-      {c.imageUrl && <LeftThumb src={c.imageUrl} alt={c.name || "센터 이미지"} />}
+
+<ThumbnailWrapper>
+{c.imageUrl && <LeftThumb src={c.imageUrl} alt={c.name || "센터 이미지"} />}
+  <Tag>{c.sport}</Tag>
+</ThumbnailWrapper>
+
 
       <RightCol>
         <Title>{c.name || "이름 없음"}</Title>
@@ -238,7 +276,7 @@ export default function CenterInfo({ center }) {
         </InfoRow>
 
         {/* 가격표 이미지 링크 */}
-        <InfoRow
+      {/*<InfoRow
           as={c.priceImgUrl ? "a" : "div"}
           href={c.priceImgUrl || undefined}
           target={c.priceImgUrl ? "_blank" : undefined}
@@ -251,7 +289,46 @@ export default function CenterInfo({ center }) {
             </svg>
           </Icon>
           <Address><Price>{c.priceImgUrl ? "가격표 이미지로 보기" : "가격 정보 없음"}</Price></Address>
-        </InfoRow>
+        </InfoRow> */}  
+<InfoRow>
+<Icon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="19" viewBox="0 0 10 19" fill="none">
+              <path d="M5.3 8.67289C3.03 8.08289 2.3 7.47289 2.3 6.52289C2.3 5.43289 3.31 4.67289 5 4.67289C6.42 4.67289 7.13 5.21289 7.39 6.07289C7.51 6.47289 7.84 6.77289 8.26 6.77289H8.56C9.22 6.77289 9.69 6.12289 9.46 5.50289C9.04 4.32289 8.06 3.34289 6.5 2.96289V2.27289C6.5 1.44289 5.83 0.772888 5 0.772888C4.17 0.772888 3.5 1.44289 3.5 2.27289V2.93289C1.56 3.35289 0 4.61289 0 6.54289C0 8.85289 1.91 10.0029 4.7 10.6729C7.2 11.2729 7.7 12.1529 7.7 13.0829C7.7 13.7729 7.21 14.8729 5 14.8729C3.35 14.8729 2.5 14.2829 2.17 13.4429C2.02 13.0529 1.68 12.7729 1.27 12.7729H0.99C0.32 12.7729 -0.15 13.4529 0.0999999 14.0729C0.67 15.4629 2 16.2829 3.5 16.6029V17.2729C3.5 18.1029 4.17 18.7729 5 18.7729C5.83 18.7729 6.5 18.1029 6.5 17.2729V16.6229C8.45 16.2529 10 15.1229 10 13.0729C10 10.2329 7.57 9.26289 5.3 8.67289Z" fill="#FF517E"/>
+            </svg>
+          </Icon>
+        <button
+  type="button"
+  disabled={!hasPriceImg}
+  onClick={() => hasPriceImg && setOpenPrice(true)}
+  style={{
+    all: "unset",
+    textDecoration: hasPriceImg ? "underline" : "none",
+    cursor: hasPriceImg ? "pointer" : "default",
+  }}
+>
+  {hasPriceImg ? "가격표 이미지로 보기" : "가격 정보 없음"}
+</button>
+
+{openPrice && (
+  <PriceImageModal
+    src={priceImgUrl}
+    onClose={() => setOpenPrice(false)}
+  />
+)}
+
+</InfoRow>
+
+
+
+
+
+
+
+
+
+
+
+
 
         {/* 웹사이트 / SNS */}
         <InfoRow>
