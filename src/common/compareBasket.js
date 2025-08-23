@@ -11,7 +11,7 @@ import React, { useEffect, useState, useCallback } from "react";
 const KEY = "compare:basket:v1";
 const EVT = "compare:basket:changed"; // 같은 탭 동기화용 커스텀 이벤트
 const MAX_ITEMS = 3;
-const EVICT_OLDEST_WHEN_FULL = true;  // false: 거부, true: 오래된 것 제거(FIFO)
+const EVICT_OLDEST_WHEN_FULL = true; // false: 거부, true: 오래된 것 제거(FIFO)
 
 // ---------- 로컬스토리지 IO ----------
 function read() {
@@ -37,7 +37,9 @@ const subscribers = new Set(); // (ids) => void
 
 function emit(ids) {
   subscribers.forEach((fn) => {
-    try { fn(ids); } catch {}
+    try {
+      fn(ids);
+    } catch {}
   });
 }
 
@@ -51,8 +53,8 @@ function addItem(id) {
   if (curr.includes(id)) return curr;
 
   if (curr.length >= MAX_ITEMS) {
-    if (!EVICT_OLDEST_WHEN_FULL) return curr;   // 거부 정책
-    const next = [...curr.slice(1), id];        // FIFO
+    if (!EVICT_OLDEST_WHEN_FULL) return curr; // 거부 정책
+    const next = [...curr.slice(1), id]; // FIFO
     setAndBroadcast(next);
     return next;
   }
@@ -115,6 +117,7 @@ export function useCompareBasket() {
   const add = useCallback((id) => {
     id = Number(id);
     if (!Number.isFinite(id)) return false;
+    // eslint-disable-next-line
     const next = addItem(id);
     // addItem 내부에서 브로드캐스트 하므로 여기선 반환만
     return read().includes(id);
@@ -140,8 +143,14 @@ export function useCompareBasket() {
   }, []);
 
   return {
-    items, add, remove, clear, setAll,
-    max: MAX_ITEMS, key: KEY, evictOldestWhenFull: EVICT_OLDEST_WHEN_FULL,
+    items,
+    add,
+    remove,
+    clear,
+    setAll,
+    max: MAX_ITEMS,
+    key: KEY,
+    evictOldestWhenFull: EVICT_OLDEST_WHEN_FULL,
   };
 }
 
