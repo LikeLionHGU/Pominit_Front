@@ -1,18 +1,18 @@
 .selectBox {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 8px;
+  gap: 0.25rem;
 
   cursor: pointer;
   align-items: center;
-  align-content: center;
   border-radius: 6.25rem;
   border: 1px solid #336dff;
+  padding: 0.75rem 1rem;
 
   background: #fff;
-  max-height: 40px; /* 기본 높이 */
-  width: 155px;
+  width: 160px;
   height: 46px;
 
   color: #2f83f3;
@@ -38,10 +38,11 @@
 }
 
 .optionList.open {
-  margin-top: 200px;
+  margin-top: 230px;
   margin-left: 250px;
   display: grid;
   width: 413px;
+  position: absolute;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
 
@@ -61,6 +62,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.25rem;
 }
 
 .arrow {

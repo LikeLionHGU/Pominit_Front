@@ -8,20 +8,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  z-index: 1001;
 }
 
 .modal {
-  display: flex;
+  display: inline-flex;
+  width: 25rem;
+  padding: 1.5rem;
   flex-direction: column;
-  background: white;
-  padding: 20px;
-  padding-bottom: 1.5rem;
-  position: relative;
-  width: 428px;
-  min-height: 8rem;
-  flex-shrink: 0;
-  justify-content: center;
   align-items: center;
+  gap: 2.5rem;
+
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+  margin-top: -4.5rem;
 }
 
 .modal_close {

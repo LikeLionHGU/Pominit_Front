@@ -34,6 +34,7 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
         /\/+$/,
         ""
       );
+      // eslint-disable-next-line
       const token = localStorage.getItem("token");
 
       // 서버가 안정적으로 파싱하도록: 빈 문자열 → null, 일정 스키마 고정

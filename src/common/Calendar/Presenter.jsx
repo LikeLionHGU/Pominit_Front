@@ -21,7 +21,7 @@ const Back = ({ width = 24, height = 24 }) => (
   <svg width={width} height={height} viewBox="0 0 24 24" fill="none">
     <path
       d="M15 18L9 12L15 6"
-      stroke="#111"
+      stroke="#2F83F3"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -32,7 +32,7 @@ const Forward = ({ width = 24, height = 24 }) => (
   <svg width={width} height={height} viewBox="0 0 24 24" fill="none">
     <path
       d="M9 6L15 12L9 18"
-      stroke="#111"
+      stroke="#2F83F3"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -46,7 +46,8 @@ const KoreanDayEnum = ["일", "월", "화", "수", "목", "금", "토"];
 /* ================= Styled Components ================= */
 export const Wrapper = styled.div`
   width: 292px;
-  height: 295px;
+  min-height: 295px;
+  height: auto;
   padding: 1.25rem;
   background: ${Colors.white};
   border-radius: 12px;
@@ -100,7 +101,6 @@ export const Title = styled.h3`
 export const CalendarWrap = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
-  row-gap: 6px;
 `;
 
 export const KoreanDays = styled.div`
@@ -120,6 +120,7 @@ export const Cell = styled.div`
 export const Days = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 36px;
   row-gap: 0.25rem;
   column-gap: 0.25rem;
 `;

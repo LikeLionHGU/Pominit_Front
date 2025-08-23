@@ -37,6 +37,7 @@ export default function Map({ center }) {
   const mapRef = useRef(null);
   const mapObjRef = useRef(null);
   const markerRef = useRef(null);
+  // eslint-disable-next-line
   const infoRef = useRef(null); // ⭐ 이름 라벨(InfoWindow) 참조
 
   const c = normalizeCenter(center);
@@ -44,7 +45,7 @@ export default function Map({ center }) {
   useEffect(() => {
     if (!c) return;
     if (typeof window === "undefined") return;
-
+    // eslint-disable-next-line
     const buildLabelHtml = (name) => `
       <div style="
         padding:6px 10px;
@@ -54,7 +55,14 @@ export default function Map({ center }) {
         box-shadow:0 2px 8px rgba(0,0,0,0.12);
         font-family: Pretendard, system-ui, -apple-system, sans-serif;
         font-size:12px; color:#111; white-space:nowrap;">
-        ${name ? String(name).replace(/[<>&]/g, (m)=>({ '<':'&lt;','>':'&gt;','&':'&amp;' }[m])) : '강습소'}
+        ${
+          name
+            ? String(name).replace(
+                /[<>&]/g,
+                (m) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[m])
+              )
+            : "강습소"
+        }
       </div>
     `;
 
@@ -89,8 +97,6 @@ export default function Map({ center }) {
           markerRef.current.setPosition(latlng);
         }
 
-      
-
         // 레이아웃 보정
         setTimeout(() => map.relayout(), 0);
       });
@@ -110,7 +116,8 @@ export default function Map({ center }) {
       s.onerror = () => console.error("카카오 SDK 로드 오류");
       document.head.appendChild(s);
     }
-  // 이름 변경시 라벨 텍스트도 즉시 갱신되도록 name까지 의존성 포함
+    // 이름 변경시 라벨 텍스트도 즉시 갱신되도록 name까지 의존성 포함
+    // eslint-disable-next-line
   }, [c?.latitude, c?.longitude, c?.name]);
 
   if (!c) return null;

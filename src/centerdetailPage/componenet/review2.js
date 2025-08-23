@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+// eslint-disable-next-line
 import ReviewModal from "../../common/ReviewModal";
 import LoginModal1 from "../../common/loginmodal"; // ✅ 네가 만든 로그인 모달
 
@@ -17,7 +18,11 @@ const Review = styled.div`
 `;
 
 const GO = styled.div`
- color: var(--Foundation-Blue-blue-700, #7D838A); font-family: Pretendard; font-size: 16px; font-weight: 600; line-height: normal; /* margin-right:5px; ← 삭제 */
+  color: var(--Foundation-Blue-blue-700, #7d838a);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal; /* margin-right:5px; ← 삭제 */
 `;
 
 const Write = styled.div`
@@ -29,16 +34,18 @@ const Write = styled.div`
 
   display: inline-flex;
   align-items: center;
-  gap:5px;
+  gap: 5px;
 
   padding: 6px 8px;
   border-radius: 6px;
 
-  svg { display: block; }
+  svg {
+    display: block;
+  }
 
   &:active {
-    background: #E7E9EC;
-    color: #7D838A;
+    background: #e7e9ec;
+    color: #7d838a;
   }
 `;
 
@@ -130,7 +137,7 @@ export default function Review2({ center }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [showModal, setShowModal] = useState(false);          // 리뷰 작성 모달
+  const [showModal, setShowModal] = useState(false); // 리뷰 작성 모달
   const [showLoginModal, setShowLoginModal] = useState(false); // ✅ 로그인 필요 모달
   const [selectedId, setSelectedId] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -147,18 +154,20 @@ export default function Review2({ center }) {
 
   const handleOpenModal = (id) => {
     if (!isLoggedIn()) {
-      setShowLoginModal(true);         // ✅ 로그인 모달 열기
+      setShowLoginModal(true); // ✅ 로그인 모달 열기
       return;
     }
     setSelectedId(id);
-    setShowModal(true);                // 리뷰 작성 모달 열기
+    setShowModal(true); // 리뷰 작성 모달 열기
   };
 
   const fetchReviewData = useCallback(async (centerId) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get(`${API_BASE_URL}/location/reviews/${centerId}`);
+      const response = await axios.get(
+        `${API_BASE_URL}/location/reviews/${centerId}`
+      );
 
       const list = Array.isArray(response.data)
         ? response.data
@@ -193,7 +202,8 @@ export default function Review2({ center }) {
 
   const visibleReviews = reviews.slice(0, visibleCount);
   const canShowMore = visibleCount < reviews.length;
-  const handleShowMore = () => setVisibleCount((n) => Math.min(n + 10, reviews.length));
+  const handleShowMore = () =>
+    setVisibleCount((n) => Math.min(n + 10, reviews.length));
 
   return (
     <div>
@@ -203,11 +213,26 @@ export default function Review2({ center }) {
         onClick={() => handleOpenModal(c.id)}
         role="button"
         aria-disabled={!c?.id}
-        style={{ opacity: c?.id ? 1 : 0.5, pointerEvents: c?.id ? "auto" : "none" }}
+        style={{
+          opacity: c?.id ? 1 : 0.5,
+          pointerEvents: c?.id ? "auto" : "none",
+        }}
       >
         <GO>리뷰 작성하기</GO>
-        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" fill="none">
-          <path d="M1.5 11L6.5 6L1.5 1" stroke="#7D838A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="8"
+          height="12"
+          viewBox="0 0 8 12"
+          fill="none"
+        >
+          <path
+            d="M1.5 11L6.5 6L1.5 1"
+            stroke="#7D838A"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </Write>
 
@@ -228,7 +253,7 @@ export default function Review2({ center }) {
 
       {/* 기존 리뷰 작성 모달 */}
       {showModal && (
-        <ReviewModal
+        <Review
           id={selectedId}
           onClose={() => setShowModal(false)}
           onSuccess={() => {
@@ -255,18 +280,29 @@ export default function Review2({ center }) {
           </BoxWrapper>
         )}
 
-        {!loading && !error && visibleReviews.map((r) => (
-          <BoxWrapper key={r.id}>
-            <Nickname>{r.nickname}</Nickname>
-            <Stardate>
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="none">
-                <path d="M7.62598 0.500977L9.19757 5.33786H14.2834L10.1689 8.32721L11.7405 13.1641L7.62598 10.1747L3.51148 13.1641L5.08308 8.32721L0.968581 5.33786H6.05438L7.62598 0.500977Z" fill="#FF517E"/>
-              </svg>
-              <Rating>{r.rating}</Rating> · {r.date}일 전
-            </Stardate>
-            <Content>{r.content}</Content>
-          </BoxWrapper>
-        ))}
+        {!loading &&
+          !error &&
+          visibleReviews.map((r) => (
+            <BoxWrapper key={r.id}>
+              <Nickname>{r.nickname}</Nickname>
+              <Stardate>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="14"
+                  viewBox="0 0 15 14"
+                  fill="none"
+                >
+                  <path
+                    d="M7.62598 0.500977L9.19757 5.33786H14.2834L10.1689 8.32721L11.7405 13.1641L7.62598 10.1747L3.51148 13.1641L5.08308 8.32721L0.968581 5.33786H6.05438L7.62598 0.500977Z"
+                    fill="#FF517E"
+                  />
+                </svg>
+                <Rating>{r.rating}</Rating> · {r.date}일 전
+              </Stardate>
+              <Content>{r.content}</Content>
+            </BoxWrapper>
+          ))}
 
         {!loading && !error && canShowMore && (
           <MoreWrap>

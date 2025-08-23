@@ -1,0 +1,15 @@
+.selectBox {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.rotate {
+  transform: rotate(180deg); /* 열리면 화살표 뒤집기 */
+}
