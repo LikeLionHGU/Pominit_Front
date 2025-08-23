@@ -8,6 +8,7 @@ body { margin: 0; background: #fff; }
   --content-width: 1080px;   /* 콘텐츠 폭 */
   --side-gutter: 100px;      /* 좌우 여백 */
   --gutter: 20px;            /* 컬럼 사이 */
+  user-select: none;
 }
 
 /* 컨테이너: 1280px에서는 1080 + 좌우 100 = 정중앙 */
