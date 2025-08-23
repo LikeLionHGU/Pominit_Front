@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -120,6 +121,7 @@ function normalizeCenter(raw) {
 }
 
 export default function Meeting({ center }) {
+  const navigate = useNavigate();
   const [meetings, setMeetings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -198,7 +200,13 @@ export default function Meeting({ center }) {
         {!loading &&
           !error &&
           meetings.map((m, idx) => (
-            <Box key={m.id ?? idx}>
+            <Box
+            key={m?.id ?? idx}
+            onClick={() => navigate(`/gather/detail/${encodeURIComponent(String(m?.id ?? idx))}`)}
+            role="link"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === "Enter" && navigate(`/gather/detail/${encodeURIComponent(String(m?.id ?? idx))}`)}
+          >
               <Meet>{m.title}</Meet>
               <InfoWrapper>
                 <Info>
