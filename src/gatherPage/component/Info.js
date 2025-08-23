@@ -89,17 +89,18 @@ function Info() {
         const { data } = await api.get(`/gather/detail/${id}`, {
           signal: controller.signal,
         });
+        console.log("data: ", data);
 
         // 데이터 정규화(백엔드 응답 필드에 따라 조정 가능)
         const normalized = {
           sport: data?.sport ?? "",
           title: data?.title ?? "제목 없음",
-          date: data?.date ?? "날짜 미정",
+          date: data?.time ?? "날짜 미정",
           location: data?.location ?? "장소 미정",
           capacity: data?.capacity ?? "정원 미정",
           description: data?.description ?? "소개 없음",
-          price: data?.price ?? 0,
-          oldPrice: data?.oldPrice ?? null,
+          price: data?.currentPrice ?? 0,
+          oldPrice: data?.originalPrice ?? null,
           salePercent: data?.salePercent ?? null,
           deadline: formatDeadline(data?.deadline),
           dday: calcDday(data?.deadline), // ✅ 여기서 계산해서 넣음

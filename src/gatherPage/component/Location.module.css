@@ -61,7 +61,7 @@
 .name {
   color: #000;
   font-family: Pretendard;
-  font-size: 1rem;
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -70,9 +70,9 @@
 .description {
   color: var(--Foundation-Blue-blue-600, #a0a8b1);
   font-family: Pretendard;
-  font-size: 0.875rem;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 140%; /* 1.225rem */
 }
 
@@ -104,6 +104,12 @@
 
   border-radius: 0.375rem;
   background: var(--Foundation-main-blue-50, #eaf3fe);
+  color: #000;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .row {

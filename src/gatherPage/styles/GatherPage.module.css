@@ -1,6 +1,7 @@
 .wrap {
   display: flex;
   flex-direction: row;
+  margin-top: 1rem;
 }
 
 .container {

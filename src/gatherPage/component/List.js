@@ -7,7 +7,6 @@ import fallbackData from "../../data/gather.json";
 import styles from "./List.module.css";
 import DateIcon from "../../asset/img/date.svg";
 import LocationIcon from "../../asset/img/location.svg";
-import MemberIcon from "../../asset/img/member.svg";
 import Arrow from "../../asset/img/pointer.svg";
 
 function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
@@ -144,23 +143,28 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
 
               <div className={styles.row}>
                 <span className={styles.content}>
-                  <img
-                    src={MemberIcon}
-                    alt="icon"
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="12"
+                    viewBox="0 0 20 12"
+                    fill="none"
                     className={styles.icon}
-                    style={{
-                      width: "11px",
-                      marginRight: "11px",
-                      marginLeft: "2px",
-                    }}
-                  />
+                  >
+                    <path
+                      opacity="0.9"
+                      d="M13.8286 5.14286C15.2622 5.14286 16.4108 3.99429 16.4108 2.57143C16.4108 1.14857 15.2622 0 13.8286 0C12.3949 0 11.2377 1.14857 11.2377 2.57143C11.2377 3.99429 12.3949 5.14286 13.8286 5.14286ZM6.91948 5.14286C8.35311 5.14286 9.50175 3.99429 9.50175 2.57143C9.50175 1.14857 8.35311 0 6.91948 0C5.48584 0 4.32857 1.14857 4.32857 2.57143C4.32857 3.99429 5.48584 5.14286 6.91948 5.14286ZM6.91948 6.85714C4.90721 6.85714 0.874023 7.86 0.874023 9.85714V11.1429C0.874023 11.6143 1.26266 12 1.73766 12H12.1013C12.5763 12 12.9649 11.6143 12.9649 11.1429V9.85714C12.9649 7.86 8.93175 6.85714 6.91948 6.85714ZM13.8286 6.85714C13.5781 6.85714 13.2931 6.87429 12.9908 6.9C13.0081 6.90857 13.0168 6.92571 13.0254 6.93429C14.0099 7.64571 14.6922 8.59714 14.6922 9.85714V11.1429C14.6922 11.4429 14.6318 11.7343 14.5368 12H19.0104C19.4854 12 19.874 11.6143 19.874 11.1429V9.85714C19.874 7.86 15.8408 6.85714 13.8286 6.85714Z"
+                      fill="#2F83F3"
+                    />
+                  </svg>
                   {current}/{max}명
                 </span>
               </div>
 
               <div className={styles.joinBtn}>
-                <span>
-                  모임 참여하기 <img src={Arrow} alt="icon" />
+                <span style={{ display: "flex", alignItems: "center" }}>
+                  모임 참여하기{" "}
+                  <img src={Arrow} alt="icon" className={styles.pointer} />
                 </span>
               </div>
             </div>
