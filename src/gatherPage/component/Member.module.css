@@ -144,6 +144,7 @@
 
 .emptyText {
   width: 13.125rem;
+  height: 12.5rem;
   gap: 0.25rem;
   display: flex;
   flex-direction: column;

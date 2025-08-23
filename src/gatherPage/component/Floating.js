@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./Floating.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import Modal from "../../common/Modal";
 
 const API_BASE = (process.env.REACT_APP_API_BASE_URL || "").replace(/\/+$/, "");
 const api = axios.create({
@@ -29,6 +30,12 @@ function parseJwt(token) {
 }
 
 function Floating() {
+  const [joinedModalOpen, setJoinedModalOpen] = useState(false); // 성공 모달
+  const [alreadyModalOpen, setAlreadyModalOpen] = useState(false); // 이미 가입 모달
+  const [failedModalOpen, setFailedModalOpen] = useState(false); // 실패 모달
+  const [loginModalOpen, setLoginModalOpen] = useState(false); // 로그인 요청 모달
+  const [expiredModalOpen, setExpiredModalOpen] = useState(false); // 로그인 만료 모달
+
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -70,23 +77,25 @@ function Floating() {
         }
       );
 
-      if (res.status >= 200 && res.status < 300) {
-        alert("신청이 완료되었습니다.");
+      if (res.data.message == "duplicated") {
+        setAlreadyModalOpen(true); // 이미 가입 모달
+      } else if (res.status >= 200 && res.status < 300) {
+        setJoinedModalOpen(true); // 성공 모달
         navigate(`/gather/detail/${id}`);
       } else {
-        alert("신청에 실패했습니다. 다시 시도해주세요.");
+        setFailedModalOpen(true); // 실패 모달
       }
     } catch (error) {
       const status = error?.response?.status;
-      if (status === 401) {
+      if (status === 406) {
         alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
         navigate("/login");
-      } else if (status === 409) {
-        // 서버 정책에 따라 중복 신청 등
-        alert("이미 신청된 모임입니다.");
+      } else if (status === 401) {
+        setLoginModalOpen(true); // 로그인 요청 모달
+        navigate("/login");
       } else {
         console.error("Error joining gather:", error);
-        alert("신청에 실패했습니다. 다시 시도해주세요.");
+        setFailedModalOpen(false);
       }
     } finally {
       setSubmitting(false);
@@ -94,18 +103,117 @@ function Floating() {
   };
 
   return (
-    <div className={styles.floatingBar}>
-      <div className={styles.floatingInner}>
-        <button
-          className={styles.submit}
-          onClick={fetchJoin}
-          disabled={submitting}
-          aria-busy={submitting}
-        >
-          {submitting ? "신청 중..." : "신청하기"}
-        </button>
+    <>
+      <div className={styles.floatingBar}>
+        <div className={styles.floatingInner}>
+          <button
+            className={styles.submit}
+            onClick={fetchJoin}
+            disabled={submitting}
+            aria-busy={submitting}
+          >
+            {submitting ? "신청 중..." : "신청하기"}
+          </button>
+        </div>
       </div>
-    </div>
+      {/* 성공 모달 */}
+      <Modal
+        className={null}
+        isOpen={joinedModalOpen}
+        onClose={() => setJoinedModalOpen(false)}
+      >
+        <div className={styles.modal_title}></div>
+        <div className={styles.modal_con}>모임에 참여하였습니다.</div>
+        <div className={styles.modal_btn}>
+          <button
+            type="button"
+            autoFocus
+            className={styles.modal_ok_btn}
+            onClick={() => setJoinedModalOpen(false)}
+          >
+            확인
+          </button>
+        </div>
+      </Modal>
+      {/* 이미 가입 모달 */}
+      <Modal
+        className={null}
+        isOpen={alreadyModalOpen}
+        onClose={() => setAlreadyModalOpen(false)}
+      >
+        <div className={styles.modal_title}></div>
+        <div className={styles.modal_con}>이미 가입된 모임입니다</div>
+        <div className={styles.modal_btn}>
+          <button
+            type="button"
+            autoFocus
+            className={styles.modal_ok_btn}
+            onClick={() => setAlreadyModalOpen(false)}
+          >
+            확인
+          </button>{" "}
+        </div>
+      </Modal>
+      {/* 실패 모달 */}
+      <Modal
+        className={null}
+        isOpen={failedModalOpen}
+        onClose={() => setFailedModalOpen(false)}
+      >
+        <div className={styles.modal_title}>가입 실패</div>
+        <div className={styles.modal_con}>
+          가입에 실패하였습니다. 다시 시도해주세요.
+        </div>
+        <div className={styles.modal_btn}>
+          <button
+            type="button"
+            autoFocus
+            className={styles.modal_ok_btn}
+            onClick={() => setFailedModalOpen(false)}
+          >
+            확인
+          </button>{" "}
+        </div>
+      </Modal>
+      {/* 로그인 모달 */}
+      <Modal
+        className={null}
+        isOpen={loginModalOpen}
+        onClose={() => setLoginModalOpen(false)}
+      >
+        <div className={styles.modal_title}></div>
+        <div className={styles.modal_con}>로그인 후 이용해주세요.</div>
+        <div className={styles.modal_btn}>
+          <button
+            type="button"
+            autoFocus
+            className={styles.modal_ok_btn}
+            onClick={() => setLoginModalOpen(false)}
+          >
+            확인
+          </button>{" "}
+        </div>
+      </Modal>
+      {/* 로그인 만료 모달 */}
+      <Modal
+        className={null}
+        isOpen={expiredModalOpen}
+        onClose={() => setExpiredModalOpen(false)}
+      >
+        <div className={styles.modal_title}>로그인이 만료되었습니다</div>
+        <div className={styles.modal_con}>다시 로그인해주세요.</div>
+        <div className={styles.modal_btn}>
+          <button
+            type="button"
+            autoFocus
+            className={styles.modal_ok_btn}
+            onClick={() => setExpiredModalOpen(false)}
+          >
+            확인
+          </button>{" "}
+        </div>
+      </Modal>
+    </>
   );
 }
 

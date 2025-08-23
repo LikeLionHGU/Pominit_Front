@@ -39,6 +39,7 @@ const api = axios.create({
   headers: { Accept: "application/json" },
   withCredentials: false,
 });
+
 function GatherDetail() {
   const { id } = useParams(); // /gather/:id
 

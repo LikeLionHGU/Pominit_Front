@@ -57,3 +57,43 @@
 .submit:active {
   background: var(--Foundation-main-blue-600, #2b77dd);
 }
+
+.modal_title {
+  color: var(--Foundation-main-blue-500, #2f83f3);
+  font-family: Pretendard;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.modal_con {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.modal_ok_btn {
+  display: flex;
+  width: 22.125rem;
+  padding: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+
+  border-radius: 0.375rem;
+  border: none;
+  background: var(--Foundation-main-blue-500, #2f83f3);
+
+  color: #fbfbfb;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
