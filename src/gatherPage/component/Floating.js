@@ -34,7 +34,6 @@ function Floating() {
   const [alreadyModalOpen, setAlreadyModalOpen] = useState(false); // 이미 가입 모달
   const [failedModalOpen, setFailedModalOpen] = useState(false); // 실패 모달
   const [loginModalOpen, setLoginModalOpen] = useState(false); // 로그인 요청 모달
-  const [expiredModalOpen, setExpiredModalOpen] = useState(false); // 로그인 만료 모달
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -87,11 +86,8 @@ function Floating() {
       }
     } catch (error) {
       const status = error?.response?.status;
-      if (status === 406) {
-        alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
-        navigate("/login");
-      } else if (status === 401) {
-        setLoginModalOpen(true); // 로그인 요청 모달
+      if (status === 401) {
+        setLoginModalOpen(true); // 로그인 만료 모달
         navigate("/login");
       } else {
         console.error("Error joining gather:", error);
@@ -189,25 +185,6 @@ function Floating() {
             autoFocus
             className={styles.modal_ok_btn}
             onClick={() => setLoginModalOpen(false)}
-          >
-            확인
-          </button>{" "}
-        </div>
-      </Modal>
-      {/* 로그인 만료 모달 */}
-      <Modal
-        className={null}
-        isOpen={expiredModalOpen}
-        onClose={() => setExpiredModalOpen(false)}
-      >
-        <div className={styles.modal_title}>로그인이 만료되었습니다</div>
-        <div className={styles.modal_con}>다시 로그인해주세요.</div>
-        <div className={styles.modal_btn}>
-          <button
-            type="button"
-            autoFocus
-            className={styles.modal_ok_btn}
-            onClick={() => setExpiredModalOpen(false)}
           >
             확인
           </button>{" "}
