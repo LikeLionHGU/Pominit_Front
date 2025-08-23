@@ -30,7 +30,7 @@ const Page = styled.div`
 `;
 const SidebarWrapper = styled.div`
   position: absolute;
-  top: 71px;
+  top: 73px;
   display: flex;
   flex-direction: column;
 `;
