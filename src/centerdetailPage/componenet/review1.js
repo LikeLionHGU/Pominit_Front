@@ -51,7 +51,7 @@ const GaugeFill = styled.div`
 `;
 
 const Rtext = styled.div`
-  color: #000;
+  color:#2B77DD;
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 600;
@@ -61,7 +61,7 @@ const Rtext = styled.div`
 
 const Rscore = styled.div`
 z-index:1;
-  color: var(--Gray-04, #828282);
+  color: #A0A8B1;
 font-family: Pretendard;
 font-size: 14px;
 font-style: normal;

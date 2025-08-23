@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Banner1 from "../asset/img/banner1.svg";
 import Banner2 from "../asset/img/banner2.svg";
 import Banner3 from "../asset/img/banner3.svg";
+import Banner4 from "../asset/img/banner4.svg";
 import Workmodal from "../common/workmodal"; // ← 대문자 컴포넌트명
 import { useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -10,6 +11,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 const SidebarWrap = styled.div`
   transform: translateX(-16px);
   user-select: none;
+   position: relative;
+   z-index: 100;
 `;
 
 const Icon = styled.div`
@@ -28,6 +31,7 @@ const Backbtn = styled.div`
   width: 153px;
   height: 186px;
   flex-shrink: 0;
+   z-index: 2;
 `;
 
 const BtnGroup = styled.div`
@@ -37,6 +41,7 @@ const BtnGroup = styled.div`
   display: flex;
   flex-direction: column;
   padding: 25px;
+  z-index: 3;
 `;
 
 const Btn = styled.button`
@@ -82,19 +87,29 @@ const Banner = styled.div`
   width: 153px;
   height: 260px;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 
   img {
     display: block;
     width: 100%;
     height: 100%;
+    pointer-events: none;
   }
 `;
 
 export default function Sidebar() {
-  const [activeIndex] = useState(0);
+  
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+    const ACTIVE_INDEX = useMemo(() => {
+        if (pathname === "/") return 0;                 // 홈
+        if (pathname.startsWith("/gather")) return 1;   // 모임
+        // 필요 시 다른 탭도 추가
+        return -1;
+      }, [pathname]);
 
   // 경로 → 배너 이미지 매핑
   const BANNERS = useMemo(
@@ -102,6 +117,7 @@ export default function Sidebar() {
       { test: (p) => p === "/", img: Banner1 },
       { test: (p) => p.startsWith("/detail"), img: Banner2 },
       { test: (p) => p.startsWith("/compare"), img: Banner3 },
+      { test: (p) => p.startsWith("/gather"), img: Banner4 },
     ],
     []
   );
@@ -163,8 +179,8 @@ export default function Sidebar() {
           {/* 버튼 그룹 (카드 위에 겹치게) */}
           <BtnGroup>
             {/* 홈 */}
-            <Btn active={activeIndex === 0} onClick={() => navigate("/")}>
-              <Icon active={activeIndex === 0}>
+            <Btn active={ACTIVE_INDEX === 0} onClick={() => navigate("/")}>
+              <Icon active={ACTIVE_INDEX === 0}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
                   <path
                     opacity="0.9"
@@ -176,8 +192,8 @@ export default function Sidebar() {
             </Btn>
 
             {/* 모임 */}
-            <Btn active={activeIndex === 1} onClick={() => navigate("/gather")}>
-              <Icon active={activeIndex === 1}>
+            <Btn active={ACTIVE_INDEX === 1} onClick={() => navigate("/gather")}>
+              <Icon active={ACTIVE_INDEX === 1}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="12" viewBox="0 0 19 12" fill="none">
                   <path
                     opacity="0.9"
@@ -190,7 +206,7 @@ export default function Sidebar() {
 
             {/* 챌린지 */}
             <Btn onClick={() => setShowModal(true)}>
-              <Icon active={activeIndex === 2}>
+              <Icon active={ACTIVE_INDEX === 2}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
                   <path
                     opacity="0.9"
@@ -203,7 +219,7 @@ export default function Sidebar() {
 
             {/* 마이페이지 */}
             <Btn onClick={() => setShowModal(true)}>
-              <Icon active={activeIndex === 3}>
+              <Icon active={ACTIVE_INDEX === 3}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
                   <path
                     opacity="0.9"

@@ -67,7 +67,7 @@ const Stardate = styled.div`
   padding-bottom: 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   user-select: none;
 `;
 
