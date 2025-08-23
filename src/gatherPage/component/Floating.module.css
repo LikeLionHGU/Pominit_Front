@@ -58,7 +58,17 @@
   background: var(--Foundation-main-blue-600, #2b77dd);
 }
 
+.modal_top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .modal_title {
+  display: flex;
+  justify-content: center;
   color: var(--Foundation-main-blue-500, #2f83f3);
   font-family: Pretendard;
   font-size: 1.5rem;

@@ -118,8 +118,12 @@ function Floating() {
         isOpen={joinedModalOpen}
         onClose={() => setJoinedModalOpen(false)}
       >
-        <div className={styles.modal_title}></div>
-        <div className={styles.modal_con}>모임에 참여하였습니다.</div>
+        <div className={styles.modal_top}>
+          <div className={styles.modal_title}>모임에 참여하셨습니다!</div>
+          <div className={styles.modal_con}>
+            댓글을 통해 멤버들과 소통해보세요!
+          </div>
+        </div>
         <div className={styles.modal_btn}>
           <button
             type="button"

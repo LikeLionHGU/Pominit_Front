@@ -138,6 +138,7 @@ export default function Review2({ center }) {
   const location = useLocation();
 
   const [showModal, setShowModal] = useState(false); // 리뷰 작성 모달
+
   const [showLoginModal, setShowLoginModal] = useState(false); // ✅ 로그인 필요 모달
   const [selectedId, setSelectedId] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -155,6 +156,7 @@ export default function Review2({ center }) {
   const handleOpenModal = (id) => {
     if (!isLoggedIn()) {
       setShowLoginModal(true); // ✅ 로그인 모달 열기
+
       return;
     }
     setSelectedId(id);
@@ -253,7 +255,7 @@ export default function Review2({ center }) {
 
       {/* 기존 리뷰 작성 모달 */}
       {showModal && (
-        <Review
+        <ReviewModal
           id={selectedId}
           onClose={() => setShowModal(false)}
           onSuccess={() => {
