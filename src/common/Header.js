@@ -48,7 +48,7 @@ const Logo = styled.svg`
   cursor: pointer;
 `;
 
-const BLUE_PATTERNS = ["/detail/*", "/compare/*"];
+const BLUE_PATTERNS = ["/detail/*", "/compare/*", "/gather/*"];
 
 function isOneOf(pathname, patterns) {
   return patterns.some((p) =>
