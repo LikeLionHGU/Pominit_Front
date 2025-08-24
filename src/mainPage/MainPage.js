@@ -7,6 +7,7 @@ import Centers from "./component/centers";
 import BG from "../common/background";
 import Floating from "../common/floatingbtn";
 import styled from "styled-components";
+import Footer from "../common/Footer";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -33,7 +34,7 @@ const Welcome = styled.div`
   user-select: none;
 `;
 const MainContainer = styled.div`
-  height: 180vh;
+  height: 100vh;
   width: auto;
   display: flex;
   flex-direction: column;
@@ -51,7 +52,9 @@ const FloatingWrapper = styled.div`
   right: 40px;
   z-index: 1000;
 `;
-
+const FooterWrapper = styled.div`
+padding-top:70px;
+`;
 // JWT payload 파싱 함수 (jwt를 디코딩한 payload 반환하는 기능)
 function parseJwt(token) {
   try {
@@ -98,24 +101,6 @@ export default function MainPage() {
     }
   }, []);
 
-  /* 정렬 관련 -> sorting 값이 바뀔 때마다 실행됨 */
-  useEffect(() => {
-    // 0/1/2 라벨로 매핑하는 객체
-    const labelMap = { 0: "높은평점순", 1: "낮은가격순", 2: "리뷰많은순" };
-    //정렬 상태 변경 했을때 콘솔에 코드값, 라벨 출력
-    console.log(
-      "[MainPage] sorting state changed:",
-      sorting,
-      `(${labelMap[sorting]})`
-    );
-  }, [sorting]);
-
-  /* 스포츠 관련 -> sport 값이 바뀔 때마다 실행됨 */
-  useEffect(() => {
-    // 빈 문자열("")이면 전체로 표시
-    const label = sport && sport.trim().length > 0 ? sport : "전체";
-    console.log("[MainPage] sport state changed:", sport, `(${label})`);
-  }, [sport]);
 
   /*
 value={sorting} → 현재 선택된 정렬 상태(0, 1, 2 등)를 자식 컴포넌트에 전달.
@@ -149,6 +134,7 @@ Centers 내부에서는 sport, sorting 두가지 props를 활용해서
           <Floating />
         </FloatingWrapper>
       </div>
+      <FooterWrapper><Footer /></FooterWrapper>
     </MainContainer>
   );
 }

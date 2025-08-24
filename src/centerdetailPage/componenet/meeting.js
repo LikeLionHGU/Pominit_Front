@@ -155,7 +155,6 @@ export default function Meeting({ center }) {
 
       setMeetings(normalized);
     } catch (e) {
-      console.error(e);
       setError("데이터를 불러오지 못했습니다.");
       setMeetings([]);
     } finally {

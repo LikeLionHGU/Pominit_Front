@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 import styled from "styled-components";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
+//position: absolute;
+  //top: 521.28px;
+  //left: 190px;
 const Grid = styled.div`
-  position: absolute;
-  top: 521.28px;
-  left: 190px;
+  margin-top:521.28px;
+  margin-left:190px;
+  min-height:500px;
   display: grid;
   grid-template-columns: repeat(3, 284px);
   gap: 28px 14px;
@@ -182,16 +186,12 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
 
   // 정렬 prop 들어오는지 확인 -> sorting 값 바뀔 때마다 콘솔에 찍기
   useEffect(() => {
-    console.log("[Centers] received sorting prop:", sorting);
   }, [sorting]);
 
   // 기본 리스트: 처음 + sorting/sport 바뀔 때
   useEffect(() => {
     // 검색 중이면 기본 리스트 재호출 스킵
     if (searchTerm.trim()) {
-      console.log(
-        "[Centers] sorting changed but search is active -> skip list API"
-      );
       return;
     }
 
@@ -203,9 +203,7 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
         const body = { sport, sorting };
         //요청 바디에 현재 선택된 sport와 sorting을 담음
 
-        console.log("[Centers] POST /home/location/list body:", body);
-        console.time("[Centers] fetch list");
-
+   
         const res = await axios.post(url, body, {
           headers: { "Content-Type": "application/json" },
         });
@@ -214,14 +212,14 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
         const arr = Array.isArray(res.data) ? res.data : res.data?.list || [];
 
         if (!cancelled) {
-          console.log("[Centers] response items:", arr.length);
+   
           setBaseLists(arr);
           setLists(arr);
         }
       } catch (e) {
-        console.error("[Centers] list error:", e.response?.status, e.message);
+   
       } finally {
-        console.timeEnd("[Centers] fetch list");
+  
         if (!cancelled) setLoading(false);
       }
     })();
@@ -237,20 +235,15 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
     //검색어 비어있을때
     if (!keyword) {
       setLists(baseLists);
-      console.log(
-        "[Centers] search cleared -> restore base list:",
-        baseLists.length
-      );
+     
       return;
     }
 
     try {
       setLoading(true);
       const url = `${API_BASE_URL}/home/location/search`;
-      console.log("[Centers] GET /home/location/search params:", {
-        input: keyword,
-      });
-      console.time("[Centers] fetch search");
+     
+
 
       //검색실행
       const res = await axios.get(url, {
@@ -260,12 +253,12 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
 
       //응답데이터가 배열이면 그대로 사용
       const arr = Array.isArray(res.data) ? res.data : res.data?.list || [];
-      console.log("[Centers] search response items:", arr.length);
+
       setLists(arr);
     } catch (e) {
-      console.error("[Centers] search error:", e.response?.status, e.message);
+
     } finally {
-      console.timeEnd("[Centers] fetch search");
+
       setLoading(false);
     }
   };
@@ -307,7 +300,7 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
       <Wrapper>
         <Field>
           <Bar
-            placeholder="검색어를 입력해주세요! (ex. 입문자, 용흥동)"
+            placeholder="검색어를 입력해주세요! (ex. 서핑, 용흥동)"
             maxLength={28}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}

@@ -68,7 +68,7 @@ const toAbsUrl = (u) => {
   if (!u) return "";
   if (/^https?:\/\//i.test(u)) return u;
   if (!API_BASE_URL) {
-    console.warn("API_BASE_URL is empty. Cannot build absolute URL for:", u);
+    
     return u;
   }
   return `${API_BASE_URL}${u.startsWith("/") ? "" : "/"}${u}`;

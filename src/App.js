@@ -8,6 +8,7 @@ import GatherDetail from "./gatherPage/GatherDetail";
 import LoginPage from "./loginPage/LoginPage";
 import { CompareProvider } from "./common/compareBasket";
 
+
 function App() {
   return (
     <CompareProvider>
@@ -21,6 +22,7 @@ function App() {
           <Route path="/compare" element={<ComparePage />} />
           <Route path="/gather/detail/:id" element={<GatherDetail />} />
         </Routes>
+    
       </BrowserRouter>
     </CompareProvider>
   );

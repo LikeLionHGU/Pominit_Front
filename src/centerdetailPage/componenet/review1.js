@@ -92,7 +92,7 @@ export default function Review1({center}) {
       const response = await axios.get(
         `${API_BASE_URL}/location/analysis/${centerId}`
       );
-      console.log("📌 리뷰 API 응답:", response);
+     
 
       const list = Array.isArray(response.data)
         ? response.data
@@ -106,7 +106,6 @@ export default function Review1({center}) {
       setReviews(normalized);
       setVisibleCount(10); // ✅ 새 데이터 들어오면 초기화
     } catch (e) {
-      console.error(e);
       setError("데이터를 불러오지 못했습니다.");
       setReviews([]);
       setVisibleCount(10); // ✅ 오류 시도 초기화(안전)

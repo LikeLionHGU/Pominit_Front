@@ -53,10 +53,10 @@ function Member({ leader }) {
         }));
 
         setMembers(normalized);
-        console.log("멤버 목록:", normalized);
+        
       } catch (e) {
         if (axios.isCancel(e)) return;
-        console.error("멤버 불러오기 실패:", e);
+       
         setErr(e.message || "멤버를 가져오지 못했습니다.");
       } finally {
         setLoading(false);

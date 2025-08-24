@@ -25,7 +25,7 @@ background: #FFF;
 
 &:active{
 border-radius: 100px;
-border: 2px solid var(--Foundation-main-blue-500, #2F83F3);
+border: 1px solid var(--Foundation-main-blue-500, #2F83F3);
 background: #FFF;
 }
 `;
@@ -58,6 +58,9 @@ const Popover = styled.div`
 
 const ArrowIcon = styled.svg`
   stroke: #336DFF;
+   transition: transform 180ms ease;
+ transform-origin: 50% 50%;
+ transform: rotate(${p => (p.$open ? 180 : 0)}deg);
 `;
 
 
@@ -152,7 +155,7 @@ export default function TypeBtn({ value = "", onChange }) {
 
   const handleSelect = (nextValue) => {
     // 콘솔 확인용
-    console.log("[TypeBtn] select:", nextValue);
+
     onChange?.(nextValue);         // 부모(MainPage)로 전달
     setOpen(false);
   };
@@ -162,7 +165,7 @@ export default function TypeBtn({ value = "", onChange }) {
       <Btn onClick={() => setOpen(p => !p)} aria-expanded={open}>
         <Label>{value ? currentLabel : DEFAULT_LABEL}</Label>
         <IconBox>
-          <ArrowIcon xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden>
+          <ArrowIcon  $open={open}  xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden>
             <path d="M1 0.724L6 6.724L11 0.724" strokeWidth="1.2" />
           </ArrowIcon>
         </IconBox>

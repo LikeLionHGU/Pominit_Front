@@ -31,13 +31,13 @@ background: #FFF;
   }
 &:focus{
 border-radius: 6px;
-border: 2px solid var(--Foundation-main-blue-500, #2F83F3);
+border: 1px solid var(--Foundation-main-blue-500, #2F83F3);
 background: #FFF;
 }
 
 &:active{
 border-radius: 6px;
-border: 2px solid var(--Foundation-main-blue-500, #2F83F3);
+border: 1px solid var(--Foundation-main-blue-500, #2F83F3);
 background: #FFF;
 }
 `;
@@ -133,16 +133,12 @@ export default function FilterBox({
 
   /* 선택 동작 처리, 선택된 값으로 라벨 바꾸기 */
   const choose = (v) => {
-    console.debug("[FilterBox] onChange ->", v, labelOf(v));
+
     if (!isControlled) setInnerSelected(v); //언컨트롤드 모드일때만 내부 상태를 직접 변경
     onChange?.(v); //부모 컴포넌트에게 선택된 값 알림
     setOpen(false); //선택끝나면 드롭다운 닫기
   };
-  // value를 문자열 label로 변환
-  function labelOf(v) {
-    const found = OPTIONS.find(o => o.value === v);
-    return found ? found.label : v;
-  }
+ 
   const current = OPTIONS.find((o) => o.value === selected) || OPTIONS[0];
 
   return (

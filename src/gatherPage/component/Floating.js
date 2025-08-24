@@ -134,7 +134,6 @@ function Floating({ initialState }) {
       } else if (status === 500) {
         setExpiredModalOpen(true);
       } else {
-        console.error("Error joining gather:", error);
         setFailedModalOpen(true);
       }
     } finally {
