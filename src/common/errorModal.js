@@ -109,8 +109,9 @@ export default function ERRModal({
       localStorage.removeItem("token");          // ✨ access token 삭제
       localStorage.removeItem("refreshToken");   // ✨ 있으면 함께 삭제 (없으면 무시)
     } catch {}
-    onClose?.();                                  // ✨ 모달 닫기
-}, [onClose]);  
+    onClose?.();                                  // ✨ 모달 닫기 
+  setTimeout(() => window.location.reload(), 0);
+}, [onClose]);
   // ESC 닫기 + 첫 버튼 포커스
   useEffect(() => {
     if (!open) return;

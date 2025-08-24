@@ -69,6 +69,9 @@ const Btn = styled.button`
   &:last-of-type {
     margin-bottom: 24px;
   }
+     &:focus {
+    outline: none;
+  }
 
   /* active가 false일 때만 hover 적용 */
   ${({ active }) =>

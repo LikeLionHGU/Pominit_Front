@@ -337,7 +337,7 @@ await axios.post(url, body, {
     open
     onClose={() => setShowLoginModal(false)}
     title="세션이 만료되었습니다"
-    description={loginMsg || "안전한 사용을 위해 다시 로그인 해주세요"}
+    description={"다시 로그인 해주세요"}
     confirmText="로그인 하기"
     cancelText="닫기"
     // onConfirm 안 주면 기본 동작: /login 이동
