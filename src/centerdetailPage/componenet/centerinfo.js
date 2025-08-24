@@ -203,9 +203,13 @@ function labelFromURL(u, idx = 0) {
   }
 }
 function SummaryText({ text }) {
-  const formatted = (text || "").replace(/([.?!])\s*/g, "$1\n").trim();
+  const formatted = (text || "")
+    .replace(/([.?!])\s*/g, "$1 ") // ← \n 대신 공백
+    .trim();
+
   return <Summary>{formatted}</Summary>;
 }
+
 
 function normalizeCenter(raw) {
   if (!raw) return null;

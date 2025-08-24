@@ -71,6 +71,8 @@ const DetailPage = () => {
         //if (elapsed < MIN_SPINNER_MS) {
           //await new Promise((r) => setTimeout(r, MIN_SPINNER_MS - elapsed));
         //}
+        console.log("[DetailPage] API 응답:", res);
+       console.log("[DetailPage] 응답 데이터:", res.data);
 
         setCenter(res.data);
       } catch (e) {
