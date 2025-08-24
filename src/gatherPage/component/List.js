@@ -1,5 +1,5 @@
 // List.jsx
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import fallbackData from "../../data/gather.json";
@@ -14,7 +14,6 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
-  const didFetch = useRef(false); // StrictMode 가드
 
   const fmtDate = (time) => {
     if (!time) return "";

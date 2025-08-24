@@ -89,7 +89,6 @@ function Info() {
         const { data } = await api.get(`/gather/detail/${id}`, {
           signal: controller.signal,
         });
-        
 
         // 데이터 정규화(백엔드 응답 필드에 따라 조정 가능)
         const normalized = {
@@ -101,16 +100,15 @@ function Info() {
           description: data?.description ?? "소개 없음",
           price: data?.currentPrice ?? 0,
           oldPrice: data?.originalPrice ?? null,
-          salePercent: data?.salePercent ?? null,
+          salePercent: data?.salePercent ?? 0,
           deadline: formatDeadline(data?.deadline),
           dday: calcDday(data?.deadline), // ✅ 여기서 계산해서 넣음
         };
 
         setGather(normalized);
-      
+        console.log(data);
       } catch (e) {
         if (!axios.isCancel(e)) {
-        
           setErr(e.message || "모임 정보를 가져오지 못했습니다.");
         }
       } finally {
