@@ -13,48 +13,83 @@ const api = axios.create({
   withCredentials: false,
 });
 
-function parseJwt(token) {
-  try {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
-    );
-    return JSON.parse(jsonPayload);
-  } catch {
-    return null;
-  }
-}
-
-function Floating() {
-  const [joinedModalOpen, setJoinedModalOpen] = useState(false); // 성공 모달
-  const [alreadyModalOpen, setAlreadyModalOpen] = useState(false); // 이미 가입 모달
-  const [failedModalOpen, setFailedModalOpen] = useState(false); // 실패 모달
-  const [loginModalOpen, setLoginModalOpen] = useState(false); // 로그인 요청 모달
+function Floating({ initialState }) {
+  const [joinedModalOpen, setJoinedModalOpen] = useState(false); // 가입 성공
+  const [failedModalOpen, setFailedModalOpen] = useState(false); // 가입 실패
+  const [expiredModalOpen, setExpiredModalOpen] = useState(false); // 로그인 만료
+  const [loginModalOpen, setLoginModalOpen] = useState(false); // 로그인 유도
 
   const navigate = useNavigate();
   const { id } = useParams();
-  // eslint-disable-next-line
-  const [userId, setUserId] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const token = localStorage.getItem("token");
 
-  // 토큰에서 userId 추출(선택사항)
+  const [joinState, setJoinState] = useState("ok");
+  const [stateLoading, setStateLoading] = useState(initialState == null);
+  const isFull = joinState === "full";
+  const isJoined = joinState === "joined";
+
   useEffect(() => {
-    if (!token) return;
-    const p = parseJwt(token);
-    if (p?.userId || p?.id) setUserId(p.userId || p.id);
-  }, [token]);
+    if (initialState == null) return;
+    const norm = String(initialState).trim().toLowerCase();
+    if (norm === "full") setJoinState("full");
+    else if (
+      ["joined", "duplicated", "duplecated", "duplacated"].includes(norm)
+    )
+      setJoinState("joined");
+    else setJoinState("ok");
+    setStateLoading(false);
+  }, [initialState]);
+
+  useEffect(() => {
+    if (initialState != null) return;
+    let ignore = false;
+    (async () => {
+      try {
+        setStateLoading(true);
+        const headers = {};
+        if (token) {
+          headers.Authorization = token.startsWith("Bearer ")
+            ? token
+            : `Bearer ${token}`;
+        }
+        // 서버 상태 조회 엔드포인트에 맞게 사용
+        const r = await api.get(`/gather/state/${id}`, { headers });
+        const raw = (r?.data?.state || r?.data?.message || "")
+          .toString()
+          .trim()
+          .toLowerCase();
+
+        if (ignore) return;
+
+        if (raw === "full") setJoinState("full");
+        else if (
+          ["joined", "duplicated", "duplecated", "duplacated"].includes(raw)
+        )
+          setJoinState("joined");
+        else setJoinState("ok");
+      } catch (err) {
+        const status = err?.response?.status;
+        if (!ignore && status === 500) {
+          setExpiredModalOpen(true);
+          navigate("/login");
+          return;
+        }
+      } finally {
+        if (!ignore) setStateLoading(false);
+      }
+    })();
+    return () => {
+      ignore = true;
+    };
+  }, [id, token, initialState]);
 
   const fetchJoin = async () => {
     if (submitting) return;
 
-    // 로그인 가드
+    // 로그인 가드: 로그인 안했으면 버튼은 보이되 클릭 시 로그인 유도
     if (!token) {
-      alert("로그인이 필요합니다.");
+      setLoginModalOpen(true);
       navigate("/login");
       return;
     }
@@ -62,8 +97,10 @@ function Floating() {
     try {
       setSubmitting(true);
 
-      // Authorization 헤더 자동 보정 (Bearer 접두사 없으면 붙여줌)
-      const authHeader = token.startsWith("Bearer ") ? token : { token };
+      // ✅ Authorization 헤더 보정
+      const authHeader = token.startsWith("Bearer ")
+        ? token
+        : `Bearer ${token}`;
 
       const res = await api.post(
         `/user/join/${id}`,
@@ -76,22 +113,31 @@ function Floating() {
         }
       );
 
-      if (res.data.message === "duplicated") {
-        setAlreadyModalOpen(true); // 이미 가입 모달
+      const msg = (res?.data?.message || "").toString().toLowerCase();
+
+      if (msg === "full") {
+        setJoinState("full");
+      } else if (
+        ["joined", "duplicated", "duplecated", "duplacated"].includes(msg)
+      ) {
+        setJoinState("joined");
       } else if (res.status >= 200 && res.status < 300) {
-        setJoinedModalOpen(true); // 성공 모달
+        setJoinedModalOpen(true);
         navigate(`/gather/detail/${id}`);
       } else {
-        setFailedModalOpen(true); // 실패 모달
+        setFailedModalOpen(true);
       }
     } catch (error) {
       const status = error?.response?.status;
       if (status === 401) {
-        setLoginModalOpen(true); // 로그인 만료 모달
+        setLoginModalOpen(true);
+        navigate("/login");
+      } else if (status === 500) {
+        setExpiredModalOpen(true);
         navigate("/login");
       } else {
         console.error("Error joining gather:", error);
-        setFailedModalOpen(false);
+        setFailedModalOpen(true);
       }
     } finally {
       setSubmitting(false);
@@ -102,14 +148,32 @@ function Floating() {
     <>
       <div className={styles.floatingBar}>
         <div className={styles.floatingInner}>
-          <button
-            className={styles.submit}
-            onClick={fetchJoin}
-            disabled={submitting}
-            aria-busy={submitting}
-          >
-            {submitting ? "신청 중..." : "신청하기"}
-          </button>
+          {(() => {
+            const btnLabel = submitting
+              ? "신청 중..."
+              : stateLoading
+              ? "상태 확인 중..."
+              : isFull
+              ? "모집이 마감되었습니다!"
+              : isJoined
+              ? "이미 참가중인 모임입니다!"
+              : "신청하기";
+            const isOk = !submitting && !stateLoading && !isFull && !isJoined;
+            const btnClass = `${styles.submit} ${
+              isOk ? styles.ok : styles.notOk
+            }`;
+
+            return (
+              <button
+                className={btnClass}
+                onClick={fetchJoin}
+                disabled={submitting || stateLoading || isFull || isJoined}
+                aria-busy={submitting || stateLoading}
+              >
+                {btnLabel}
+              </button>
+            );
+          })()}
         </div>
       </div>
       {/* 성공 모달 */}
@@ -135,25 +199,6 @@ function Floating() {
           </button>
         </div>
       </Modal>
-      {/* 이미 가입 모달 */}
-      <Modal
-        className={null}
-        isOpen={alreadyModalOpen}
-        onClose={() => setAlreadyModalOpen(false)}
-      >
-        <div className={styles.modal_title}></div>
-        <div className={styles.modal_con}>이미 가입된 모임입니다</div>
-        <div className={styles.modal_btn}>
-          <button
-            type="button"
-            autoFocus
-            className={styles.modal_ok_btn}
-            onClick={() => setAlreadyModalOpen(false)}
-          >
-            확인
-          </button>{" "}
-        </div>
-      </Modal>
       {/* 실패 모달 */}
       <Modal
         className={null}
@@ -172,7 +217,26 @@ function Floating() {
             onClick={() => setFailedModalOpen(false)}
           >
             확인
-          </button>{" "}
+          </button>
+        </div>
+      </Modal>
+      {/* 로그인 만료 모달 */}
+      <Modal
+        className={null}
+        isOpen={expiredModalOpen}
+        onClose={() => setExpiredModalOpen(false)}
+      >
+        <div className={styles.modal_title}></div>
+        <div className={styles.modal_con}>로그인이 만료되었습니다.</div>
+        <div className={styles.modal_btn}>
+          <button
+            type="button"
+            autoFocus
+            className={styles.modal_ok_btn}
+            onClick={() => setExpiredModalOpen(false)}
+          >
+            확인
+          </button>
         </div>
       </Modal>
       {/* 로그인 모달 */}
@@ -191,7 +255,7 @@ function Floating() {
             onClick={() => setLoginModalOpen(false)}
           >
             확인
-          </button>{" "}
+          </button>
         </div>
       </Modal>
     </>

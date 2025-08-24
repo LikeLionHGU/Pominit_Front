@@ -70,16 +70,25 @@ function GatherDetail() {
   useEffect(() => {
     if (!id) return;
     const controller = new AbortController();
-
+    const token = localStorage.getItem("token");
+    const headers = token
+      ? {
+          Authorization: token.startsWith("Bearer ")
+            ? token
+            : `Bearer ${token}`,
+        }
+      : undefined;
     (async () => {
       try {
         setFetchError(null);
         // eslint-disable-next-line
         const { data } = await api.get(`/gather/detail/${id}`, {
           signal: controller.signal,
+          headers,
         });
 
-        setGather({});
+        setGather(data);
+        console.log("디테일: ", data);
       } catch (e) {
         if (!axios.isCancel(e)) {
           console.error("상세 조회 실패:", e);
@@ -123,7 +132,9 @@ function GatherDetail() {
           )}
         </div>
       </div>
-      <Floating />
+      <Floating
+        initialState={gather?.state ?? gather?.joinState ?? gather?.message}
+      />
     </div>
   );
 }
