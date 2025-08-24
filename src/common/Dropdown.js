@@ -14,13 +14,15 @@ import down from "../asset/img/down.svg";
     3. options에는 아래 들어갈 항목을 넣는다
     4. 끗
 */
-function Dropdown({ defaultValue, options }) {
+function Dropdown({ defaultValue, options, onChange, onSelect }) {
   const dropDownRef = useRef();
   const [value, setValue] = useState(defaultValue);
   const [isOpen, setIsOpen] = useDetectClose(dropDownRef);
 
   const handleSelect = (option) => {
     setValue(option);
+    onChange?.(option);
+    onSelect?.(option);
     setIsOpen(false);
   };
 
