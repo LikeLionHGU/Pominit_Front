@@ -1,31 +1,47 @@
 /* reset */
-* { box-sizing: border-box; }
-html, body, #root { height: 100%; }
-body { margin: 0; background: #fff; }
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+  background: #fafbff;
+}
+body {
+  margin: 0;
+  background: #fff;
+}
 
 /* 원하는 값들 */
-:root{
-  --content-width: 1080px;   /* 콘텐츠 폭 */
-  --side-gutter: 100px;      /* 좌우 여백 */
-  --gutter: 20px;            /* 컬럼 사이 */
+:root {
+  --content-width: 1080px; /* 콘텐츠 폭 */
+  --side-gutter: 100px; /* 좌우 여백 */
+  --gutter: 20px; /* 컬럼 사이 */
   user-select: none;
 }
 
 /* 컨테이너: 1280px에서는 1080 + 좌우 100 = 정중앙 */
-.container{
+.container {
   width: min(var(--content-width), calc(100vw - (var(--side-gutter) * 2)));
   margin-inline: auto;
   position: relative;
+  background-color: #fafbff;
 }
-@media (min-width: 1280px){
-  .container{ width: var(--content-width); } /* 1080 고정 */
+@media (min-width: 1280px) {
+  .container {
+    width: var(--content-width);
+  } /* 1080 고정 */
 }
 
 /* 수평 스크롤 방지 (세이프가드) */
-html, body { overflow-x: hidden; }
+html,
+body {
+  overflow-x: hidden;
+}
 
 /* 그리드 */
-.grid{
+.grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--gutter);
@@ -33,7 +49,7 @@ html, body { overflow-x: hidden; }
 }
 
 /* 시각용 가이드라인: border 대신 outline(레이아웃에 영향 없음) */
-.grid > div{
-  background: rgba(255,0,0,.12);
-  outline: 1px solid rgba(0,0,0,.05);
+.grid > div {
+  background: rgba(255, 0, 0, 0.12);
+  outline: 1px solid rgba(0, 0, 0, 0.05);
 }
