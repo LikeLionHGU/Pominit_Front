@@ -242,10 +242,6 @@ await axios.post(url, body, {
       // 실패했으니 완료 상태 되돌리기
       setSubmitted(false);
       const status = err?.response?.status;
-      const msg =
-        err?.response?.data?.message ||
-        `리뷰 등록에 실패했습니다. (status: ${status ?? "unknown"})`;
-    
 
       if (status === 500) {            // ✨
                    // ✨
