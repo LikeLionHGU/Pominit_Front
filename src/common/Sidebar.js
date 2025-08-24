@@ -108,7 +108,9 @@ export default function Sidebar() {
   const { pathname } = useLocation();
 
     const ACTIVE_INDEX = useMemo(() => {
-        if (pathname === "/") return 0;                 // 홈
+        if (pathname === "/") return 0;      
+        if (pathname === "/compare") return 0;   
+        if (pathname === "/" || pathname.startsWith("/detail")) return 0; 
         if (pathname.startsWith("/gather")) return 1;   // 모임
         // 필요 시 다른 탭도 추가
         return -1;

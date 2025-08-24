@@ -78,7 +78,7 @@ background: var(--Foundation-White-white-400, #E1E1E1);
   
 `;
 
-const Register=styled.div`
+ const Register=styled.button`
 color: white;
 text-align: center;
 font-family: Pretendard;
@@ -96,6 +96,9 @@ gap: 10px;
 border-radius: 6px;
 border: 1px solid var(--Foundation-White-white-500, #D9D9D9);
 background: #2F83F3;
+cursor: pointer;
+&:disabled { opacity: .6; cursor: not-allowed; }
+
 `;
 const Signuppage = () => {
     const navigate = useNavigate();
@@ -113,7 +116,8 @@ const Signuppage = () => {
       setForm((prev) => ({ ...prev, [name]: value }));
     };
 
-    const onSubmit = async () =>{
+    const onSubmit = async (e) =>{
+      e.preventDefault();
       try{
         setLoading(true);
         const url = `${API_BASE_URL}/register`;

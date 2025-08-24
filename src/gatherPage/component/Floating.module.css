@@ -58,6 +58,10 @@
   background: var(--Foundation-main-blue-600, #2b77dd);
 }
 
+.submit.notOk {
+  background: var(--Foundation-Blue-blue-300, #cad0d7);
+}
+
 .modal_top {
   display: flex;
   flex-direction: column;

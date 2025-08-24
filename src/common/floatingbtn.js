@@ -8,9 +8,6 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const Wrapper = styled.div`
   user-select: none;
-  position: fixed;
-  bottom: 30px;
-  right: 40px;
   display: inline-flex;
   padding: 13px 24px;
   align-items: center;
@@ -96,6 +93,7 @@ export default function FloatingButton() {
 
   const [open, setOpen] = useState(false);
 
+
   // 항상 길이 3으로 보관하는 썸네일 배열: [string|null, string|null, string|null]
   const [thumbs, setThumbs] = useState([null, null, null]);
   const [error, setError] = useState("");
@@ -111,7 +109,9 @@ export default function FloatingButton() {
     if (routeIds.length === 0) return;
     routeIds.forEach(id => add(id));
     // 필요시 navigate(…, { replace:true, state:undefined })로 state 비우기 가능
-  }, [routePayload, add]);
+  }, [routePayload, add, navigate]);
+
+ 
 
   // 바스켓 → API payload (앞에서부터 최대 3개)
   const payload = useMemo(() => {
@@ -182,6 +182,8 @@ export default function FloatingButton() {
   const onKey = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } };
 
   return (
+    <>
+
     <Wrapper
       data-open={open}
       role="button"
@@ -252,5 +254,6 @@ export default function FloatingButton() {
         </Action>
       </Expand>
     </Wrapper>
+    </>
   );
 }

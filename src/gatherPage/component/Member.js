@@ -70,7 +70,6 @@ function Member({ leader }) {
     <div className={styles.member}>
       <div className={styles.top}>
         <span className={styles.topLeft}>멤버 소개</span>
-        <button className={styles.topRight}>더보기 {">"} </button>
       </div>
 
       <div className={styles.contents}>
