@@ -177,7 +177,7 @@ export default function Workmodal({ id, onClose, onSuccess }) {
 
    // ✨ 500 에러 시 LoginModal 열기 위한 상태 추가
    const [showLoginModal, setShowLoginModal] = useState(false); // ✨
-   const [loginMsg, setLoginMsg] = useState("");                // ✨
+   const [setLoginMsg] = useState("");                // ✨
 
   // ✅ 버튼 활성화 조건: 텍스트 있고, 별점 1~5, 전송 중 아님
   const canSubmit = useMemo(
