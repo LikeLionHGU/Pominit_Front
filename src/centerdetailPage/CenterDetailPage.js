@@ -12,6 +12,7 @@ import Map from "./componenet/map";
 import Meeting from "./componenet/meeting";
 import Review2 from "./componenet/review2";
 import Bar from "./componenet/Bar";
+import Floating from "../common/floatingbtn";
 
 
 const LocalGlobalStyle = createGlobalStyle`
@@ -43,6 +44,12 @@ const HeaderWrapper = styled.div`
 const ContentWrap = styled.div`
   position: relative;
   padding-bottom: calc(72px + 16px + env(safe-area-inset-bottom));
+`;
+const FloatingWrapper = styled.div`
+  position: fixed;
+  bottom: 80px;
+  right: 130px;
+  z-index: 1000;
 `;
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -116,6 +123,9 @@ const DetailPage = () => {
   
 
       <ContentWrap />
+      <FloatingWrapper>
+  <Floating />
+</FloatingWrapper>
       {center && <Bar center={center} />}
     </Page>
     </>
