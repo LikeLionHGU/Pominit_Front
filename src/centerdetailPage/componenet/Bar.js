@@ -133,7 +133,7 @@ const BarComponent = ({ center }) => {
     if (!c?.id) return;
 
     if (items.includes(c.id)) {
-      setMaxModalOpen(true);
+      showToast("이미 담겼어요");
       return;
     }
     if (items.length >= 3) {

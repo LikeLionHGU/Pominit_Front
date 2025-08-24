@@ -109,7 +109,7 @@ export default function FloatingButton() {
     if (routeIds.length === 0) return;
     routeIds.forEach(id => add(id));
     // 필요시 navigate(…, { replace:true, state:undefined })로 state 비우기 가능
-  }, [routePayload, add]);
+  }, [routePayload, add, navigate]);
 
  
 
