@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useCompareBasket } from "../../common/compareBasket";
 import React, { useRef, useState, useEffect } from "react"; // ← useRef/useState/useEffect 필요
-import { useNavigate } from "react-router-dom";
 import Modal from "../../common/fullModal";
 
 
@@ -110,7 +109,6 @@ const toAbsUrl = (u) => {
 };
 
 const BarComponent = ({ center }) => {
-  const navigate = useNavigate();
   const { add, items = [] } = useCompareBasket();
   const c = normalizeCenter(center);
   const [maxModalOpen, setMaxModalOpen] = useState(false);
