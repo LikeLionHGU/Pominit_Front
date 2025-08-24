@@ -82,7 +82,7 @@ function Floating({ initialState }) {
     return () => {
       ignore = true;
     };
-  }, [id, token, initialState]);
+  }, [id, token, initialState, navigate]);
 
   const fetchJoin = async () => {
     if (submitting) return;
