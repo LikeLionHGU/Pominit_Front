@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 import styled from "styled-components";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
+//position: absolute;
+  //top: 521.28px;
+  //left: 190px;
 const Grid = styled.div`
-  position: absolute;
-  top: 521.28px;
-  left: 190px;
+  margin-top:521.28px;
+  margin-left:190px;
+  min-height:500px;
   display: grid;
   grid-template-columns: repeat(3, 284px);
   gap: 28px 14px;

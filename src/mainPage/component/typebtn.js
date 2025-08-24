@@ -25,7 +25,7 @@ background: #FFF;
 
 &:active{
 border-radius: 100px;
-border: 2px solid var(--Foundation-main-blue-500, #2F83F3);
+border: 1px solid var(--Foundation-main-blue-500, #2F83F3);
 background: #FFF;
 }
 `;
