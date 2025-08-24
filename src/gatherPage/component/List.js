@@ -14,7 +14,6 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
-  const didFetch = useRef(false); // StrictMode 가드
 
   const fmtDate = (time) => {
     if (!time) return "";

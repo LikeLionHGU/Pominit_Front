@@ -6,7 +6,6 @@ html,
 body,
 #root {
   height: 100%;
-  background: #fafbff;
 }
 body {
   margin: 0;
@@ -26,7 +25,6 @@ body {
   width: min(var(--content-width), calc(100vw - (var(--side-gutter) * 2)));
   margin-inline: auto;
   position: relative;
-  background-color: #fafbff;
 }
 @media (min-width: 1280px) {
   .container {
