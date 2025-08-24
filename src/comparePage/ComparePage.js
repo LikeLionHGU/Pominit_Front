@@ -195,7 +195,7 @@ const PriceText = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-
+ padding-top:10px;
   text-decoration-line: underline;
   text-decoration-style: solid;
   text-decoration-skip-ink: auto;

@@ -1,6 +1,5 @@
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useEffect, useRef } from "react";
-
 const Mapstyle = styled.div`
   position: absolute;
   top: 775.72px;
@@ -39,7 +38,7 @@ export default function Map({ center }) {
   const markerRef = useRef(null);
   // eslint-disable-next-line
   const infoRef = useRef(null); // ⭐ 이름 라벨(InfoWindow) 참조
-
+  const [interactive, setInteractive] = useState(false);
   const c = normalizeCenter(center);
 
   useEffect(() => {
@@ -77,6 +76,21 @@ export default function Map({ center }) {
           const zoomControl = new window.kakao.maps.ZoomControl();
           map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
           mapObjRef.current = map;
+
+  // ✅ 초기엔 스크롤/드래그 비활성화
+            map.setDraggable(false);
+            if (map.setZoomable) map.setZoomable(false);
+  
+            // ✅ 맵 클릭하면 활성화
+            window.kakao.maps.event.addListener(map, "click", () => {
+              setInteractive(true);
+            });
+
+
+
+
+
+
         }
 
         const map = mapObjRef.current;
@@ -119,6 +133,13 @@ export default function Map({ center }) {
     // 이름 변경시 라벨 텍스트도 즉시 갱신되도록 name까지 의존성 포함
     // eslint-disable-next-line
   }, [c?.latitude, c?.longitude, c?.name]);
+    // ✅ 활성화 상태가 바뀔 때 지도 인터랙션 옵션 갱신
+  useEffect(() => {
+    if (!mapObjRef.current) return;
+    const map = mapObjRef.current;
+    map.setDraggable(interactive);
+    if (map.setZoomable) map.setZoomable(interactive);
+  }, [interactive]);
 
   if (!c) return null;
 
