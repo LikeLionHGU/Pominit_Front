@@ -46,6 +46,12 @@ const SidebarWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
+const FloatingWrapper = styled.div`
+   position: fixed;
+  bottom: 30px;
+  right: 40px;
+  z-index: 1000;
+`;
 
 // JWT payload 파싱 함수 (jwt를 디코딩한 payload 반환하는 기능)
 function parseJwt(token) {
@@ -136,7 +142,9 @@ Centers 내부에서는 sport, sorting 두가지 props를 활용해서
       <FilterBox value={sorting} onChange={setSorting} />
       <Centers sport={sport} sorting={sorting} /> 
     
-      <Floating/>
+      <FloatingWrapper>
+  <Floating />
+</FloatingWrapper>
       </div>
     </MainContainer>
   );
