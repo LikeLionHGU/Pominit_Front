@@ -300,7 +300,13 @@ export default function Review2({ center }) {
                     fill="#FF517E"
                   />
                 </svg>
-                <Rating>{r.rating}</Rating> · {r.date}일 전
+                <Rating>{r.rating}</Rating> · {
+    (() => {
+      const n = Number(r.date);
+      if (Number.isFinite(n)) return n === 0 ? "오늘" : `${n}일 전`;
+      return String(r.date); // 숫자가 아닐 땐 원본 표시
+    })()
+  }
               </Stardate>
               <Content>{r.content}</Content>
             </BoxWrapper>
