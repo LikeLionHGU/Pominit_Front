@@ -185,7 +185,7 @@ export default function Review2({ center }) {
       setReviews(normalized);
       setVisibleCount(10);
     } catch (e) {
-      console.error(e);
+    
       setError("데이터를 불러오지 못했습니다.");
       setReviews([]);
       setVisibleCount(10);

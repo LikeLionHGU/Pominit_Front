@@ -162,13 +162,12 @@ const LoginPage = () => {
       });
 
       const token = res.headers["authorization"];
-      console.log(token);
+     
       localStorage.setItem("token", token);
 
       navigate("/");
       window.location.reload();
     } catch (err) {
-      console.error(err);
   
     } finally {
       setLoading(false);

@@ -41,7 +41,7 @@ function Location() {
           signal: controller.signal,
         });
 
-        console.log("강습소 정보:", data);
+      
 
         // data 예시를 넉넉히 커버 (필드명 다를 수 있어 폴백)
         const normalized = {
@@ -55,10 +55,10 @@ function Location() {
         };
 
         setPlace(normalized);
-        console.log("강습소 정보:", normalized);
+     
       } catch (e) {
         if (!axios.isCancel(e)) {
-          console.error("강습소 불러오기 실패:", e);
+         
           setErr(e.message || "강습소 정보를 가져오지 못했습니다.");
         }
       } finally {

@@ -133,7 +133,7 @@ export default function FilterBox({
 
   /* 선택 동작 처리, 선택된 값으로 라벨 바꾸기 */
   const choose = (v) => {
-    console.debug("[FilterBox] onChange ->", v, labelOf(v));
+
     if (!isControlled) setInnerSelected(v); //언컨트롤드 모드일때만 내부 상태를 직접 변경
     onChange?.(v); //부모 컴포넌트에게 선택된 값 알림
     setOpen(false); //선택끝나면 드롭다운 닫기

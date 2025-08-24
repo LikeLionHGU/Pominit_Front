@@ -155,7 +155,7 @@ export default function TypeBtn({ value = "", onChange }) {
 
   const handleSelect = (nextValue) => {
     // 콘솔 확인용
-    console.log("[TypeBtn] select:", nextValue);
+
     onChange?.(nextValue);         // 부모(MainPage)로 전달
     setOpen(false);
   };

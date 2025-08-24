@@ -26,7 +26,6 @@ function parseJwt(token) {
     );
     return JSON.parse(jsonPayload);
   } catch (error) {
-    console.error("JWT 파싱 에러:", error);
     return null;
   }
 }
@@ -88,10 +87,10 @@ function GatherDetail() {
         });
 
         setGather(data);
-        console.log("디테일: ", data);
+    
       } catch (e) {
         if (!axios.isCancel(e)) {
-          console.error("상세 조회 실패:", e);
+
           setFetchError(e.message || "데이터를 가져오지 못했습니다.");
         }
       }

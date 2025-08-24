@@ -78,14 +78,10 @@ const DetailPage = () => {
         //if (elapsed < MIN_SPINNER_MS) {
           //await new Promise((r) => setTimeout(r, MIN_SPINNER_MS - elapsed));
         //}
-        console.log("[DetailPage] API 응답:", res);
-       console.log("[DetailPage] 응답 데이터:", res.data);
-
         setCenter(res.data);
       } catch (e) {
         if (axios.isCancel(e)) return;
         setError("데이터를 불러오지 못했습니다.");
-        console.error(e);
       } finally {
         setLoading(false);
       }

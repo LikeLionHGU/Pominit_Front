@@ -136,7 +136,6 @@ function Floating({ initialState }) {
         setExpiredModalOpen(true);
         navigate("/login");
       } else {
-        console.error("Error joining gather:", error);
         setFailedModalOpen(true);
       }
     } finally {

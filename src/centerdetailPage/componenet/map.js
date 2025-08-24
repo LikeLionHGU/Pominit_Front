@@ -127,7 +127,6 @@ export default function Map({ center }) {
       s.async = true;
       s.src = SDK_SRC;
       s.onload = onLoad;
-      s.onerror = () => console.error("카카오 SDK 로드 오류");
       document.head.appendChild(s);
     }
     // 이름 변경시 라벨 텍스트도 즉시 갱신되도록 name까지 의존성 포함
