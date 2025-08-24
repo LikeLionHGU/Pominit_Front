@@ -198,7 +198,6 @@ export default function Workmodal({ id, onClose, onSuccess }) {
   const onSubmit = async () => {
     if (!hasText || submitting) return; // 빈 값/중복 방지
     if (!rating || rating < 1) {
-      alert("별점을 선택해 주세요.");
       return;
     }
     setSubmitted(true);
@@ -255,10 +254,7 @@ await axios.post(url, body, {
       if (status === 500) {            // ✨
                    // ✨
         setShowLoginModal(true);       // ✨
-      } else {
-        alert(msg);
       }
-
 
 
 

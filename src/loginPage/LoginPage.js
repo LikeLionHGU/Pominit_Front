@@ -164,12 +164,12 @@ const LoginPage = () => {
       const token = res.headers["authorization"];
       console.log(token);
       localStorage.setItem("token", token);
-      alert("로그인이 완료되었습니다!");
+
       navigate("/");
       window.location.reload();
     } catch (err) {
       console.error(err);
-      alert("로그인에 실패했어요. (API 경로/서버 응답 확인)");
+  
     } finally {
       setLoading(false);
     }

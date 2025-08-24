@@ -131,11 +131,9 @@ const Signuppage = () => {
         headers:{"Content-Type": "application/json"},
       });
       console.log(res);
-      alert("회원가입이 완료되었습니다!");
       navigate("/login");
     } catch (err) {
       console.error(err);
-      alert("회원가입에 실패했어요. (API 경로/서버 응답 확인)");
     } finally {
       setLoading(false);
     }
