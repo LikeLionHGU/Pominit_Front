@@ -715,7 +715,8 @@ const ComparePage = () => {
           {!loading && !error && list.length > 0 && (
             <>
               {list.slice(0, validCount).map((d, i) => (
-                <CompareRow key={i} d={d} onRemove={() => askRemove(i)} />
+                <CompareRow key={i} d={d} onRemove={() => askRemove(i)}
+                isEdge={i === 0}  />
               ))}
               {[...Array(3 - validCount)].map((_, k) => (
                 <Empty key={`ph-${k}`}>

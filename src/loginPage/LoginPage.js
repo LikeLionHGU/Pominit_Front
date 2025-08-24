@@ -98,7 +98,7 @@ const Register = styled.div`
   cursor: pointer;
 `;
 
-const Go = styled.div`
+const Go = styled.button`
   justify-content: center;
   text-align: center;
   display: flex;
@@ -118,6 +118,7 @@ const Go = styled.div`
   line-height: normal;
   margin-top: 12px;
   cursor: pointer;
+   &:disabled { opacity: .6; cursor: not-allowed; }
 `;
 
 const Hr = styled.div`
@@ -146,7 +147,8 @@ const LoginPage = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     try {
       setLoading(true);
       const url = `${API_BASE_URL}/login`;
