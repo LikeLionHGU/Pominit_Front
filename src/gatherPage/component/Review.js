@@ -17,6 +17,7 @@ function TimeFormat(time) {
   const now = new Date();
   const reviewDate = new Date(time);
   const diffDays = Math.floor((now - reviewDate) / (1000 * 60 * 60 * 24));
+  if (diffDays === -1) return "오늘";
   if (diffDays === 0) return "오늘";
   if (diffDays === 1) return "1일 전";
   return `${diffDays}일 전`;
@@ -111,17 +112,6 @@ function Review({ userName, isLoggedIn }) {
 
   // 등록(POST에만 토큰 수동 첨부)
   const handleSubmit = async () => {
-    // 클릭은 항상 되게 두고, 조건 미충족 시 메시지 표시
-    if (!actuallyLoggedIn) {
-      setErr("로그인이 필요합니다.");
-      return;
-    }
-    if (!content.trim()) {
-      setErr("댓글 내용을 입력하세요.");
-      return;
-    }
-    if (posting) return;
-
     try {
       setPosting(true);
       setErr("");

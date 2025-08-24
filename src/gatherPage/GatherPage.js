@@ -46,14 +46,18 @@ function GatherPage() {
                   )
                 }
               />
-              <Calendar onDateChange={(val) => setDate(val)} />
+              <Calendar
+                onDateChange={(val) => {
+                  console.log("picked:", val);
+                  setDate(val);
+                }}
+              />
             </div>
 
             <div className={styles.gathers}>
               <div className={styles.gatherTop}>이런 모임은 어때요?</div>
               <div className={styles.gatherList}>
-                {/* ⬇️ 이제 List가 직접 API 호출 */}
-                <GatherList category={sport} date={date} />
+                <GatherList category={sport} date={date || "모임일자"} />
               </div>
             </div>
           </div>

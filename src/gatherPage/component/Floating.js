@@ -72,7 +72,6 @@ function Floating({ initialState }) {
         const status = err?.response?.status;
         if (!ignore && status === 500) {
           setExpiredModalOpen(true);
-          navigate("/login");
           return;
         }
       } finally {
@@ -134,13 +133,17 @@ function Floating({ initialState }) {
         navigate("/login");
       } else if (status === 500) {
         setExpiredModalOpen(true);
-        navigate("/login");
       } else {
         setFailedModalOpen(true);
       }
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleExpired = () => {
+    setExpiredModalOpen(false);
+    navigate("/login");
   };
 
   return (
@@ -232,7 +235,7 @@ function Floating({ initialState }) {
             type="button"
             autoFocus
             className={styles.modal_ok_btn}
-            onClick={() => setExpiredModalOpen(false)}
+            onClick={handleExpired}
           >
             확인
           </button>

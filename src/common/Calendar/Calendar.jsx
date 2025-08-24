@@ -14,7 +14,7 @@ import down from "../../asset/img/down.svg";
 
 const TIMEZONE = "Asia/Seoul";
 
-const Calendar = () => {
+const Calendar = ({ onDateChange, value }) => {
   // 최초 nowDate 계산 1회만
   const initialNowDate = useMemo(() => toZonedTime(new Date(), TIMEZONE), []);
   const [selectedYearAndMonth, setSelectedYearAndMonth] = useState({
@@ -25,6 +25,13 @@ const Calendar = () => {
   const [selectedTimestamp, setSelectedTimestamp] = useState(
     initialNowDate.setHours(0, 0, 0, 0)
   );
+
+  const toYMD = useCallback((ts) => {
+    const d = toZonedTime(ts, TIMEZONE);
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${d.getFullYear()}-${mm}-${dd}`;
+  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef(null);
@@ -53,9 +60,15 @@ const Calendar = () => {
   // 날짜 클릭 시
   const handleDayClick = useCallback(
     (timestamp) => () => {
-      setSelectedTimestamp(timestamp);
+      setSelectedTimestamp((prev) => {
+        const isSame = prev === timestamp;
+        const next = isSame ? null : timestamp;
+        onDateChange?.(isSame ? "" : toYMD(timestamp));
+        return next;
+      });
+      setIsOpen(false);
     },
-    []
+    [onDateChange, toYMD]
   );
 
   // '오늘' 클릭 시
@@ -67,10 +80,12 @@ const Calendar = () => {
       year: now.getFullYear(),
       month: now.getMonth(),
     });
-  }, []);
+    onDateChange?.(toYMD(ts));
+  }, [onDateChange, toYMD]);
 
   // 선택된 날짜 바뀌면 연/월 동기화
   useEffect(() => {
+    if (selectedTimestamp == null) return;
     const selectedDate = toZonedTime(selectedTimestamp, TIMEZONE);
     setSelectedYearAndMonth({
       year: selectedDate.getFullYear(),
@@ -149,9 +164,11 @@ const Calendar = () => {
       >
         <span className={styles.selectBox}>
           {/* 표시용: 선택된 날짜를 YYYY-MM-DD 로 보여주고 싶다면 */}
-          {new Date(selectedTimestamp).toLocaleDateString("sv-SE", {
-            timeZone: "Asia/Seoul",
-          })}
+          {selectedTimestamp
+            ? new Date(selectedTimestamp).toLocaleDateString("sv-SE", {
+                timeZone: "Asia/Seoul",
+              })
+            : "모임 일자"}
           {"  "}
           <img
             src={down}
