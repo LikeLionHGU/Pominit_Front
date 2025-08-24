@@ -127,7 +127,7 @@ const Signuppage = () => {
           name: form.name,          
           statement: form.statement,  
         };
-      const res = await axios.post(url, body,{
+      await axios.post(url, body,{
         headers:{"Content-Type": "application/json"},
       });
 

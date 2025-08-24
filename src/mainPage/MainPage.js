@@ -101,18 +101,6 @@ export default function MainPage() {
     }
   }, []);
 
-  /* 정렬 관련 -> sorting 값이 바뀔 때마다 실행됨 */
-  useEffect(() => {
-    // 0/1/2 라벨로 매핑하는 객체
-    const labelMap = { 0: "높은평점순", 1: "낮은가격순", 2: "리뷰많은순" };
- 
-  }, [sorting]);
-
-  /* 스포츠 관련 -> sport 값이 바뀔 때마다 실행됨 */
-  useEffect(() => {
-    // 빈 문자열("")이면 전체로 표시
-    const label = sport && sport.trim().length > 0 ? sport : "전체";
-  }, [sport]);
 
   /*
 value={sorting} → 현재 선택된 정렬 상태(0, 1, 2 등)를 자식 컴포넌트에 전달.

@@ -138,11 +138,7 @@ export default function FilterBox({
     onChange?.(v); //부모 컴포넌트에게 선택된 값 알림
     setOpen(false); //선택끝나면 드롭다운 닫기
   };
-  // value를 문자열 label로 변환
-  function labelOf(v) {
-    const found = OPTIONS.find(o => o.value === v);
-    return found ? found.label : v;
-  }
+ 
   const current = OPTIONS.find((o) => o.value === selected) || OPTIONS[0];
 
   return (
