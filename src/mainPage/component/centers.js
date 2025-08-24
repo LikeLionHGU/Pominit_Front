@@ -296,7 +296,7 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
                 <span>{list.score.toFixed(1)}</span>
 
                 <Dot />
-                후기
+                리뷰
                 <span style={{ color: "#A0A8B1" }}>{list.reviewCount}개</span>
               </InfoItem>
             </InfoRow>
