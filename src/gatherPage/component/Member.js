@@ -89,17 +89,17 @@ function Member({ leader }) {
             <span className={styles.badge}>모임장</span>
           </div>
           <div className={styles.leaderInfo}>
-            <div className={styles.name}>{leader?.makerName || "모임장"}</div>
+            <div className={styles.name}>{leader?.name || "모임장"}</div>
             <div className={styles.raw}>
               <span>
                 <img src={PHONE} alt="icon" className={styles.iconImg} />
-                {leader?.makerContact || "연락처"}
+                {leader?.contact || "연락처"}
               </span>
             </div>
             <div className={styles.raw}>
               <span>
                 <img src={SMILE} alt="icon" className={styles.iconImg} />
-                {leader?.makerStatement || "경력"}
+                {leader?.statement || "경력"}
               </span>
             </div>
           </div>

@@ -3,42 +3,41 @@ import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 import Typebtn from "./component/typebtn";
 import FilterBox from "./component/filterbox";
-import Centers from  "./component/centers";
+import Centers from "./component/centers";
 import BG from "../common/background";
 import Floating from "../common/floatingbtn";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  position: absolute;  
-   top:471.28px;
-    left: 190px;
-    color: #000;
-    font-family: Pretendard;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    border-radius: 6px;
+  position: absolute;
+  top: 471.28px;
+  left: 190px;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border-radius: 6px;
 `;
 const Welcome = styled.div`
-position: absolute;  
-   top: 256px;
-color: #FFF;
-font-family: Pretendard;
-font-size: 22px;
-font-style: normal;
-font-weight: 600;
-line-height: 36px; /* 163.636% */
- text-align: left;
- user-select: none;
-
+  position: absolute;
+  top: 256px;
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 36px; /* 163.636% */
+  text-align: left;
+  user-select: none;
 `;
 const MainContainer = styled.div`
-   height: 180vh;  
+  height: 180vh;
   width: auto;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #2185E3 0%, #FFF 100%);
+  background: linear-gradient(180deg, #2185e3 0%, #fff 100%);
 `;
 const SidebarWrapper = styled.div`
   position: absolute;
@@ -47,7 +46,7 @@ const SidebarWrapper = styled.div`
   flex-direction: column;
 `;
 const FloatingWrapper = styled.div`
-   position: fixed;
+  position: fixed;
   bottom: 30px;
   right: 40px;
   z-index: 1000;
@@ -79,9 +78,9 @@ function parseJwt(token) {
 
 export default function MainPage() {
   //정렬 기준 상태, 초기값:0
-  const [sorting, setSorting] = useState(0); 
+  const [sorting, setSorting] = useState(0);
   //선택된 스포츠 상태. 초기값:빈문자열
-  const [sport, setSport] = useState(""); 
+  const [sport, setSport] = useState("");
   //유저 이름 상태, 초기값:게스트 -> 로그인 후에 setUserName으로 업데이트
   const [userName, setUserName] = useState("게스트");
 
@@ -99,24 +98,26 @@ export default function MainPage() {
     }
   }, []);
 
-
   /* 정렬 관련 -> sorting 값이 바뀔 때마다 실행됨 */
-useEffect(() => {
-  // 0/1/2 라벨로 매핑하는 객체
-  const labelMap = { 0: "높은평점순", 1: "낮은가격순", 2: "리뷰많은순" };
-  //정렬 상태 변경 했을때 콘솔에 코드값, 라벨 출력
-  console.log("[MainPage] sorting state changed:", sorting, `(${labelMap[sorting]})`);
-}, [sorting]);
+  useEffect(() => {
+    // 0/1/2 라벨로 매핑하는 객체
+    const labelMap = { 0: "높은평점순", 1: "낮은가격순", 2: "리뷰많은순" };
+    //정렬 상태 변경 했을때 콘솔에 코드값, 라벨 출력
+    console.log(
+      "[MainPage] sorting state changed:",
+      sorting,
+      `(${labelMap[sorting]})`
+    );
+  }, [sorting]);
 
+  /* 스포츠 관련 -> sport 값이 바뀔 때마다 실행됨 */
+  useEffect(() => {
+    // 빈 문자열("")이면 전체로 표시
+    const label = sport && sport.trim().length > 0 ? sport : "전체";
+    console.log("[MainPage] sport state changed:", sport, `(${label})`);
+  }, [sport]);
 
-/* 스포츠 관련 -> sport 값이 바뀔 때마다 실행됨 */
-useEffect(() => {
-  // 빈 문자열("")이면 전체로 표시
-  const label = sport && sport.trim().length > 0 ? sport : "전체";
-  console.log("[MainPage] sport state changed:", sport, `(${label})`);
-}, [sport]);
-
-/*
+  /*
 value={sorting} → 현재 선택된 정렬 상태(0, 1, 2 등)를 자식 컴포넌트에 전달.
 value={sport} → 현재 선택된 스포츠 값 전달
 
@@ -129,22 +130,24 @@ Centers 내부에서는 sport, sorting 두가지 props를 활용해서
 */
   return (
     <MainContainer>
-       <div className="container">
+      <div className="container">
         <BG />
-        <Welcome>{userName} 님 반가워요 !<br/>
-        포항의 모든 해저 레포츠, 씨즐과 함께 즐겨보세요.</Welcome>
-      <Header />
-      <Typebtn value={sport} onChange={setSport} /> 
-      <Wrapper>포항 추천 강습소</Wrapper>
-      <SidebarWrapper>
-        <Sidebar />
-      </SidebarWrapper>
-      <FilterBox value={sorting} onChange={setSorting} />
-      <Centers sport={sport} sorting={sorting} /> 
-    
-      <FloatingWrapper>
-  <Floating />
-</FloatingWrapper>
+        <Welcome>
+          {userName} 님 반가워요 !<br />
+          포항의 모든 해저 레포츠, 씨즐과 함께 즐겨보세요.
+        </Welcome>
+        <Header />
+        <Typebtn value={sport} onChange={setSport} />
+        <Wrapper>포항 추천 강습소</Wrapper>
+        <SidebarWrapper>
+          <Sidebar />
+        </SidebarWrapper>
+        <FilterBox value={sorting} onChange={setSorting} />
+        <Centers sport={sport} sorting={sorting} />
+
+        <FloatingWrapper>
+          <Floating />
+        </FloatingWrapper>
       </div>
     </MainContainer>
   );
