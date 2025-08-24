@@ -1,4 +1,4 @@
-// Workmodal.jsx
+// 공사중 모달
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import { useEffect } from "react";
