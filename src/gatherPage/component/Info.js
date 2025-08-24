@@ -158,13 +158,17 @@ function Info() {
             </span>
             <span>{gather.capacity}명</span>
           </div>
-          <div className={styles.infoRaw}>
+          <div className={styles.infoRaw} style={{ alignItems: "flex-start" }}>
             <span
-              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "0.5rem",
+              }}
             >
               <img src={HAND} alt="icon" /> 모임소개
             </span>
-            <span>{gather.description}</span>
+            <span style={{ width: "23rem" }}>{gather.description}</span>
           </div>
         </div>
 
