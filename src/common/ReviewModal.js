@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useEffect, useState, useMemo } from "react";
 // eslint-disable-next-line
 import Modal from "../common/loginmodal";
+import ErrModal from "../common/errorModal";
 
 // 스타일 수정
 const Wrapper = styled.div`
@@ -174,6 +175,10 @@ export default function Workmodal({ id, onClose, onSuccess }) {
   // 상태 계산
   const hasText = text.trim().length > 0;
 
+   // ✨ 500 에러 시 LoginModal 열기 위한 상태 추가
+   const [showLoginModal, setShowLoginModal] = useState(false); // ✨
+   const [loginMsg, setLoginMsg] = useState("");                // ✨
+
   // ✅ 버튼 활성화 조건: 텍스트 있고, 별점 1~5, 전송 중 아님
   const canSubmit = useMemo(
     () => hasText && rating >= 1 && rating <= 5 && !submitting,
@@ -248,14 +253,26 @@ await axios.post(url, body, {
         err?.response?.data?.message ||
         `리뷰 등록에 실패했습니다. (status: ${status ?? "unknown"})`;
       console.error("[REVIEW] error:", err?.response ?? err);
-      alert(msg);
+
+      if (status === 500) {            // ✨
+        setLoginMsg(msg);              // ✨
+        setShowLoginModal(true);       // ✨
+      } else {
+        alert(msg);
+      }
+
+
+
+
     } finally {
       setSubmitting(false);
     }
   };
 
-  return createPortal(
-    <Overlay onClick={onClose}>
+  return (
+    <>
+      {createPortal(
+        <Overlay onClick={onClose}>
       <Wrapper onClick={(e) => e.stopPropagation()}>
         <Xboxd onClick={onClose} aria-label="닫기">
           <img src={Xbox} alt="닫기" />
@@ -312,5 +329,23 @@ await axios.post(url, body, {
       </Wrapper>
     </Overlay>,
     document.body // ← 콤마 필수!
+        )}
+
+   {/* ✨ 500 에러 시 LoginModal 표시 */}
+   {showLoginModal && (
+  <ErrModal
+    open
+    onClose={() => setShowLoginModal(false)}
+    title="세션이 만료되었습니다"
+    description={loginMsg || "안전한 사용을 위해 다시 로그인 해주세요"}
+    confirmText="로그인 하기"
+    cancelText="닫기"
+    // onConfirm 안 주면 기본 동작: /login 이동
+    zIndex={2100}
+  />
+)}
+
+
+    </>
   );
 }
