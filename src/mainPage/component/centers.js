@@ -307,7 +307,7 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
       <Wrapper>
         <Field>
           <Bar
-            placeholder="검색어를 입력해주세요! (ex. 입문자, 용흥동)"
+            placeholder="검색어를 입력해주세요! (ex. 서핑, 용흥동)"
             maxLength={28}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}

@@ -77,7 +77,7 @@ const Bar = styled.input`
   }
 `;
 
-const Register = styled.div`
+const Register = styled.button.attrs({ type: "submit" })`
   color: white;
   text-align: center;
   font-family: Pretendard;
@@ -98,7 +98,7 @@ const Register = styled.div`
   cursor: pointer;
 `;
 
-const Go = styled.button`
+const Go = styled.button.attrs({ type: "button" })`
   justify-content: center;
   text-align: center;
   display: flex;
@@ -214,14 +214,14 @@ const LoginPage = () => {
               placeholder="비밀번호를 입력해주세요."
               value={form.password}
               onChange={onChange}
-              autoComplete="new-password"
+              autoComplete="current-password"
               required
             />
-            <Register onClick={onSubmit} disabled={loading} autoFocus>
+            <Register disabled={loading} autoFocus>
               로그인
             </Register>
             <Hr />
-            <Go onClick={() => navigate("/signup")}>회원가입</Go>
+            <Go type="button" onClick={() => navigate("/signup")}>회원가입</Go>
           </Box>
         </form>
       </div>
