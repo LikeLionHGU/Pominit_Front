@@ -105,19 +105,13 @@ export default function MainPage() {
   useEffect(() => {
     // 0/1/2 라벨로 매핑하는 객체
     const labelMap = { 0: "높은평점순", 1: "낮은가격순", 2: "리뷰많은순" };
-    //정렬 상태 변경 했을때 콘솔에 코드값, 라벨 출력
-    console.log(
-      "[MainPage] sorting state changed:",
-      sorting,
-      `(${labelMap[sorting]})`
-    );
+ 
   }, [sorting]);
 
   /* 스포츠 관련 -> sport 값이 바뀔 때마다 실행됨 */
   useEffect(() => {
     // 빈 문자열("")이면 전체로 표시
     const label = sport && sport.trim().length > 0 ? sport : "전체";
-    console.log("[MainPage] sport state changed:", sport, `(${label})`);
   }, [sport]);
 
   /*

@@ -89,7 +89,7 @@ function Info() {
         const { data } = await api.get(`/gather/detail/${id}`, {
           signal: controller.signal,
         });
-        console.log("data: ", data);
+        
 
         // 데이터 정규화(백엔드 응답 필드에 따라 조정 가능)
         const normalized = {
@@ -107,10 +107,10 @@ function Info() {
         };
 
         setGather(normalized);
-        console.log("모임 정보:", normalized);
+      
       } catch (e) {
         if (!axios.isCancel(e)) {
-          console.error("모임 정보 불러오기 실패:", e);
+        
           setErr(e.message || "모임 정보를 가져오지 못했습니다.");
         }
       } finally {

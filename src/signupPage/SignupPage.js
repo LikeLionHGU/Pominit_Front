@@ -130,10 +130,10 @@ const Signuppage = () => {
       const res = await axios.post(url, body,{
         headers:{"Content-Type": "application/json"},
       });
-      console.log(res);
+
       navigate("/login");
     } catch (err) {
-      console.error(err);
+
     } finally {
       setLoading(false);
     }

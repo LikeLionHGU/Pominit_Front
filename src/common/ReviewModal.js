@@ -165,7 +165,6 @@ const Btn = styled.button`
 `;
 
 export default function Workmodal({ id, onClose, onSuccess }) {
-  console.log("[Workmodal render] id:", id);
   const [text, setText] = useState("");
   const [rating, setRating] = useState(0);
   const [submitted, setSubmitted] = useState(false);
@@ -211,10 +210,7 @@ export default function Workmodal({ id, onClose, onSuccess }) {
         score: rating, // ← 서버 필드명: score/rating 등
       };
 
-      // 디버깅용 로그
-      console.groupCollapsed("[REVIEW] POST", url);
-      console.log("payload:", body);
-      console.groupEnd();
+  
 
       /*
             const back = raw?.replace(/^Bearer\s+/i, "");
@@ -228,7 +224,7 @@ await axios.post(url, body, {
   timeout: 15000,
 });
 */
-      console.log(token);
+
       await axios.post(url, body, {
         headers: {
           "Content-Type": "application/json",
@@ -249,7 +245,7 @@ await axios.post(url, body, {
       const msg =
         err?.response?.data?.message ||
         `리뷰 등록에 실패했습니다. (status: ${status ?? "unknown"})`;
-      console.error("[REVIEW] error:", err?.response ?? err);
+    
 
       if (status === 500) {            // ✨
                    // ✨
