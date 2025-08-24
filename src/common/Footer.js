@@ -1,5 +1,4 @@
 import React from "react";
-import LOGO from "../asset/img/SeaZle.svg";
 import styles from "./styles/Footer.module.css";
 
 function Footer() {
