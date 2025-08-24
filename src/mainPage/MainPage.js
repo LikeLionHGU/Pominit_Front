@@ -7,6 +7,7 @@ import Centers from "./component/centers";
 import BG from "../common/background";
 import Floating from "../common/floatingbtn";
 import styled from "styled-components";
+import Footer from "../common/Footer";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -33,7 +34,7 @@ const Welcome = styled.div`
   user-select: none;
 `;
 const MainContainer = styled.div`
-  height: 180vh;
+  height: 100vh;
   width: auto;
   display: flex;
   flex-direction: column;
@@ -51,7 +52,9 @@ const FloatingWrapper = styled.div`
   right: 40px;
   z-index: 1000;
 `;
-
+const FooterWrapper = styled.div`
+padding-top:70px;
+`;
 // JWT payload 파싱 함수 (jwt를 디코딩한 payload 반환하는 기능)
 function parseJwt(token) {
   try {
@@ -149,6 +152,7 @@ Centers 내부에서는 sport, sorting 두가지 props를 활용해서
           <Floating />
         </FloatingWrapper>
       </div>
+      <FooterWrapper><Footer /></FooterWrapper>
     </MainContainer>
   );
 }
