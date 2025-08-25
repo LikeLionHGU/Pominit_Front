@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo} from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import styled from "styled-components";
 import axios from "axios";
 const Review =styled.div`
@@ -81,7 +81,7 @@ export default function Review1({center}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const c = useMemo(() => normalizeCenter(center), [center]);
+  const c = normalizeCenter(center);
   
   const fetchReviewData = useCallback(async (centerId) => {
     try {
@@ -115,6 +115,7 @@ export default function Review1({center}) {
   useEffect(() => {
     if (!c) return;
     fetchReviewData(c.id);
+    // eslint-disable-next-line
   }, [c?.id, fetchReviewData]);
 
   const visibleReviews = reviews.slice(0, visibleCount);
