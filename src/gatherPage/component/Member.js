@@ -13,6 +13,7 @@ function Member({ leader, refreshKey = 0 }) {
   const [members, setMembers] = useState([]);
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
+  const isEmpty = !loading && !err && members.length === 0;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -89,13 +90,13 @@ function Member({ leader, refreshKey = 0 }) {
           </div>
         </div>
 
-        <div className={styles.members}>
+        <div className={isEmpty ? styles.membersEmpty : styles.members}>
           {loading && <div>멤버 불러오는 중…</div>}
           {err && <div className={styles.error}>멤버 로드 실패: {err}</div>}
 
           {!loading &&
             !err &&
-            (members.length === 0 ? (
+            (isEmpty ? (
               <div className={styles.emptyWrap}>
                 <div className={styles.emptyText}>
                   <svg

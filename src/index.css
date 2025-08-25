@@ -5,7 +5,6 @@ html,
 body,
 #root {
   height: 100%;
-  background: #fafbff;
 }
 body {
   margin: 0;
@@ -13,9 +12,9 @@ body {
 }
 
 :root {
-  --content-width: 1080px; 
-  --side-gutter: 100px; 
-  --gutter: 20px; 
+  --content-width: 1080px;
+  --side-gutter: 100px;
+  --gutter: 20px;
   user-select: none;
 }
 
@@ -27,21 +26,20 @@ body {
 @media (min-width: 1280px) {
   .container {
     width: var(--content-width);
-  } 
+  }
 }
 
 html,
 body {
   overflow-x: hidden;
+  background: #fafbff;
 }
-
 
 .grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--gutter);
 }
-
 
 .grid > div {
   background: rgba(255, 0, 0, 0.12);
