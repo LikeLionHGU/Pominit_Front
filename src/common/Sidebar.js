@@ -85,7 +85,7 @@ const Btn = styled.button`
 
 const Banner = styled.div`
   margin-left: 15px;
-  margin-top: 37px;
+  margin-top: 30px;
   width: 153px;
   height: 260px;
   flex-shrink: 0;
@@ -123,7 +123,6 @@ export default function Sidebar() {
     []
   );
 
- 
   const bannerSrc = useMemo(
     () => BANNERS.find((b) => b.test(pathname))?.img ?? Banner1,
     [BANNERS, pathname]
@@ -269,7 +268,6 @@ export default function Sidebar() {
           </BtnGroup>
         </Backbtn>
 
-     
         <Banner>
           <img src={bannerSrc} alt="page banner" />
         </Banner>
