@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import No from "../../asset/img/nocenter.png";
+import No from "../../asset/img/nocenter.svg";
 
 
 import styled from "styled-components";
@@ -262,7 +262,7 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
        <div
          style={{
            marginTop: "480px",
-           marginLeft: "190px",
+           marginLeft: "180px",
            fontSize: "16px",
            color: "#666",
            fontFamily: "Pretendard, sans-serif",
