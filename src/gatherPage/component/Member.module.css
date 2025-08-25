@@ -134,6 +134,10 @@
   gap: 0.625rem 1.26rem;
 }
 
+.membersEmpty {
+  display: flex;
+}
+
 .emptyWrap {
   display: flex;
   align-items: center;
