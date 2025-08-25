@@ -1,4 +1,4 @@
-# Pominit_Front
+# SwaZle_Front
 
 ## 1. 이슈 작성하기
 
