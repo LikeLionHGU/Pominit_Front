@@ -81,7 +81,7 @@ export default function Review1({center}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const c = normalizeCenter(center);
+  const c = useMemo(() => normalizeCenter(center), [center]);
   
   const fetchReviewData = useCallback(async (centerId) => {
     try {
