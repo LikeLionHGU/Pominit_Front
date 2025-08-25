@@ -61,7 +61,7 @@
 .name {
   color: #000;
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -84,7 +84,7 @@
 
   color: var(--Foundation-Blue-blue-700, #7d838a);
   font-family: Pretendard;
-  font-size: 1rem;
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
