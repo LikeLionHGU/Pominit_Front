@@ -105,21 +105,25 @@
 .raw {
   display: flex;
   width: 14.125rem;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   gap: 0.25rem;
 
   color: #000;
   font-family: Pretendard;
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  font-size: 14px;
 
   margin-bottom: 0.25rem;
 }
 
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
 .iconImg {
+  width: 19px;
   margin-right: 0.5rem;
 }
 

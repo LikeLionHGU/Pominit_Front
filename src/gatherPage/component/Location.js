@@ -41,8 +41,6 @@ function Location() {
           signal: controller.signal,
         });
 
-      
-
         // data 예시를 넉넉히 커버 (필드명 다를 수 있어 폴백)
         const normalized = {
           locationId: data?.id ?? id,
@@ -55,10 +53,8 @@ function Location() {
         };
 
         setPlace(normalized);
-     
       } catch (e) {
         if (!axios.isCancel(e)) {
-         
           setErr(e.message || "강습소 정보를 가져오지 못했습니다.");
         }
       } finally {

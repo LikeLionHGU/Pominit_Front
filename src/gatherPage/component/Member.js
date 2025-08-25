@@ -11,7 +11,7 @@ import styles from "./Member.module.css";
  * props
  * - gatherId?: number | string  (모임별 멤버를 받는다면 쿼리로 전달; 서버에서 무시하면 전체 멤버)
  */
-function Member({ leader }) {
+function Member({ leader, refreshKey = 0 }) {
   const { id } = useParams(); // /gather/:id 같은 라우트에서 id 추출
 
   const [members, setMembers] = useState([]);
@@ -53,10 +53,9 @@ function Member({ leader }) {
         }));
 
         setMembers(normalized);
-        
       } catch (e) {
         if (axios.isCancel(e)) return;
-       
+
         setErr(e.message || "멤버를 가져오지 못했습니다.");
       } finally {
         setLoading(false);
@@ -64,7 +63,7 @@ function Member({ leader }) {
     })();
 
     return () => controller.abort();
-  }, [id]);
+  }, [id, refreshKey]);
 
   return (
     <div className={styles.member}>
@@ -90,17 +89,15 @@ function Member({ leader }) {
           </div>
           <div className={styles.leaderInfo}>
             <div className={styles.name}>{leader?.name || "모임장"}</div>
-            <div className={styles.raw}>
-              <span>
+            <div className={styles.rows}>
+              <div className={styles.raw}>
                 <img src={PHONE} alt="icon" className={styles.iconImg} />
                 {leader?.contact || "연락처"}
-              </span>
-            </div>
-            <div className={styles.raw}>
-              <span>
+              </div>
+              <div className={styles.raw}>
                 <img src={SMILE} alt="icon" className={styles.iconImg} />
                 {leader?.statement || "경력"}
-              </span>
+              </div>
             </div>
           </div>
         </div>

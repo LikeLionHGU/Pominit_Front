@@ -48,6 +48,11 @@ function GatherDetail() {
   const [gather, setGather] = useState(null); // 상세 응답
   // eslint-disable-next-line
   const [fetchError, setFetchError] = useState(null); // 필요시 화면에 노출 가능
+  const [refresh, setRefresh] = useState(0);
+
+  const handleJoined = () => {
+    setRefresh((t) => t + 1);
+  };
 
   // 사용자 이름 관련 (기존 유지)
   useEffect(() => {
@@ -87,10 +92,8 @@ function GatherDetail() {
         });
 
         setGather(data);
-    
       } catch (e) {
         if (!axios.isCancel(e)) {
-
           setFetchError(e.message || "데이터를 가져오지 못했습니다.");
         }
       }
@@ -117,6 +120,7 @@ function GatherDetail() {
               <Info />
 
               <Member
+                refreshKey={refresh}
                 leader={{
                   imageUrl: gather.makerImage,
                   name: gather.makerName,
