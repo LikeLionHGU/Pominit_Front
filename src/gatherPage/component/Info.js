@@ -85,12 +85,10 @@ function Info() {
         setLoading(true);
         setErr(null);
 
-        // ✅ /gather/detail/{id} 호출
         const { data } = await api.get(`/gather/detail/${id}`, {
           signal: controller.signal,
         });
 
-        // 데이터 정규화(백엔드 응답 필드에 따라 조정 가능)
         const normalized = {
           sport: data?.sport ?? "",
           title: data?.title ?? "제목 없음",
@@ -102,11 +100,10 @@ function Info() {
           oldPrice: data?.originalPrice ?? null,
           salePercent: data?.salePercent ?? 0,
           deadline: formatDeadline(data?.deadline),
-          dday: calcDday(data?.deadline), // ✅ 여기서 계산해서 넣음
+          dday: calcDday(data?.deadline),
         };
 
         setGather(normalized);
-        console.log(data);
       } catch (e) {
         if (!axios.isCancel(e)) {
           setErr(e.message || "모임 정보를 가져오지 못했습니다.");
@@ -121,7 +118,7 @@ function Info() {
 
   if (loading) return <div className={styles.info}>불러오는 중…</div>;
   if (err) return <div className={styles.info}>로드 실패: {err}</div>;
-  if (!gather) return null; // 데이터 없을 때 렌더링 X
+  if (!gather) return null;
 
   return (
     <div className={styles.info}>
