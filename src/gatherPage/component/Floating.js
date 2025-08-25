@@ -13,7 +13,7 @@ const api = axios.create({
   withCredentials: false,
 });
 
-function Floating({ initialState }) {
+function Floating({ initialState, onJoined }) {
   const [joinedModalOpen, setJoinedModalOpen] = useState(false); // 가입 성공
   const [failedModalOpen, setFailedModalOpen] = useState(false); // 가입 실패
   const [expiredModalOpen, setExpiredModalOpen] = useState(false); // 로그인 만료
@@ -122,7 +122,8 @@ function Floating({ initialState }) {
         setJoinState("joined");
       } else if (res.status >= 200 && res.status < 300) {
         setJoinedModalOpen(true);
-        navigate(`/gather/detail/${id}`);
+        setJoinState("joined");
+        onJoined?.();
       } else {
         setFailedModalOpen(true);
       }
