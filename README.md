@@ -5,6 +5,10 @@
 
 
 
+<img width="2560" height="1440" alt="image" src="https://github.com/user-attachments/assets/776958be-159d-46f1-b7d5-845e837caefb" />
+
+<br />
+
 ## ✨ 기능
 
 
