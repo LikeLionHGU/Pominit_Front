@@ -5,12 +5,7 @@
 
 
 
-
-
-## SeaZle : 포항 해양 스포츠의 모든 것
-
-
-✨ 기능
+## ✨ 기능
 
 
 
@@ -22,7 +17,7 @@
 
 상세 페이지로 이동해 더 많은 정보를 확인
 
-<p align="center"> <img src="https://github.com/user-attachments/assets/c6db2229-b056-4afb-9ab4-26d0d60f681b" width="800" alt="SeaZle Front Preview" /> </p>
+<p align="center"> <img src="https://github.com/user-attachments/assets/c6db2229-b056-4afb-9ab4-26d0d60f681b" width="1280" alt="SeaZle Front Preview" /> </p>
 
 ### 🔍 AI 기반 리뷰 분석 및 비교
 
@@ -47,10 +42,9 @@
 <p> <img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/4e6d0a19-9584-4c6f-a6cf-040643a2a9ee" />
  </p>
 
- 
+ <hr />
 
-🧰 기술 스택
-
+## 🧰 기술 스택
 
 
 Frontend: React, CSS Modules / Styled-Components
@@ -59,12 +53,18 @@ State & Utils: React Hooks, Axios
 
 AI 요약/분석: 리뷰 텍스트 기반 요약/스코어링 로직
 
-## ✨우리의 정신
-<img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/fa58369e-4777-4d33-b7aa-c8e2d7c980ec" />
+<hr />
 
+## 👨‍💻 개발자
 
-👨‍💻 개발자
 
 <table> <tr> <td align="center"> <img width="160" height="160" alt="image" src="https://github.com/user-attachments/assets/ecf72e67-43f9-4191-88f7-707877164f9d" />
 <br/> <sub><b>김윤채</b></sub> </td> <td align="center"> <img width="120" height="120" alt="KakaoTalk_Photo_2025-08-25-21-38-13" src="https://github.com/user-attachments/assets/6d3fdd54-e45a-4552-8140-3cb3c39e2dfa" />
 <br/> <sub><b>이하린</b></sub> </td> </tr> </table>
+
+<hr />
+
+## ✨우리의 정신
+
+<img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/fa58369e-4777-4d33-b7aa-c8e2d7c980ec" />
+
