@@ -15,7 +15,7 @@ import down from "../../asset/img/down.svg";
 const TIMEZONE = "Asia/Seoul";
 
 const Calendar = ({ onDateChange, value }) => {
-  // 최초 nowDate 계산 1회만
+
   const initialNowDate = useMemo(() => toZonedTime(new Date(), TIMEZONE), []);
   const [selectedYearAndMonth, setSelectedYearAndMonth] = useState({
     year: initialNowDate.getFullYear(),
@@ -37,7 +37,7 @@ const Calendar = ({ onDateChange, value }) => {
   const triggerRef = useRef(null);
   const popoverRef = useRef(null);
 
-  // '<' 클릭 시
+
   const handleLeftClick = useCallback(() => {
     setSelectedYearAndMonth((prev) => {
       if (prev.month === 0) {
@@ -47,7 +47,6 @@ const Calendar = ({ onDateChange, value }) => {
     });
   }, []);
 
-  // '>' 클릭 시
   const handleRightClick = useCallback(() => {
     setSelectedYearAndMonth((prev) => {
       if (prev.month === 11) {
@@ -57,7 +56,6 @@ const Calendar = ({ onDateChange, value }) => {
     });
   }, []);
 
-  // 날짜 클릭 시
   const handleDayClick = useCallback(
     (timestamp) => () => {
       setSelectedTimestamp((prev) => {
@@ -71,7 +69,7 @@ const Calendar = ({ onDateChange, value }) => {
     [onDateChange, toYMD]
   );
 
-  // '오늘' 클릭 시
+ 
   const handleTodayClick = useCallback(() => {
     const now = toZonedTime(new Date(), TIMEZONE);
     const ts = now.setHours(0, 0, 0, 0);
@@ -83,7 +81,6 @@ const Calendar = ({ onDateChange, value }) => {
     onDateChange?.(toYMD(ts));
   }, [onDateChange, toYMD]);
 
-  // 선택된 날짜 바뀌면 연/월 동기화
   useEffect(() => {
     if (selectedTimestamp == null) return;
     const selectedDate = toZonedTime(selectedTimestamp, TIMEZONE);
@@ -93,7 +90,7 @@ const Calendar = ({ onDateChange, value }) => {
     });
   }, [selectedTimestamp]);
 
-  // 렌더링용 날짜 리스트 계산
+
   const calendarTimestamps = useMemo(() => {
     return getTimestampListForCalendar(
       selectedYearAndMonth.year,
@@ -102,13 +99,11 @@ const Calendar = ({ onDateChange, value }) => {
     );
   }, [selectedYearAndMonth.year, selectedYearAndMonth.month]);
 
-  // ✅ 토글 핸들러
   const toggleOpen = useCallback((e) => {
     e.stopPropagation();
     setIsOpen((v) => !v);
   }, []);
 
-  // ✅ 바깥 클릭/ESC로 닫기
   useEffect(() => {
     if (!isOpen) return;
 
@@ -137,7 +132,7 @@ const Calendar = ({ onDateChange, value }) => {
 
   return (
     <div style={{ position: "relative", display: "inline-block" }}>
-      {/* ✅ 이 div를 클릭하면 캘린더 열림 */}
+
       <div
         ref={triggerRef}
         onClick={toggleOpen}
@@ -156,14 +151,14 @@ const Calendar = ({ onDateChange, value }) => {
           fontSize: "1rem",
           fontStyle: "normal",
           fontWeight: "600",
-          lineHeight: "140%" /* 1.4rem */,
+          lineHeight: "140%" ,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         <span className={styles.selectBox}>
-          {/* 표시용: 선택된 날짜를 YYYY-MM-DD 로 보여주고 싶다면 */}
+
           {selectedTimestamp
             ? new Date(selectedTimestamp).toLocaleDateString("sv-SE", {
                 timeZone: "Asia/Seoul",
@@ -178,7 +173,6 @@ const Calendar = ({ onDateChange, value }) => {
         </span>
       </div>
 
-      {/* ✅ 팝오버로 캘린더 표시 */}
       {isOpen && (
         <div
           ref={popoverRef}

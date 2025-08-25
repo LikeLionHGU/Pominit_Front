@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { useCompareBasket } from "../common/compareBasket"; // ← 경로 확인!
+import { useCompareBasket } from "../common/compareBasket"; 
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -63,7 +63,6 @@ const Icon = () => (
   </svg>
 );
 
-// 상대경로 -> 절대경로 보정
 const toAbsUrl = (u) => {
   if (!u) return "";
   if (/^https?:\/\//i.test(u)) return u;
@@ -88,19 +87,17 @@ export default function FloatingButton() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 로컬스토리지/동기화는 훅이 담당
+ 
   const { items = [], add, remove } = useCompareBasket();
 
   const [open, setOpen] = useState(false);
 
-
-  // 항상 길이 3으로 보관하는 썸네일 배열: [string|null, string|null, string|null]
   const [thumbs, setThumbs] = useState([null, null, null]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 라우터 state → 바스켓에 병합(중복/최대치 처리는 add가 담당)
-  const routePayload = location.state?.comparePayload; // { item1, item2, item3 } | undefined
+
+  const routePayload = location.state?.comparePayload;
   useEffect(() => {
     if (!routePayload) return;
     const routeIds = [routePayload.item1, routePayload.item2, routePayload.item3]
@@ -108,12 +105,12 @@ export default function FloatingButton() {
       .filter(n => Number.isFinite(n) && n !== -1);
     if (routeIds.length === 0) return;
     routeIds.forEach(id => add(id));
-    // 필요시 navigate(…, { replace:true, state:undefined })로 state 비우기 가능
+
   }, [routePayload, add, navigate]);
 
  
 
-  // 바스켓 → API payload (앞에서부터 최대 3개)
+
   const payload = useMemo(() => {
     const ids = (items || []).slice(0, 3);
     return {
@@ -124,12 +121,11 @@ export default function FloatingButton() {
     };
   }, [items]);
 
-  // 썸네일 조회: 항상 3칸 유지. 없는 건 null로 둬서 빈 칸 유지.
   useEffect(() => {
     const hasAnyValid = [payload.item1, payload.item2, payload.item3]
       .some(v => v != null && v !== -1);
 
-    // 기본값: 언제나 3칸(전부 빈 칸)
+
     if (!hasAnyValid) { setThumbs([null, null, null]); return; }
 
     let cancelled = false;
@@ -150,7 +146,7 @@ export default function FloatingButton() {
         );
 
         const { thumb1, thumb2, thumb3 } = res.data ?? {};
-        // ✨ index를 보존하기 위해 filter 금지. 없는 건 null로 둔다.
+ 
         const byIndex = [
           typeof thumb1 === "string" && thumb1.trim() !== "" ? thumb1 : null,
           typeof thumb2 === "string" && thumb2.trim() !== "" ? thumb2 : null,
@@ -163,7 +159,7 @@ export default function FloatingButton() {
         const status = err?.response?.status;
         const d = err?.response?.data;
         setError(typeof d === "string" ? d : d?.message || `요청 실패 (status: ${status ?? "unknown"})`);
-        // 에러여도 3칸 플레이스홀더 유지
+  
         setThumbs([null, null, null]);
       } finally {
         if (!cancelled) setLoading(false);
@@ -173,7 +169,7 @@ export default function FloatingButton() {
     return () => { cancelled = true; };
   }, [payload.item1, payload.item2, payload.item3]);
 
-  // 특정 경로에서 숨길 경우
+
   if (location.pathname === "/signup") return null;
   if (location.pathname === "/login") return null;
 
@@ -197,22 +193,22 @@ export default function FloatingButton() {
       {!open && "비교함"}
 
       <Expand data-open={open} onClick={(e) => e.stopPropagation()}>
-        {/* 닫기 아이콘 */}
+       
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none" onClick={toggle} aria-label="패널 닫기">
           <rect y="24.4473" width="24" height="24" rx="12" transform="rotate(-90 0 24.4473)" fill="#FF658C"/>
           <path d="M10.5 17.4473L15.5 12.4473L10.5 7.44727" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
 
-        {/* 👉 항상 3칸 렌더 */}
+     
         {[0,1,2].map((i) => {
-          const idAtSlot = payload.allIds[i];       // 이 칸에 담긴 center id (없으면 undefined)
-          const url = thumbs[i];                    // 썸네일 URL 또는 null
-          const showRemove = idAtSlot != null;      // 담긴 항목이 있을 때만 X버튼 노출
+          const idAtSlot = payload.allIds[i];       
+          const url = thumbs[i];                    
+          const showRemove = idAtSlot != null;      
 
           return (
             <ImgBox key={i} title={url ? toAbsUrl(url) : (error ? `오류: ${error}` : "빈 칸")}>
               {loading && idAtSlot != null ? (
-                // 담긴 항목이면 로딩 중일 때 임시 이미지
+          
                 <img src={FALLBACK_THUMB} alt="로딩 중" />
               ) : url ? (
                 <img
@@ -228,13 +224,13 @@ export default function FloatingButton() {
                 <CloseButton
                   onClick={(e) => {
                     e.stopPropagation();
-                    // 1) 이 슬롯만 즉시 비우기(자리 유지)
+                  
                     setThumbs(prev => {
                       const copy = [...prev];
                       copy[i] = null;
                       return copy;
                     });
-                    // 2) 바스켓에서도 제거(실제 항목 제거 → payload/재요청으로 재정렬)
+                    
                     remove(idAtSlot);
                   }}
                   aria-label="삭제"

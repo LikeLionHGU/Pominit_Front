@@ -8,7 +8,6 @@ import HAND from "../../asset/img/red_hand.svg";
 
 import styles from "./Info.module.css";
 
-// API 기본 주소
 const API_BASE = (process.env.REACT_APP_API_BASE_URL || "").replace(/\/+$/, "");
 const api = axios.create({
   baseURL: API_BASE,
@@ -20,7 +19,6 @@ const api = axios.create({
 function calcDday(deadlineStr) {
   if (!deadlineStr || typeof deadlineStr !== "string") return null;
 
-  // "yyyy-MM-dd" 부분만 안전하게 추출
   const m = deadlineStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (!m) return null;
   // eslint-disable-next-line
@@ -37,7 +35,7 @@ function calcDday(deadlineStr) {
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
   const diffDays = Math.floor((deadlineDate - todayDate) / MS_PER_DAY);
 
-  return diffDays >= 0 ? diffDays : null; // 마감 지난 경우 null
+  return diffDays >= 0 ? diffDays : null; 
 }
 
 function formatDeadline(deadlineStr) {
@@ -72,7 +70,7 @@ function formatDeadline(deadlineStr) {
 }
 
 function Info() {
-  const { id } = useParams(); // /gather/detail/:id 에서 id 추출
+  const { id } = useParams(); 
   const [gather, setGather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);

@@ -95,7 +95,7 @@ export default function ERRModal({
   confirmText = "확인",
   cancelText = "닫기",
   onClose,
-  onConfirm,                 // 없으면 기본으로 /login 이동
+  onConfirm,                 
   children,
   zIndex = 2100,
 }) {
@@ -103,24 +103,22 @@ export default function ERRModal({
   const location = useLocation();
   const firstBtnRef = useRef(null);
 
-  // ✨ 닫기(취소)=로그아웃 함수
   const handleCancel= useCallback(() => {
     try {
-      localStorage.removeItem("token");          // ✨ access token 삭제
-      localStorage.removeItem("refreshToken");   // ✨ 있으면 함께 삭제 (없으면 무시)
+      localStorage.removeItem("token");          
+      localStorage.removeItem("refreshToken");  
     } catch {}
-    onClose?.();                                  // ✨ 모달 닫기 
+    onClose?.();                                
   setTimeout(() => window.location.reload(), 0);
 }, [onClose]);
-  // ESC 닫기 + 첫 버튼 포커스
+ 
   useEffect(() => {
     if (!open) return;
     firstBtnRef.current?.focus();
-    const onKey = (e) => e.key === "Escape" && handleCancel(); // ✨ ESC도 로그아웃처럼 동작
+    const onKey = (e) => e.key === "Escape" && handleCancel(); 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, handleCancel]); // ✨ onClose 의존성 제거, handleCancel 내부에서 처리
-
+  }, [open, handleCancel]); 
   if (!open) return null;
 
   const handleConfirm = () => {
@@ -134,7 +132,7 @@ export default function ERRModal({
   const bodyText = description ?? message ?? "";
 
   return createPortal(
-    <Overlay $zIndex={zIndex} onClick={handleCancel}> {/* ✨ 바깥 클릭도 로그아웃 */}
+    <Overlay $zIndex={zIndex} onClick={handleCancel}>
       <Wrapper
         role="dialog"
         aria-modal="true"
@@ -157,7 +155,7 @@ export default function ERRModal({
             {cancelText}
           </CancelButton>
           <GoButton type="button" onClick={handleConfirm}>
-            {confirmText /* = 로그인 */}
+            {confirmText}
           </GoButton>
         </ButtonRow>
       </Wrapper>

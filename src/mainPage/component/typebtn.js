@@ -130,16 +130,12 @@ export default function TypeBtn({ value = "", onChange }) {
     { label: "조정",       value: "조정" },
   ]), []); //label은 버튼에 보여줄 이름, value는 백엔드에 보낼 코드
 
-  const ref = useRef(null); //바깥 클릭 감지에 사용
-  const [open, setOpen] = useState(false); //드롭다운 열려 있는지 여부
-
-  // 현재 value로 표시할 라벨 == 버튼에 보여줄 현재 선택된 문구
+  const ref = useRef(null); 
+  const [open, setOpen] = useState(false); 
   const currentLabel =
     OPTIONS.find(o => o.value === value)?.label ?? DEFAULT_LABEL;
-    //현재 value와 일치하는 옵션 찾아서 label을 가져옴 없으면 디폴트 라벨 표시
 
 
-  /*드롭다운 열려 있을때 닫는 로직 */
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
@@ -154,9 +150,7 @@ export default function TypeBtn({ value = "", onChange }) {
   }, []);
 
   const handleSelect = (nextValue) => {
-    // 콘솔 확인용
-
-    onChange?.(nextValue);         // 부모(MainPage)로 전달
+    onChange?.(nextValue);        
     setOpen(false);
   };
 

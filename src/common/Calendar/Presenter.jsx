@@ -3,7 +3,6 @@ import { toZonedTime } from "date-fns-tz";
 import { isCurrentMonth, isToday } from "./utils";
 import styled, { css } from "styled-components";
 
-/* ================= Colors ================= */
 export const Colors = {
   red: "#FF517E",
   blue: "#2F83F3",
@@ -16,7 +15,6 @@ export const Colors = {
   white: "#FFFFFF",
 };
 
-/* ================= Icons ================= */
 const Back = ({ width = 24, height = 24 }) => (
   <svg width={width} height={height} viewBox="0 0 24 24" fill="none">
     <path
@@ -40,10 +38,9 @@ const Forward = ({ width = 24, height = 24 }) => (
   </svg>
 );
 
-/* ================= 상단 요일 ================= */
+
 const KoreanDayEnum = ["일", "월", "화", "수", "목", "금", "토"];
 
-/* ================= Styled Components ================= */
 export const Wrapper = styled.div`
   width: 292px;
   min-height: 295px;
@@ -125,8 +122,7 @@ export const Days = styled.div`
   column-gap: 0.25rem;
 `;
 
-/** ✅ transient props: $isSelected / $isToday / $isCurrentMonth */
-/** ✅ transient props: $isSelected / $isToday / $isCurrentMonth */
+
 export const Day = styled(Cell)`
   cursor: pointer;
   position: relative;
@@ -142,7 +138,7 @@ export const Day = styled(Cell)`
     color: ${Colors.black};
   }
 
-  /* 선택된 날짜 (채움) */
+
   ${({ $isSelected }) =>
     $isSelected &&
     css`
@@ -152,7 +148,6 @@ export const Day = styled(Cell)`
       }
     `}
 
-  /* 오늘 (윤곽선) — 선택과 겹치면 선택 스타일 우선 */
   ${({ $isToday, $isSelected }) =>
     $isToday &&
     !$isSelected &&
@@ -163,7 +158,6 @@ export const Day = styled(Cell)`
       }
     `}
 
-  /* 이번 달이 아니면 흐리게 + 클릭 방지 */
   ${({ $isCurrentMonth }) =>
     !$isCurrentMonth &&
     css`
@@ -183,13 +177,11 @@ export const Day = styled(Cell)`
   }
 `;
 
-/** ✅ color도 transient prop로 처리 (선택사항) */
 export const Typo = styled.span`
   color: ${({ $color }) => $color || Colors.black};
   font-size: 14px;
 `;
 
-/* ================= Presenter ================= */
 const Presenter = ({
   selectedYearAndMonth,
   selectedTimestamp,

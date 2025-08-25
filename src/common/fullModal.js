@@ -64,7 +64,7 @@ border:none;
 `;
 
 export default function Comparemodal({ onClose }) {
-  // ESC로 닫기 (선택)
+
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose?.();
     window.addEventListener("keydown", onKey);
@@ -79,6 +79,6 @@ export default function Comparemodal({ onClose }) {
         <Btn type="button" onClick={onClose}>확인</Btn>
       </Wrapper>
     </Overlay>,
-    document.body // ← 콤마 필수!
+    document.body 
   );
 }

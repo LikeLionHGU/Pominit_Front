@@ -7,9 +7,6 @@ import styled from "styled-components";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-//position: absolute;
-  //top: 521.28px;
-  //left: 190px;
 const Grid = styled.div`
   margin-top:521.28px;
   margin-left:190px;
@@ -184,7 +181,6 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
   const [loading, setLoading] = useState(false); //api 호출 중 로딩 상태
   const navigate = useNavigate();
 
-  // 정렬 prop 들어오는지 확인 -> sorting 값 바뀔 때마다 콘솔에 찍기
   useEffect(() => {
   }, [sorting]);
 
@@ -242,16 +238,12 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
     try {
       setLoading(true);
       const url = `${API_BASE_URL}/home/location/search`;
-     
-
-
-      //검색실행
       const res = await axios.get(url, {
         params: { input: keyword },
         headers: { Accept: "application/json" },
       });
 
-      //응답데이터가 배열이면 그대로 사용
+
       const arr = Array.isArray(res.data) ? res.data : res.data?.list || [];
 
       setLists(arr);

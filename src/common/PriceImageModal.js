@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useEffect } from "react";
 
 function PriceImageModal({ src, onClose }) {
-  // ESC로 닫기 + 뒤 스크롤 잠금(선택)
+
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose?.();
     window.addEventListener("keydown", onKey);
@@ -36,7 +36,7 @@ function PriceImageModal({ src, onClose }) {
   );
 }
 
-/* ===== styled ===== */
+
 const Overlay = styled.div`
   position: fixed; inset: 0; background: rgba(0,0,0,0.45);
   display: flex; align-items: center; justify-content: center; z-index: 3000;
@@ -52,7 +52,7 @@ const ImgWrap = styled.div`
   overflow: auto;
   img {
     max-width: 100%;
-    max-height: 76vh;   /* 헤더 제외 화면에 맞게 */
+    max-height: 76vh;   
     object-fit: contain;
     display: block;
   }

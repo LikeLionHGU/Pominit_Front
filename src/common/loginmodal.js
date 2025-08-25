@@ -97,13 +97,12 @@ export default function LoginModal({
   confirmText = "로그인 하기",
   cancelText = "취소",
   onClose,
-  onConfirm, // 없으면 기본으로 /login 이동
+  onConfirm, 
 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const firstBtnRef = useRef(null);
 
-  // 포커스 & ESC 닫기
   useEffect(() => {
     if (!open) return;
     firstBtnRef.current?.focus();

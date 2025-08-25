@@ -4,7 +4,7 @@ import Banner1 from "../asset/img/banner1.svg";
 import Banner2 from "../asset/img/banner2.svg";
 import Banner3 from "../asset/img/banner3.svg";
 import Banner4 from "../asset/img/banner4.svg";
-import Workmodal from "../common/workmodal"; // ← 대문자 컴포넌트명
+import Workmodal from "../common/workmodal";
 import { useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -109,12 +109,10 @@ export default function Sidebar() {
     if (pathname === "/") return 0;
     if (pathname === "/compare") return 0;
     if (pathname === "/" || pathname.startsWith("/detail")) return 0;
-    if (pathname.startsWith("/gather")) return 1; // 모임
-    // 필요 시 다른 탭도 추가
+    if (pathname.startsWith("/gather")) return 1;
     return -1;
   }, [pathname]);
 
-  // 경로 → 배너 이미지 매핑
   const BANNERS = useMemo(
     () => [
       { test: (p) => p === "/", img: Banner1 },
@@ -125,7 +123,7 @@ export default function Sidebar() {
     []
   );
 
-  // 현재 경로에 맞는 배너 선택(기본값: Banner1)
+ 
   const bannerSrc = useMemo(
     () => BANNERS.find((b) => b.test(pathname))?.img ?? Banner1,
     [BANNERS, pathname]
@@ -191,7 +189,6 @@ export default function Sidebar() {
             </defs>
           </svg>
 
-          {/* 버튼 그룹 (카드 위에 겹치게) */}
           <BtnGroup>
             {/* 홈 */}
             <Btn $active={ACTIVE_INDEX === 0} onClick={() => navigate("/")}>
@@ -234,7 +231,6 @@ export default function Sidebar() {
               모임
             </Btn>
 
-            {/* 챌린지 */}
             <Btn onClick={() => setShowModal(true)}>
               <Icon $active={ACTIVE_INDEX === 2}>
                 <svg
@@ -253,7 +249,6 @@ export default function Sidebar() {
               챌린지
             </Btn>
 
-            {/* 마이페이지 */}
             <Btn onClick={() => setShowModal(true)}>
               <Icon $active={ACTIVE_INDEX === 3}>
                 <svg
@@ -274,7 +269,7 @@ export default function Sidebar() {
           </BtnGroup>
         </Backbtn>
 
-        {/* 페이지별 배너 */}
+     
         <Banner>
           <img src={bannerSrc} alt="page banner" />
         </Banner>
