@@ -43,7 +43,6 @@ function Review({ userName, isLoggedIn }) {
   const { id } = useParams();
   const PAGE = 10; // 한 번에 보여줄 개수
 
-  // 표시용 이름: prop 없으면 토큰에서 꺼냄
   const [displayName, setDisplayName] = useState(userName || "");
   const [actuallyLoggedIn, setActuallyLoggedIn] = useState(
     Boolean(isLoggedIn || localStorage.getItem("token"))
@@ -110,7 +109,6 @@ function Review({ userName, isLoggedIn }) {
     setVisibleCount((prev) => Math.min(PAGE, reviews.length || PAGE));
   }, [reviews]);
 
-  // 등록(POST에만 토큰 수동 첨부)
   const handleSubmit = async () => {
     try {
       setPosting(true);
@@ -129,7 +127,6 @@ function Review({ userName, isLoggedIn }) {
         },
       });
 
-      // 성공 → 입력 초기화 & 목록 재조회
       setContent("");
       setSecret(0);
       const refetchController = new AbortController();

@@ -11,8 +11,8 @@ import Footer from "../common/Footer";
 import "../index.css";
 
 function GatherPage() {
-  const [sport, setSport] = useState(""); // 카테고리(스포츠)
-  const [date, setDate] = useState(""); // yyyy-MM-dd
+  const [sport, setSport] = useState("");
+  const [date, setDate] = useState("");
 
   return (
     <>
