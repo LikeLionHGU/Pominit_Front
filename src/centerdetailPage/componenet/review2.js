@@ -143,7 +143,7 @@ export default function Review2({ center }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const c = useMemo(() => normalizeCenter(center), [center]);
+  const c = normalizeCenter(center);
 
   const isLoggedIn = () => {
     const token = localStorage.getItem("token");
@@ -193,6 +193,7 @@ export default function Review2({ center }) {
   useEffect(() => {
     if (!c) return;
     fetchReviewData(c.id);
+    // eslint-disable-next-line
   }, [c?.id, fetchReviewData]);
 
   if (!c) return null;
