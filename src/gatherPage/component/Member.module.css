@@ -42,7 +42,7 @@
 
 .contents {
   display: flex;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   gap: 1.26rem;
 }
 
@@ -160,9 +160,9 @@
   align-items: center;
   color: var(--Foundation-Blue-blue-300, #cad0d7);
   font-family: Pretendard;
-  font-size: 1rem;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
 }
 

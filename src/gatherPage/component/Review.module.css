@@ -97,7 +97,7 @@
   border: 1px solid var(--Foundation-main-blue-500, #2f83f3);
   background: var(--Foundation-Blue-blue-100, #eaf5ff);
 
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 .writeHeader {
