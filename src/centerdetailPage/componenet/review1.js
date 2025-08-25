@@ -63,7 +63,7 @@ color: #A0A8B1;
 font-family: Pretendard;
 font-size: 14px;
 font-style: normal;
-font-weight: 600;
+font-weight: 400;
 line-height: 140%; 
 `;
 

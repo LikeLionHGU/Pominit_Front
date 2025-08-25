@@ -35,7 +35,7 @@ function calcDday(deadlineStr) {
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
   const diffDays = Math.floor((deadlineDate - todayDate) / MS_PER_DAY);
 
-  return diffDays >= 0 ? diffDays : null; 
+  return diffDays >= 0 ? diffDays : null;
 }
 
 function formatDeadline(deadlineStr) {
@@ -70,7 +70,7 @@ function formatDeadline(deadlineStr) {
 }
 
 function Info() {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [gather, setGather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
@@ -161,7 +161,7 @@ function Info() {
             >
               <img src={HAND} alt="icon" /> 모임소개
             </span>
-            <span style={{ width: "23rem" }}>{gather.description}</span>
+            <span className={styles.gatherInfo}>{gather.description}</span>
           </div>
         </div>
 

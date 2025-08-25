@@ -52,6 +52,16 @@
   grid-template-columns: 90px 20rem;
 }
 
+.gatherInfo {
+  width: 23rem;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 1.4rem */
+}
+
 .infoRight {
   display: flex;
   width: 21.25rem;
@@ -122,7 +132,7 @@
 .oldPrice {
   color: var(--Foundation-Blue-blue-500, #b0b9c3);
   font-family: "Wanted Sans";
-  font-size: 0.875rem;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;

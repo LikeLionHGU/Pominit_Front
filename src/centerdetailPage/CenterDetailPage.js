@@ -104,6 +104,7 @@ const DetailPage = () => {
           </>
         )}
       </div>
+
       <ContentWrap />
       <FloatingWrapper>
   <Floating />

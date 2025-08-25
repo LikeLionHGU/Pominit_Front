@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import No from "../../asset/img/nocenter.svg";
 
 
 import styled from "styled-components";
@@ -8,7 +9,7 @@ import styled from "styled-components";
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const Grid = styled.div`
-  margin-top:521.28px;
+  margin-top:480.28px;
   margin-left:190px;
   min-height:500px;
   display: grid;
@@ -25,7 +26,7 @@ const Card = styled.div`
 `;
 const ThumbnailWrapper = styled.div`
   position: relative;
-  display: inline-block; /* 크기 맞춰주기 */
+  display: inline-block; 
 `;
 const Thumbnail = styled.img`
   width: 100%;
@@ -128,7 +129,7 @@ const Field = styled.div`
 const Bar = styled.input`
   display: flex;
   width: 533px;
-  height: 46px;
+  height: 50px;
   padding: 11px 16px;
   justify-content: space-between;
   align-items: center;
@@ -155,8 +156,8 @@ const IconBtn = styled.button`
 
 const Tag=styled.div`
 position: absolute;
-  top: 8px;   /* 이미지 위에서 8px */
-  left: 8px;  /* 이미지 왼쪽에서 8px */
+  top: 8px;   
+  left: 8px;  
 display: flex;
 padding: 4px 10px;
 align-items: center;
@@ -257,37 +258,49 @@ export default function Centerlist({ sorting = 0, sport = "" }) {
 
   return (
     <div>
-      <Grid>
-        {lists.map((list) => (
-          <Card key={list.id} onClick={() => navigate(`/detail/${list.id}`)}>
-            <ThumbnailWrapper>
-  <Thumbnail src={list.thumbnail} alt={list.thumbnail} />
-  <Tag>{list.sport}</Tag>
-</ThumbnailWrapper>
-
-            <Name>{list.name}</Name>
-            <Script>{list.description}</Script>
-
-            <InfoRow>
-              <InfoItem style={{ maxWidth: 130 }}>
-                <Icon16 />
-                <Truncate>{list.region}</Truncate>
-              </InfoItem>
-
-              <Dot />
-
-              <InfoItem>
-                <IconStar14 />
-                <span>{list.score.toFixed(1)}</span>
-
-                <Dot />
-                리뷰
-                <span style={{ color: "#A0A8B1" }}>{list.reviewCount}개</span>
-              </InfoItem>
-            </InfoRow>
-          </Card>
-        ))}
-      </Grid>
+     {lists.length === 0 ? (
+       <div
+         style={{
+           marginTop: "480px",
+           marginLeft: "180px",
+           fontSize: "16px",
+           color: "#666",
+           fontFamily: "Pretendard, sans-serif",
+         }}
+       >
+          <img
+           src={No}
+           alt="데이터 없음"
+      
+         />
+       </div>
+     ) : (
+       <Grid>
+         {lists.map((list) => (
+           <Card key={list.id} onClick={() => navigate(`/detail/${list.id}`)}>
+             <ThumbnailWrapper>
+               <Thumbnail src={list.thumbnail} alt={list.thumbnail} />
+               <Tag>{list.sport}</Tag>
+             </ThumbnailWrapper>
+             <Name>{list.name}</Name>
+             <Script>{list.description}</Script>
+             <InfoRow>
+               <InfoItem style={{ maxWidth: 130 }}>
+                 <Icon16 />
+                 <Truncate>{list.region}</Truncate>
+               </InfoItem>
+               <Dot />
+               <InfoItem>
+                 <IconStar14 />
+                 <span>{list.score.toFixed(1)}</span>
+                 <Dot />
+                 리뷰 <span style={{ color: "#A0A8B1" }}>{list.reviewCount}개</span>
+               </InfoItem>
+             </InfoRow>
+           </Card>
+         ))}
+       </Grid>
+     )}
 
       <Wrapper>
         <Field>
