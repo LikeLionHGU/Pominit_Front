@@ -4,6 +4,8 @@
 
 
 
+
+
 ## SeaZle : 포항 해양 스포츠의 모든 것
 
 
@@ -58,4 +60,5 @@ AI 요약/분석: 리뷰 텍스트 기반 요약/스코어링 로직
 
 👨‍💻 개발자
 
-<table> <tr> <td align="center"> <img src="https://placehold.co/120x120?text=Yunchae" width="120" alt="김윤채 사진"/><br/> <sub><b>김윤채</b></sub> </td> <td align="center"> <img src="https://placehold.co/120x120?text=Harin" width="120" alt="이하린 사진"/><br/> <sub><b>이하린</b></sub> </td> </tr> </table>
+<table> <tr> <td align="center"> <img src="https://placehold.co/120x120?text=Yunchae" width="120" alt="김윤채 사진"/><br/> <sub><b>김윤채</b></sub> </td> <td align="center"> <img width="160" height="160" alt="KakaoTalk_Photo_2025-08-25-21-38-13" src="https://github.com/user-attachments/assets/6d3fdd54-e45a-4552-8140-3cb3c39e2dfa" />
+<br/> <sub><b>이하린</b></sub> </td> </tr> </table>
