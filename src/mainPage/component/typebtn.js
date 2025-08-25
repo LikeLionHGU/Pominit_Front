@@ -107,17 +107,10 @@ const Panel = styled.div`
   background: #FFF;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 `;
-/**
- * props:
- *  - value: string (현재 선택된 sport 코드, "" = 전체)
- *  - onChange: (v: string) => void
- */
 
-//value 기본값은 빈 문자열, onChange는 선택 변경시 메인페이지에 알려주기 위한 함수
 export default function TypeBtn({ value = "", onChange }) {
-  const DEFAULT_LABEL = "포항 레포츠 종류"; //아무것도 선택되지 않았을 때 버튼에 보여줄 기본 문구
+  const DEFAULT_LABEL = "포항 레포츠 종류"; 
 
-  // 백엔드에 보낼 코드(value)와 표시 라벨(label) 매핑
   const OPTIONS = useMemo(() => ([
     { label: "전체 보기",   value: "" },
     { label: "요트",       value: "요트" },
@@ -128,7 +121,7 @@ export default function TypeBtn({ value = "", onChange }) {
     { label: "스노클링",   value: "스노클링" },
     { label: "카약/카누",  value: "카약/카누" },
     { label: "조정",       value: "조정" },
-  ]), []); //label은 버튼에 보여줄 이름, value는 백엔드에 보낼 코드
+  ]), []); 
 
   const ref = useRef(null); 
   const [open, setOpen] = useState(false); 

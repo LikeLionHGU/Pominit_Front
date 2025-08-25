@@ -32,7 +32,7 @@ body {
 html,
 body {
   overflow-x: hidden;
-  background: #fafbff;
+  background: white;
 }
 
 .grid {
