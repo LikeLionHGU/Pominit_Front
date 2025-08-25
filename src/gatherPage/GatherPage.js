@@ -48,7 +48,6 @@ function GatherPage() {
               />
               <Calendar
                 onDateChange={(val) => {
-                  console.log("picked:", val);
                   setDate(val);
                 }}
               />

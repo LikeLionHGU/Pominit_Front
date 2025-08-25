@@ -106,7 +106,6 @@ function Info() {
         };
 
         setGather(normalized);
-        console.log(data);
       } catch (e) {
         if (!axios.isCancel(e)) {
           setErr(e.message || "모임 정보를 가져오지 못했습니다.");

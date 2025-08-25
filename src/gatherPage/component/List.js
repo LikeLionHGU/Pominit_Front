@@ -74,7 +74,6 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
         setList(items);
       } catch (e) {
         if (e.name === "CanceledError") return; // 취소된 요청 무시
-        console.error("[Gather List] fetch error:", e);
 
         setErrMsg("네트워크 오류가 발생했습니다.");
         setList(useFallbackWhenEmpty ? fallbackData : []);
