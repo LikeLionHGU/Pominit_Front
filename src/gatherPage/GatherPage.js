@@ -7,15 +7,22 @@ import Dropdown from "../common/Dropdown";
 import GatherList from "./component/List";
 import Calendar from "../common/Calendar/Calendar";
 import Footer from "../common/Footer";
+import { createGlobalStyle } from "styled-components";
 
 import "../index.css";
 
+const LocalGlobalStyle = createGlobalStyle`
+  body { 
+    background: #fafbff;
+  }
+`;
 function GatherPage() {
   const [sport, setSport] = useState("");
   const [date, setDate] = useState("");
 
   return (
     <>
+     <LocalGlobalStyle />
       <div className="container">
         <Header />
         <div className={styles.wrap}>
