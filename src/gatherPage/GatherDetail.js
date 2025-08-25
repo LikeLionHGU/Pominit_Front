@@ -37,21 +37,20 @@ const api = axios.create({
 });
 
 function GatherDetail() {
-  const { id } = useParams(); 
+  const { id } = useParams();
 
   const [userName, setUserName] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const [gather, setGather] = useState(null); 
+  const [gather, setGather] = useState(null);
   // eslint-disable-next-line
-  const [fetchError, setFetchError] = useState(null); 
+  const [fetchError, setFetchError] = useState(null);
   const [refresh, setRefresh] = useState(0);
 
   const handleJoined = () => {
     setRefresh((t) => t + 1);
   };
 
- 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -81,7 +80,6 @@ function GatherDetail() {
     (async () => {
       try {
         setFetchError(null);
-        // eslint-disable-next-line
         const { data } = await api.get(`/gather/detail/${id}`, {
           signal: controller.signal,
           headers,
@@ -105,11 +103,8 @@ function GatherDetail() {
         <Sidebar />
 
         <div className={styles.container}>
-         
           {gather && (
             <>
-          
-
               <Info />
 
               <Member

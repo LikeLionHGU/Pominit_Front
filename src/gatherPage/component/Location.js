@@ -7,7 +7,6 @@ import LOCATION from "../../asset/img/location.svg";
 import DATE from "../../asset/img/date.svg";
 import { Link } from "react-router-dom";
 
-
 const API_BASE = (process.env.REACT_APP_API_BASE_URL || "").replace(/\/+$/, "");
 const api = axios.create({
   baseURL: API_BASE,
@@ -22,10 +21,7 @@ function Location() {
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
-  const locationId = id; 
   useEffect(() => {
- 
-
     const controller = new AbortController();
 
     (async () => {
@@ -33,7 +29,6 @@ function Location() {
         setLoading(true);
         setErr(null);
 
-      
         const { data } = await api.get(`gather/location/${id}`, {
           signal: controller.signal,
         });

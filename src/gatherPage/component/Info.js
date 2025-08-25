@@ -83,7 +83,6 @@ function Info() {
         setLoading(true);
         setErr(null);
 
-
         const { data } = await api.get(`/gather/detail/${id}`, {
           signal: controller.signal,
         });
@@ -117,7 +116,7 @@ function Info() {
 
   if (loading) return <div className={styles.info}>불러오는 중…</div>;
   if (err) return <div className={styles.info}>로드 실패: {err}</div>;
-  if (!gather) return null; 
+  if (!gather) return null;
 
   return (
     <div className={styles.info}>

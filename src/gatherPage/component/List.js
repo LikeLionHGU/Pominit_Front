@@ -24,7 +24,6 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
   useEffect(() => {
     const controller = new AbortController();
 
-
     const t = setTimeout(async () => {
       setLoading(true);
       setErrMsg("");
@@ -73,7 +72,7 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
 
         setList(items);
       } catch (e) {
-        if (e.name === "CanceledError") return; 
+        if (e.name === "CanceledError") return;
 
         setErrMsg("네트워크 오류가 발생했습니다.");
         setList(useFallbackWhenEmpty ? fallbackData : []);
@@ -97,7 +96,6 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
   return (
     <div>
       {lists.map((item, idx) => {
-
         const id = item.id ?? idx;
         const sportLabel = item.sport || item["카테고리"] || "";
         const title = item.title || item["모집 제목"] || "";

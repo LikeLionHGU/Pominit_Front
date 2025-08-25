@@ -7,9 +7,8 @@ import PHONE from "../../asset/img/red_phone.svg";
 import SMILE from "../../asset/img/red_smile.svg";
 import styles from "./Member.module.css";
 
-
 function Member({ leader, refreshKey = 0 }) {
-  const { id } = useParams(); 
+  const { id } = useParams();
 
   const [members, setMembers] = useState([]);
   const [err, setErr] = useState(null);
@@ -27,20 +26,18 @@ function Member({ leader, refreshKey = 0 }) {
           /\/+$/,
           ""
         );
-        const url = `${BASE}/gather/members/${id}`; 
-
+        const url = `${BASE}/gather/members/${id}`;
         const res = await axios.get(url, {
           signal: controller.signal,
           timeout: 10000,
           headers: { Accept: "application/json" },
         });
-
         const arr = Array.isArray(res.data) ? res.data : [];
 
         const normalized = arr.map((m, i) => ({
           id: m.id ?? `${m.name || "member"}-${i}`,
           name: m.name ?? "",
-          imageUrl: m.imageUrl || "", 
+          imageUrl: m.imageUrl || "",
           statement: m.statement ?? "",
         }));
 
@@ -64,10 +61,8 @@ function Member({ leader, refreshKey = 0 }) {
       </div>
 
       <div className={styles.contents}>
- 
         <div className={styles.leader}>
           <div className={styles.leaderTop}>
-         
             {leader?.imageUrl ? (
               <img
                 src={leader.imageUrl}
@@ -149,8 +144,6 @@ function Member({ leader, refreshKey = 0 }) {
               ))
             ))}
         </div>
-
-   
       </div>
     </div>
   );

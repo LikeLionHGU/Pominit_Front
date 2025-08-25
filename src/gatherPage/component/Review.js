@@ -11,7 +11,7 @@ const api = axios.create({
   headers: { Accept: "application/json" },
   withCredentials: false,
 });
-const token = localStorage.getItem("token");
+const token = localStorage.getItem("token"); // 없으면 401
 
 function TimeFormat(time) {
   const now = new Date();
@@ -41,7 +41,8 @@ function parseJwt(token) {
 
 function Review({ userName, isLoggedIn }) {
   const { id } = useParams();
-  const PAGE = 10; 
+  const PAGE = 10; // 한 번에 보여줄 개수
+
   const [displayName, setDisplayName] = useState(userName || "");
   const [actuallyLoggedIn, setActuallyLoggedIn] = useState(
     Boolean(isLoggedIn || localStorage.getItem("token"))
@@ -57,7 +58,7 @@ function Review({ userName, isLoggedIn }) {
   const [secret, setSecret] = useState(0);
   const [posting, setPosting] = useState(false);
 
-
+  // 토큰/이름 보강
   useEffect(() => {
     const token = localStorage.getItem("token");
     setActuallyLoggedIn(Boolean(isLoggedIn || token));
@@ -67,7 +68,7 @@ function Review({ userName, isLoggedIn }) {
     }
   }, [isLoggedIn, displayName]);
 
-
+  // 목록 로드
   const fetchReviews = useCallback(
     async (signal) => {
       try {
@@ -108,7 +109,6 @@ function Review({ userName, isLoggedIn }) {
     setVisibleCount((prev) => Math.min(PAGE, reviews.length || PAGE));
   }, [reviews]);
 
- 
   const handleSubmit = async () => {
     try {
       setPosting(true);
@@ -117,7 +117,7 @@ function Review({ userName, isLoggedIn }) {
       const payload = {
         id: Number(id),
         content: content.trim(),
-        secrete: secret,
+        secrete: secret, // 0 or 1
       };
 
       await api.post("/user/comment", payload, {
@@ -127,7 +127,6 @@ function Review({ userName, isLoggedIn }) {
         },
       });
 
- 
       setContent("");
       setSecret(0);
       const refetchController = new AbortController();
@@ -150,7 +149,7 @@ function Review({ userName, isLoggedIn }) {
         <span className={styles.topLeft}>댓글</span>
       </div>
 
-
+      {/* 목록 */}
       <div
         className={styles.writen}
         style={{ display: reviews.length === 0 ? "none" : "block" }}
@@ -164,7 +163,7 @@ function Review({ userName, isLoggedIn }) {
             <div className={styles.comment}>{review.comment}</div>
           </div>
         ))}
-
+        {/* 더보기 / 접기 */}
         {reviews.length > PAGE && (
           <div className={styles.more}>
             {visibleCount < reviews.length ? (
@@ -193,7 +192,7 @@ function Review({ userName, isLoggedIn }) {
       {loading && <div className={styles.loading}>리뷰 불러오는 중…</div>}
       {err && <div className={styles.error}>{err}</div>}
 
-
+      {/* 작성 */}
       <div className={styles.write}>
         <div className={styles.writeHeader}>
           {actuallyLoggedIn ? `${displayName}님` : ""}
@@ -228,7 +227,7 @@ function Review({ userName, isLoggedIn }) {
             <span>비밀댓글</span>
           </button>
 
- 
+          {/* 클릭은 항상 되게 두고, 내부에서 가드 */}
           <button
             type="button"
             className={styles.submit}

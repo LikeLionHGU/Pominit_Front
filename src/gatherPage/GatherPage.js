@@ -11,8 +11,9 @@ import Footer from "../common/Footer";
 import "../index.css";
 
 function GatherPage() {
-  const [sport, setSport] = useState(""); 
+  const [sport, setSport] = useState("");
   const [date, setDate] = useState("");
+
   return (
     <>
       <div className="container">
