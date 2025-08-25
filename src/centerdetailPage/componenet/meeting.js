@@ -37,9 +37,9 @@ const ScrollArea = styled.div`
   overflow-x: auto;
   overflow-y: hidden;
 
-  /* (선택) 스크롤바 커스텀 - 크롬/엣지/사파리 */
+  
   &::-webkit-scrollbar {
-    height: 8px; /* 가로 스크롤 → height 사용 */
+    height: 8px;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 100px;
@@ -51,7 +51,7 @@ const ScrollArea = styled.div`
   }
 `;
 
-/* 카드(박스) */
+
 const Box = styled.div`
 user-select:none;
 cursor:pointer;

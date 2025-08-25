@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useCompareBasket } from "../../common/compareBasket";
-import React, { useRef, useState, useEffect } from "react"; // ← useRef/useState/useEffect 필요
+import React, { useRef, useState, useEffect } from "react"; 
 import Modal from "../../common/fullModal";
 
 
@@ -27,15 +27,15 @@ const ToastInner = styled.div`
 
 const ToastText = styled.div`
   position: absolute;
-inset: 0;                               /* 전체 채우기 */
+inset: 0;                              
 display: flex;
-align-items: center;                    /* 세로 중앙 */
-justify-content: center;                /* 가로 중앙 */
-transform: translateY(-5px);            /* 살짝 위로 (원하면 2~4px 조정) */
+align-items: center;                    
+justify-content: center;                
+transform: translateY(-5px);            
   color: #fff;
   font-family: Pretendard, system-ui, -apple-system, sans-serif;
-font-size: 14px;                        /* 13 → 14로 가독성 ↑ (취향껏) */
-font-weight: 600;                       /* 700 → 600: 한글 번짐 ↓ */
+font-size: 14px;                        
+font-weight: 600;                      
 line-height: 1.2;
 `;
 
@@ -43,7 +43,6 @@ function Toast({ open, children }) {
   return (
     <ToastWrap role="status" aria-live="polite" $show={open}>
       <ToastInner>
-        {/* 분홍 말풍선 */}
         <svg xmlns="http://www.w3.org/2000/svg" width="132" height="43" viewBox="0 0 132 43" fill="none" aria-hidden="true">
           <path d="M126 0C129.314 1.15966e-06 132 2.68629 132 6V27.9805C132 31.2942 129.314 33.9805 126 33.9805H119.779L114.866 42.4902C114.481 43.1569 113.519 43.1569 113.134 42.4902L108.221 33.9805H6C2.68629 33.9805 9.27407e-08 31.2942 0 27.9805V6C9.27407e-08 2.68629 2.68629 9.66384e-08 6 0H126Z" fill="#FF658C"/>
         </svg>
@@ -101,7 +100,7 @@ function normalizeCenter(raw) {
   };
 }
 
-// https 없으면 자동으로 붙여 절대 URL로
+
 const toAbsUrl = (u) => {
   if (!u || typeof u !== "string") return null;
   if (/^https?:\/\//i.test(u)) return u;
@@ -112,8 +111,6 @@ const BarComponent = ({ center }) => {
   const { add, items = [] } = useCompareBasket();
   const c = normalizeCenter(center);
   const [maxModalOpen, setMaxModalOpen] = useState(false);
-
-    // 🔔 토스트 상태
     const [toastOpen, setToastOpen] = useState(false);
     const [toastMsg, setToastMsg] = useState("");
     const toastTimerRef = useRef(null);
@@ -142,14 +139,14 @@ const BarComponent = ({ center }) => {
     }
 
     add(c.id);
-    // 추가 후 개수(즉시 반영 UX용): 현재 길이 + 1
+
     showToast(`${items.length + 1}개가 담겼어요`);
   };
 
 
   const onClickReserve = () => {
     const url = toAbsUrl(c?.reserveLink);
-    if (!url) return; // 버튼이 disabled라서 보통 여기 안 옴
+    if (!url) return; 
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
