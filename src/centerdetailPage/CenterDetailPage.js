@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-//import Lottie from "lottie-react";
-//import loadingAnim from "../common/loading.json";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 import styled, { createGlobalStyle } from "styled-components";
@@ -17,7 +15,7 @@ import Floating from "../common/floatingbtn";
 
 const LocalGlobalStyle = createGlobalStyle`
   body { 
-    background: #fafbff;   /* ✅ 스크롤해도 항상 꽉 차게 배경 */
+    background: #fafbff;
   }
 `;
 
@@ -53,9 +51,6 @@ const FloatingWrapper = styled.div`
 `;
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
-//const MIN_SPINNER_MS = 2000;
-
 const DetailPage = () => {
   const { id } = useParams();
   const [center, setCenter] = useState(null);
@@ -68,16 +63,9 @@ const DetailPage = () => {
       try {
         setLoading(true);
         setError("");
-
-        //const startedAt = Date.now();
         const res = await axios.get(`${API_BASE_URL}/location/detail/${id}`, {
           signal: ctrl.signal,
         });
-
-        //const elapsed = Date.now() - startedAt;
-        //if (elapsed < MIN_SPINNER_MS) {
-          //await new Promise((r) => setTimeout(r, MIN_SPINNER_MS - elapsed));
-        //}
         setCenter(res.data);
       } catch (e) {
         if (axios.isCancel(e)) return;
@@ -116,8 +104,6 @@ const DetailPage = () => {
           </>
         )}
       </div>
-  
-
       <ContentWrap />
       <FloatingWrapper>
   <Floating />
@@ -129,11 +115,3 @@ const DetailPage = () => {
 };
 
 export default DetailPage;
-
-     /* {loading && (
-        <LoadingOverlay>
-          <LoaderBox>
-            <Lottie animationData={loadingAnim} loop />
-          </LoaderBox>
-        </LoadingOverlay>
-      )}*/

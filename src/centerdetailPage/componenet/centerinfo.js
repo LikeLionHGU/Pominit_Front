@@ -18,7 +18,7 @@ const Rbox = styled.div`
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: 140%; /* 22.4px */
+  line-height: 140%; 
 `;
 const Ricon1 = styled.div`
   width: 24px;
@@ -27,12 +27,12 @@ const Ricon1 = styled.div`
   padding: 16px;
 `;
 const Ricon2 = styled.div`
-  position: absolute; /* ✅ 절대 위치 */
+  position: absolute; 
   width: 24px;
   height: 24px;
   aspect-ratio: 1/1;
-  top: 150px; /* margin-top 대신 */
-  left: 210px; /* margin-left 대신 */
+  top: 150px; 
+  left: 210px; 
 `;
 
 const Rt = styled.div`
@@ -124,15 +124,7 @@ const InfoWrapper = styled.div`
   font-weight: 400;
   line-height: normal;
 `;
-// eslint-disable-next-line
-const Price = styled.div`
-  text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-decoration-skip-ink: auto;
-  text-decoration-thickness: auto;
-  text-underline-offset: auto;
-  text-underline-position: from-font;
-`;
+
 const Address = styled.span`
   a {
     color: #336dff;
@@ -145,13 +137,13 @@ const Address = styled.span`
 `;
 const ThumbnailWrapper = styled.div`
   position: relative;
-  display: inline-block; /* 크기 맞춰주기 */
+  display: inline-block; 
 `;
 
 const Tag = styled.div`
   position: absolute;
-  top: 20px; /* 이미지 top + 여백 */
-  left: 192px; /* 이미지 left + 여백 */
+  top: 20px; 
+  left: 192px; 
   display: flex;
   padding: 4px 10px;
   align-items: center;
@@ -161,7 +153,7 @@ const Tag = styled.div`
   color: var(--Foundation-Red-red-500, #ff517e);
   text-align: center;
   font-family: Pretendard;
-  white-space: nowrap; /* ✅ 줄바꿈 금지 */
+  white-space: nowrap; 
   writing-mode: horizontal-tb;
   font-size: 12px;
   font-style: normal;
@@ -171,7 +163,6 @@ const Tag = styled.div`
 
 function labelFromURL(u, idx = 0) {
   try {
-    // tel:, sms: 같은 프로토콜 먼저 처리
     if (u.startsWith("tel:")) return "전화하기";
     if (u.startsWith("sms:")) return "문자 보내기";
 
@@ -190,8 +181,6 @@ function labelFromURL(u, idx = 0) {
     if (/(reserve|booking|book|reservation|reser?v)/i.test(href))
       return "예약하기";
     if (/linktr\.ee|page\.link/i.test(host)) return "링크 모음";
-
-    // 도메인 기반 기본값
     if (/naver\.com/i.test(host)) return "네이버";
     if (/kakao\.com|daum\.net/i.test(host)) return "카카오";
     if (/facebook\.com/i.test(host)) return "페이스북";
@@ -204,7 +193,7 @@ function labelFromURL(u, idx = 0) {
 }
 function SummaryText({ text }) {
   const formatted = (text || "")
-    .replace(/([.?!])\s*/g, "$1 ") // ← \n 대신 공백
+    .replace(/([.?!])\s*/g, "$1 ")
     .trim();
 
   return <Summary>{formatted}</Summary>;
@@ -259,10 +248,8 @@ export default function CenterInfo({ center }) {
       </RightCol>
 
       <InfoWrapper>
-        {/* 주소 */}
         <InfoRow>
           <Icon>
-            {/* 위치 아이콘 */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -279,7 +266,6 @@ export default function CenterInfo({ center }) {
           <Address>{c.address || "주소 정보 없음"}</Address>
         </InfoRow>
 
-        {/* 영업 시간 */}
         <InfoRow>
           <Icon>
             <svg
@@ -298,7 +284,7 @@ export default function CenterInfo({ center }) {
           <Address>{c.time || "영업 시간 정보 없음"}</Address>
         </InfoRow>
 
-        {/* 전화번호 */}
+
         <InfoRow>
           <Icon>
             <svg
@@ -317,21 +303,6 @@ export default function CenterInfo({ center }) {
           <Address>{c.number || "연락처 정보 없음"}</Address>
         </InfoRow>
 
-        {/* 가격표 이미지 링크 */}
-        {/*<InfoRow
-          as={c.priceImgUrl ? "a" : "div"}
-          href={c.priceImgUrl || undefined}
-          target={c.priceImgUrl ? "_blank" : undefined}
-          rel={c.priceImgUrl ? "noreferrer" : undefined}
-          style={{ cursor: c.priceImgUrl ? "pointer" : "default", textDecoration: "none" }}
-        >
-          <Icon>
-            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="19" viewBox="0 0 10 19" fill="none">
-              <path d="M5.3 8.67289C3.03 8.08289 2.3 7.47289 2.3 6.52289C2.3 5.43289 3.31 4.67289 5 4.67289C6.42 4.67289 7.13 5.21289 7.39 6.07289C7.51 6.47289 7.84 6.77289 8.26 6.77289H8.56C9.22 6.77289 9.69 6.12289 9.46 5.50289C9.04 4.32289 8.06 3.34289 6.5 2.96289V2.27289C6.5 1.44289 5.83 0.772888 5 0.772888C4.17 0.772888 3.5 1.44289 3.5 2.27289V2.93289C1.56 3.35289 0 4.61289 0 6.54289C0 8.85289 1.91 10.0029 4.7 10.6729C7.2 11.2729 7.7 12.1529 7.7 13.0829C7.7 13.7729 7.21 14.8729 5 14.8729C3.35 14.8729 2.5 14.2829 2.17 13.4429C2.02 13.0529 1.68 12.7729 1.27 12.7729H0.99C0.32 12.7729 -0.15 13.4529 0.0999999 14.0729C0.67 15.4629 2 16.2829 3.5 16.6029V17.2729C3.5 18.1029 4.17 18.7729 5 18.7729C5.83 18.7729 6.5 18.1029 6.5 17.2729V16.6229C8.45 16.2529 10 15.1229 10 13.0729C10 10.2329 7.57 9.26289 5.3 8.67289Z" fill="#FF517E"/>
-            </svg>
-          </Icon>
-          <Address><Price>{c.priceImgUrl ? "가격표 이미지로 보기" : "가격 정보 없음"}</Price></Address>
-        </InfoRow> */}
         <InfoRow>
           <Icon>
             <svg
@@ -368,7 +339,7 @@ export default function CenterInfo({ center }) {
           )}
         </InfoRow>
 
-        {/* 웹사이트 / SNS */}
+
         <InfoRow>
           <Icon>
             <svg

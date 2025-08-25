@@ -2,9 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-// eslint-disable-next-line
 import ReviewModal from "../../common/ReviewModal";
-import LoginModal1 from "../../common/loginmodal"; // ✅ 네가 만든 로그인 모달
+import LoginModal1 from "../../common/loginmodal";
 
 const Review = styled.div`
   position: absolute;
@@ -22,7 +21,7 @@ const GO = styled.div`
   font-family: Pretendard;
   font-size: 16px;
   font-weight: 600;
-  line-height: normal; /* margin-right:5px; ← 삭제 */
+  line-height: normal; 
 `;
 
 const Write = styled.div`
@@ -136,10 +135,8 @@ function normalizeCenter(raw) {
 export default function Review2({ center }) {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [showModal, setShowModal] = useState(false); // 리뷰 작성 모달
-
-  const [showLoginModal, setShowLoginModal] = useState(false); // ✅ 로그인 필요 모달
+  const [showModal, setShowModal] = useState(false); 
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
@@ -155,12 +152,11 @@ export default function Review2({ center }) {
 
   const handleOpenModal = (id) => {
     if (!isLoggedIn()) {
-      setShowLoginModal(true); // ✅ 로그인 모달 열기
-
+      setShowLoginModal(true); 
       return;
     }
     setSelectedId(id);
-    setShowModal(true); // 리뷰 작성 모달 열기
+    setShowModal(true);
   };
 
   const fetchReviewData = useCallback(async (centerId) => {
@@ -197,7 +193,6 @@ export default function Review2({ center }) {
   useEffect(() => {
     if (!c) return;
     fetchReviewData(c.id);
-    // eslint-disable-next-line
   }, [c?.id, fetchReviewData]);
 
   if (!c) return null;
@@ -237,8 +232,6 @@ export default function Review2({ center }) {
           />
         </svg>
       </Write>
-
-      {/* ✅ 로그인 필요 모달 */}
       <LoginModal1
         open={showLoginModal}
         title="로그인이 필요합니다"
@@ -252,8 +245,6 @@ export default function Review2({ center }) {
           navigate("/login", { state: { from: location.pathname } });
         }}
       />
-
-      {/* 기존 리뷰 작성 모달 */}
       {showModal && (
         <ReviewModal
           id={selectedId}

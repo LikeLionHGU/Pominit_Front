@@ -108,7 +108,8 @@ const Row = styled.div`
   margin-left: 175px;
   width: 880px;
   height: 220px;
-  background: ${({ $isEdge }) => ($isEdge ? "#F1F7FF" : "transparent")};
+  background: ${({ $isEdge, $onlyOne }) =>
+    $onlyOne ? "#fff" : $isEdge ? "#F1F7FF" : "transparent"};
 `;
 
 const Img = styled.img`
@@ -383,7 +384,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
    Helper Components
 ========================= */
 
-function CompareRow({ d, onRemove, isEdge }) {
+function CompareRow({ d, onRemove, isEdge, onlyOne }) {
   const [imgOk, setImgOk] = useState(Boolean(d?.imgUrl));
   const hasPriceImg = Boolean(d?.priceImgUrl);
   const [openPrice, setOpenPrice] = useState(false);
@@ -393,7 +394,7 @@ function CompareRow({ d, onRemove, isEdge }) {
   const items2 = (d?.badPart || "").split(/\s*,\s*/).filter(Boolean);
 
   return (
-    <Row $isEdge={isEdge}>
+    <Row $isEdge={isEdge} $onlyOne={onlyOne}>
       <Card>
         <Tag>{d.name}</Tag>
         <Tag2>
@@ -718,13 +719,15 @@ const ComparePage = () => {
             {!loading && !error && list.length > 0 && (
               <>
                 {list.slice(0, validCount).map((d, i) => (
-                  <CompareRow
-                    key={i}
-                    d={d}
-                    onRemove={() => askRemove(i)}
-                    isEdge={i === 0}
-                  />
-                ))}
+  <CompareRow
+    key={i}
+    d={d}
+    onRemove={() => askRemove(i)}
+    isEdge={i === 0}
+    onlyOne={validCount === 1}   // ✅ 개수가 1개일 때 true
+  />
+))}
+
                 {[...Array(3 - validCount)].map((_, k) => (
                   <Empty key={`ph-${k}`}>
                     <Box
