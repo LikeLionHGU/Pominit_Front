@@ -89,13 +89,13 @@ const Item = styled.button`
 `;
 export default function FilterBox({
   value,            //부모가 주는 현재 선택값
-  defaultValue = 0, // 초기 선택값
-  onChange,         // 선택 변경 시 부모에게 알려줄 콜백
+  defaultValue = 0, 
+  onChange,        
   options,          
   style,           
 }){
 
-  //외부 options가 오면 대체 가능하게 기본값 정의해둠.
+  
   const OPTIONS = [
     { value: 0, label: "높은평점순" },
     { value: 1,   label: "낮은가격순" },

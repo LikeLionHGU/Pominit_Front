@@ -8,7 +8,6 @@ import HAND from "../../asset/img/red_hand.svg";
 
 import styles from "./Info.module.css";
 
-// API 기본 주소
 const API_BASE = (process.env.REACT_APP_API_BASE_URL || "").replace(/\/+$/, "");
 const api = axios.create({
   baseURL: API_BASE,
@@ -20,7 +19,6 @@ const api = axios.create({
 function calcDday(deadlineStr) {
   if (!deadlineStr || typeof deadlineStr !== "string") return null;
 
-  // "yyyy-MM-dd" 부분만 안전하게 추출
   const m = deadlineStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (!m) return null;
   // eslint-disable-next-line
@@ -37,7 +35,7 @@ function calcDday(deadlineStr) {
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
   const diffDays = Math.floor((deadlineDate - todayDate) / MS_PER_DAY);
 
-  return diffDays >= 0 ? diffDays : null; // 마감 지난 경우 null
+  return diffDays >= 0 ? diffDays : null; 
 }
 
 function formatDeadline(deadlineStr) {
@@ -72,7 +70,7 @@ function formatDeadline(deadlineStr) {
 }
 
 function Info() {
-  const { id } = useParams(); // /gather/detail/:id 에서 id 추출
+  const { id } = useParams(); 
   const [gather, setGather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
@@ -85,12 +83,11 @@ function Info() {
         setLoading(true);
         setErr(null);
 
-        // ✅ /gather/detail/{id} 호출
+
         const { data } = await api.get(`/gather/detail/${id}`, {
           signal: controller.signal,
         });
 
-        // 데이터 정규화(백엔드 응답 필드에 따라 조정 가능)
         const normalized = {
           sport: data?.sport ?? "",
           title: data?.title ?? "제목 없음",
@@ -102,11 +99,10 @@ function Info() {
           oldPrice: data?.originalPrice ?? null,
           salePercent: data?.salePercent ?? 0,
           deadline: formatDeadline(data?.deadline),
-          dday: calcDday(data?.deadline), // ✅ 여기서 계산해서 넣음
+          dday: calcDday(data?.deadline),
         };
 
         setGather(normalized);
-        console.log(data);
       } catch (e) {
         if (!axios.isCancel(e)) {
           setErr(e.message || "모임 정보를 가져오지 못했습니다.");
@@ -121,7 +117,7 @@ function Info() {
 
   if (loading) return <div className={styles.info}>불러오는 중…</div>;
   if (err) return <div className={styles.info}>로드 실패: {err}</div>;
-  if (!gather) return null; // 데이터 없을 때 렌더링 X
+  if (!gather) return null; 
 
   return (
     <div className={styles.info}>

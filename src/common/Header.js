@@ -10,7 +10,6 @@ const LogoWrapper = styled.div`
   padding-left: 0px;
 `;
 
-// ✅ $blue 프롭으로 보더 색 분기
 const Loginbtn = styled.div`
   display: inline-flex;
   position: absolute;
@@ -33,7 +32,7 @@ const Loginbtn = styled.div`
   }
 `;
 
-// ✅ $blue 프롭으로 글자 색 분기
+
 const Login = styled.div`
   color: ${({ $blue }) =>
     $blue ? "#2F83F3" : "var(--Foundation-main-blue-50, #EAF3FE)"};
@@ -60,8 +59,6 @@ export default function Header() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isBlueLogo = isOneOf(pathname, BLUE_PATTERNS);
-
-  // ✅ 홈('/')만 제외하고 버튼을 파란 테마로
   const isBlueBtn = pathname !== "/";
 
   const [isAuthed, setIsAuthed] = useState(false);
@@ -81,7 +78,7 @@ export default function Header() {
     try {
       await axios.put(`${API_BASE_URL}/logout`, {}, { withCredentials: true });
     } catch (e) {
-      // 무시
+
     } finally {
       localStorage.removeItem("token");
       setIsAuthed(false);

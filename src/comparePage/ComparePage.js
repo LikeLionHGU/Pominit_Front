@@ -4,14 +4,12 @@ import styled from "styled-components";
 import axios from "axios";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
-import Delete from "../common/Deletemodal"; // ✅ 삭제 확인 모달
+import Delete from "../common/Deletemodal";
 import Footer from "../common/Footer";
 import { useCompareBasket } from "../common/compareBasket";
 import PriceImageModal from "../common/PriceImageModal";
 import { toAbsUrl } from "../common/url";
-/* =========================
-   Styled Components
-========================= */
+
 
 const SidebarWrapper = styled.div`
   position: absolute;
@@ -148,7 +146,7 @@ const RegionWrapper = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%; 
 `;
 
 const PriceWrapper = styled.div`
@@ -176,7 +174,7 @@ const Practice = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%; 
 `;
 
 const Price = styled.div`
@@ -185,7 +183,7 @@ const Price = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%; 
 `;
 
 const PriceText = styled.div`
@@ -216,7 +214,7 @@ const GBbox = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%; 
 `;
 
 const GoodWrapper = styled.div`
@@ -231,27 +229,27 @@ const GoodWrapper = styled.div`
 
 const GoodList = styled.ol`
   margin: 0;
-  padding-left: 18px; /* 번호 들여쓰기 */
+  padding-left: 18px; 
   line-height: 1.5;
   white-space: normal;
-  overflow-wrap: anywhere; /* 긴 단어 줄바꿈 */
+  overflow-wrap: anywhere; 
   text-align: left;
-  white-space: normal; /* 자동 줄바꿈 허용 */
-  overflow-wrap: anywhere; /* 긴 단어도 강제 줄바꿈 */
-  word-break: keep-all; /* 한글 단어 중간 끊김 최소화 */
+  white-space: normal; 
+  overflow-wrap: anywhere; 
+  word-break: keep-all; 
   width: 100%;
   list-style-type: disc;
 `;
 const BadList = styled.ol`
   margin: 0;
-  padding-left: 18px; /* 번호 들여쓰기 */
+  padding-left: 18px; 
   line-height: 1.5;
   white-space: normal;
-  overflow-wrap: anywhere; /* 긴 단어 줄바꿈 */
+  overflow-wrap: anywhere; 
   text-align: left;
-  white-space: normal; /* 자동 줄바꿈 허용 */
-  overflow-wrap: anywhere; /* 긴 단어도 강제 줄바꿈 */
-  word-break: keep-all; /* 한글 단어 중간 끊김 최소화 */
+  white-space: normal; 
+  overflow-wrap: anywhere; 
+  word-break: keep-all; 
   width: 100%;
   list-style-type: disc;
 `;
@@ -273,7 +271,7 @@ const Bad = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%; 
   border-right: 1px solid #e7e9ec;
 `;
 
@@ -297,7 +295,7 @@ const ReviewWrapper = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%; 
 `;
 
 const RemoveBtn = styled.button`
@@ -321,11 +319,11 @@ const Good = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%; 
   border-right: 1px solid #e7e9ec;
 `;
 const Card = styled.div`
-  position: relative; /* 자식 절대배치 기준 */
+  position: relative; 
 `;
 
 const Tag = styled.div`
@@ -346,10 +344,10 @@ const Tag = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
-  line-height: 140%; /* 19.6px */
+  line-height: 140%; 
 
   text-align: center;
-  white-space: nowrap; /* ✅ 줄바꿈 금지 */
+  white-space: nowrap; 
   writing-mode: horizontal-tb;
 `;
 
@@ -375,14 +373,8 @@ const Tag2 = styled.div`
   line-height: normal;
 `;
 
-/* =========================
-   Constants
-========================= */
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-/* =========================
-   Helper Components
-========================= */
 
 function CompareRow({ d, onRemove, isEdge, onlyOne }) {
   const [imgOk, setImgOk] = useState(Boolean(d?.imgUrl));
@@ -533,17 +525,14 @@ function CompareRow({ d, onRemove, isEdge, onlyOne }) {
   );
 }
 
-/* =========================
-   Page Component
-========================= */
+
 
 const ComparePage = () => {
   const navigate = useNavigate();
 
-  // ✅ compareBasket 훅 (로컬스토리지  동기화)
   const { items = [], remove } = useCompareBasket();
 
-  // 삭제 모달 state
+ 
   const [showDelete, setShowDelete] = useState(false);
   const [pending, setPending] = useState({ idx: null, id: null, name: "" });
 
@@ -555,7 +544,6 @@ const ComparePage = () => {
     timeout: 15000,
   });
 
-  // 바스켓 → API payload (앞에서부터 최대 3개)
   const payload = useMemo(() => {
     const ids = (items || []).slice(0, 3);
     return {
@@ -571,7 +559,6 @@ const ComparePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // 유효 id가 1개 이상일 때만 호출
   useEffect(() => {
     let cancelled = false;
     if (validCount === 0) {
@@ -607,24 +594,18 @@ const ComparePage = () => {
       cancelled = true;
     };
     // eslint-disable-next-line
-  }, [payload.item1, payload.item2, payload.item3, validCount]); // items 변하면 재요청
+  }, [payload.item1, payload.item2, payload.item3, validCount]);
 
-  // 데이터 표준화: 배열로 맞추기
   const list = useMemo(() => {
     if (!data) return [];
     return Array.isArray(data) ? data : [data];
   }, [data]);
 
-  /* =========================
-     삭제 동작: 모달 + 실제 제거
-  ========================= */
-
-  // 실제 삭제 수행
+ 
   const doRemove = (idx) => {
     const idToRemove = payload.allIds[idx];
     if (idToRemove == null) return;
 
-    // 1) UI 낙관적 업데이트
     setData((prev) => {
       if (!prev) return prev;
       const arr = Array.isArray(prev) ? [...prev] : [prev];
@@ -632,11 +613,9 @@ const ComparePage = () => {
       return arr;
     });
 
-    // 2) 바스켓에서 제거 → items 변경 → payload/validCount 갱신
     remove(idToRemove);
   };
 
-  // 아이콘 클릭 시: 모달 열기
   const askRemove = (idx) => {
     const id = payload.allIds[idx] ?? null;
     const name = list[idx]?.name || "";
@@ -674,7 +653,6 @@ const ComparePage = () => {
           <HeadCell></HeadCell>
         </Category>
 
-        {/* 0개: 파란 안내 상자 3개 */}
         {validCount === 0 && (
           <>
             {[0, 1, 2].map((k) => (
@@ -709,7 +687,7 @@ const ComparePage = () => {
           </>
         )}
 
-        {/* 1~2개: 데이터 행 + 빈자리 채우기 */}
+    
         {validCount > 0 && validCount < 3 && (
           <>
             {loading && <Empty>불러오는 중…</Empty>}
@@ -724,7 +702,7 @@ const ComparePage = () => {
     d={d}
     onRemove={() => askRemove(i)}
     isEdge={i === 0}
-    onlyOne={validCount === 1}   // ✅ 개수가 1개일 때 true
+    onlyOne={validCount === 1}  
   />
 ))}
 
@@ -762,7 +740,7 @@ const ComparePage = () => {
           </>
         )}
 
-        {/* 3개: 데이터 3행 */}
+   
         {validCount >= 3 && (
           <>
             {loading && <Empty>불러오는 중…</Empty>}
@@ -784,7 +762,7 @@ const ComparePage = () => {
           </>
         )}
 
-        {/* ✅ 삭제 확인 모달 */}
+    
         {showDelete && (
           <Delete
             onClose={cancelDelete}

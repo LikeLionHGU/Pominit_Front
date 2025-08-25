@@ -7,12 +7,9 @@ import PHONE from "../../asset/img/red_phone.svg";
 import SMILE from "../../asset/img/red_smile.svg";
 import styles from "./Member.module.css";
 
-/**
- * props
- * - gatherId?: number | string  (모임별 멤버를 받는다면 쿼리로 전달; 서버에서 무시하면 전체 멤버)
- */
+
 function Member({ leader, refreshKey = 0 }) {
-  const { id } = useParams(); // /gather/:id 같은 라우트에서 id 추출
+  const { id } = useParams(); 
 
   const [members, setMembers] = useState([]);
   const [err, setErr] = useState(null);
@@ -30,7 +27,7 @@ function Member({ leader, refreshKey = 0 }) {
           /\/+$/,
           ""
         );
-        const url = `${BASE}/gather/members/${id}`; // ✅ 서버에서 주신 정확한 엔드포인트
+        const url = `${BASE}/gather/members/${id}`; 
 
         const res = await axios.get(url, {
           signal: controller.signal,
@@ -38,17 +35,12 @@ function Member({ leader, refreshKey = 0 }) {
           headers: { Accept: "application/json" },
         });
 
-        // 응답 예시:
-        // [
-        //   { "name": "서병주", "imageUrl": "qwer.com", "statement": "상태메시지" },
-        //   { ... }
-        // ]
         const arr = Array.isArray(res.data) ? res.data : [];
 
         const normalized = arr.map((m, i) => ({
           id: m.id ?? `${m.name || "member"}-${i}`,
           name: m.name ?? "",
-          imageUrl: m.imageUrl || "", // 없으면 기본 이미지로 대체
+          imageUrl: m.imageUrl || "", 
           statement: m.statement ?? "",
         }));
 
@@ -72,10 +64,10 @@ function Member({ leader, refreshKey = 0 }) {
       </div>
 
       <div className={styles.contents}>
-        {/* 모임장 블록: 서버에서 별도 제공되면 치환하세요 */}
+ 
         <div className={styles.leader}>
           <div className={styles.leaderTop}>
-            {/* 전달받은 이미지가 있으면 사용, 없으면 기본 아이콘 */}
+         
             {leader?.imageUrl ? (
               <img
                 src={leader.imageUrl}
@@ -158,12 +150,7 @@ function Member({ leader, refreshKey = 0 }) {
             ))}
         </div>
 
-        {/* 정원/현재 인원이 필요하면 표시
-        {(capacity || capacity === 0) && (total || total === 0) && (
-          <div className={styles.summary}>
-            모집 인원: {total}/{capacity}
-          </div>
-        )} */}
+   
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ export function loadIdsFromLocalStorage(key = "compare:basket:v1") {
       const ids = Array.isArray(arr)
         ? arr.map(Number).filter(Number.isFinite).slice(0, 3)
         : [];
-      // item1~3로 패딩 (-1)
+
       return {
         item1: ids[0] ?? -1,
         item2: ids[1] ?? -1,

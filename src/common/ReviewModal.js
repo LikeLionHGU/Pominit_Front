@@ -7,9 +7,9 @@ import { useEffect, useState, useMemo } from "react";
 import Modal from "../common/loginmodal";
 import ErrModal from "../common/errorModal";
 
-// 스타일 수정
+
 const Wrapper = styled.div`
-  position: relative; /* ⭐ 자식 절대배치 기준 */
+  position: relative; 
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 
 const Xboxd = styled.div`
   position: absolute;
-  top: 20px; /* ⭐ 오른쪽 상단 */
+  top: 20px; 
   right: 12px;
   width: 30px;
   height: 30px;
@@ -41,7 +41,7 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000; /* 필요시 더 키우기 */
+  z-index: 2000; 
   user-select: none;
 `;
 
@@ -85,7 +85,7 @@ const Star = styled.div`
   margin: 0;
   padding: 0;
   line-height: 0;
-  /* 색 제어를 하려면 이렇게 */
+
   color: #cad0d7;
   svg path {
     fill: currentColor;
@@ -94,7 +94,7 @@ const Star = styled.div`
 
 const StarGroup = styled.div`
   display: grid;
-  grid-auto-flow: column; /* 칸을 가로로 흐르게 */
+  grid-auto-flow: column; 
   gap: 8px;
   svg {
     display: block;
@@ -114,30 +114,29 @@ const TextArea = styled.textarea`
   font-size: 14px;
   line-height: 1.4;
 
-  /* 상태별 테두리/배경 */
+
   border: 1px solid
     ${({ $state }) =>
       $state === "done"
-        ? "#D1D5DB" /* ✅ 완료 → 연회색 테두리 */
+        ? "#D1D5DB" 
         : $state === "typing"
-        ? "#2F83F3" /* ✅ 입력 중 → 파란색 테두리 */
-        : "#D1D5DB"}; /* ✅ 기본 → 연회색 테두리 */
+        ? "#2F83F3" 
+        : "#D1D5DB"}; 
 
   background: ${({ $state }) =>
     $state === "done"
-      ? "#F5F5F5" /* ✅ 완료 → 연회색 배경 */
+      ? "#F5F5F5"
       : $state === "typing"
-      ? "#F9FBFF" /* ✅ 입력 중 → 아주 옅은 파랑 */
-      : "#E7E9EC"}; /* ✅ 기본 → 연회색 배경 */
-
+      ? "#F9FBFF"
+      : "#E7E9EC"}; 
   &:focus {
-    border: 1px solid #2f83f3; /* 포커스 시 파란색 */
+    border: 1px solid #2f83f3; 
     background: #f9fbff;
-    outline: none; /* 포커스 시 옅은 파랑 */
+    outline: none;
   }
 
   &::placeholder {
-    color: #999; /* 플레이스홀더 글씨 회색 */
+    color: #999;
   }
 `;
 
@@ -171,12 +170,12 @@ export default function Workmodal({ id, onClose, onSuccess }) {
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const [submitting, setSubmitting] = useState(false);
 
-  // 상태 계산
+
   const hasText = text.trim().length > 0;
 
-   // ✨ 500 에러 시 LoginModal 열기 위한 상태 추가
-   const [showLoginModal, setShowLoginModal] = useState(false); // ✨
-  // ✅ 버튼 활성화 조건: 텍스트 있고, 별점 1~5, 전송 중 아님
+
+   const [showLoginModal, setShowLoginModal] = useState(false); 
+
   const canSubmit = useMemo(
     () => hasText && rating >= 1 && rating <= 5 && !submitting,
     [hasText, rating, submitting]
@@ -195,7 +194,7 @@ export default function Workmodal({ id, onClose, onSuccess }) {
   }, [onClose]);
 
   const onSubmit = async () => {
-    if (!hasText || submitting) return; // 빈 값/중복 방지
+    if (!hasText || submitting) return; 
     if (!rating || rating < 1) {
       return;
     }
@@ -203,34 +202,20 @@ export default function Workmodal({ id, onClose, onSuccess }) {
     setSubmitting(true);
     try {
       const token = localStorage.getItem("token");
-      const url = `${API_BASE_URL}/user/review`; // ← 백엔드 엔드포인트에 맞게 수정
+      const url = `${API_BASE_URL}/user/review`; 
       const body = {
         id: id,
-        content: text.trim(), // ← 또는 centerId/center_id 등 서버 스펙에 맞추세요
-        score: rating, // ← 서버 필드명: score/rating 등
+        content: text.trim(), 
+        score: rating, 
       };
 
   
 
-      /*
-            const back = raw?.replace(/^Bearer\s+/i, "");
-
-await axios.post(url, body, {
-  headers: {
-    "Content-Type": "application/json",
-    ...(back ? { Authorization: back } : {}), // ✅ 접두어 없이 그대로
-  },
-  withCredentials: true,
-  timeout: 15000,
-});
-*/
 
       await axios.post(url, body, {
         headers: {
           "Content-Type": "application/json",
           Authorization: token,
-          // ✅ 'Bearer ' 접두어가 없으면 붙여서 보냄
-          //   ...(token ? { authorization: token.startsWith("Bearer ") ? token : `Bearer ${token}` } : {}),
         },
         withCredentials: true,
         timeout: 15000,
@@ -239,13 +224,13 @@ await axios.post(url, body, {
       if (typeof onSuccess === "function") onSuccess();
       else onClose();
     } catch (err) {
-      // 실패했으니 완료 상태 되돌리기
+  
       setSubmitted(false);
       const status = err?.response?.status;
 
-      if (status === 500) {            // ✨
-                   // ✨
-        setShowLoginModal(true);       // ✨
+      if (status === 500) {            
+                   
+        setShowLoginModal(true);       
       }
 
 
@@ -269,7 +254,7 @@ await axios.post(url, body, {
           {[1, 2, 3, 4, 5].map((n) => (
             <Star
               key={n}
-              onClick={() => setRating(n)} // ⭐ 클릭 시 rating 업데이트
+              onClick={() => setRating(n)} 
               style={{
                 cursor: "pointer",
                 color: rating >= n ? "#FF517E" : "#CAD0D7",
@@ -291,7 +276,7 @@ await axios.post(url, body, {
         <TextArea
           placeholder={`강습소와 관련하여 만족스러웠던 점이나,
 강사님의 강습 방식, 강습소 주변 시설 등에 대해 남겨주세요.`}
-          value={text} // ✅ 바인딩
+          value={text} 
           onChange={(e) => setText(e.target.value)}
           $state={state}
           disabled={submitting}
@@ -300,7 +285,7 @@ await axios.post(url, body, {
         <Btn
           type="button"
           onClick={onSubmit}
-          disabled={!canSubmit} // ✅ 비활성화
+          disabled={!canSubmit} 
           aria-disabled={!canSubmit}
           title={
             !hasText
@@ -314,10 +299,10 @@ await axios.post(url, body, {
         </Btn>
       </Wrapper>
     </Overlay>,
-    document.body // ← 콤마 필수!
+    document.body 
         )}
 
-   {/* ✨ 500 에러 시 LoginModal 표시 */}
+  
    {showLoginModal && (
   <ErrModal
     open
@@ -326,7 +311,6 @@ await axios.post(url, body, {
     description={"다시 로그인 해주세요"}
     confirmText="로그인 하기"
     cancelText="닫기"
-    // onConfirm 안 주면 기본 동작: /login 이동
     zIndex={2100}
   />
 )}

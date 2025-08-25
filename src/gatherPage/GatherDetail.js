@@ -1,4 +1,3 @@
-// GatherDetail.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../common/Header";
@@ -13,7 +12,6 @@ import Location from "./component/Location";
 import { useParams } from "react-router-dom";
 import styles from "./styles/GatherDetail.module.css";
 
-// JWT 디코딩 함수 (기존 유지)
 function parseJwt(token) {
   try {
     const base64Url = token.split(".")[1];
@@ -30,7 +28,6 @@ function parseJwt(token) {
   }
 }
 
-/** ===== axios 인스턴스 (Info.jsx와 동일한 방식) ===== */
 const API_BASE = (process.env.REACT_APP_API_BASE_URL || "").replace(/\/+$/, "");
 const api = axios.create({
   baseURL: API_BASE,
@@ -40,21 +37,21 @@ const api = axios.create({
 });
 
 function GatherDetail() {
-  const { id } = useParams(); // /gather/:id
+  const { id } = useParams(); 
 
   const [userName, setUserName] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const [gather, setGather] = useState(null); // 상세 응답
+  const [gather, setGather] = useState(null); 
   // eslint-disable-next-line
-  const [fetchError, setFetchError] = useState(null); // 필요시 화면에 노출 가능
+  const [fetchError, setFetchError] = useState(null); 
   const [refresh, setRefresh] = useState(0);
 
   const handleJoined = () => {
     setRefresh((t) => t + 1);
   };
 
-  // 사용자 이름 관련 (기존 유지)
+ 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -70,7 +67,6 @@ function GatherDetail() {
     }
   }, []);
 
-  // ✅ axios로 상세 조회 (Info.jsx 방식과 동일 스타일)
   useEffect(() => {
     if (!id) return;
     const controller = new AbortController();
@@ -109,13 +105,10 @@ function GatherDetail() {
         <Sidebar />
 
         <div className={styles.container}>
-          {/* 필요하면 fetchError 노출 */}
-          {/* {fetchError && <div className={styles.error}>{fetchError}</div>} */}
-
+         
           {gather && (
             <>
-              {/* Info/Member/Review/Location은 각자 내부에서 필요한 API를 호출하거나,
-                  여기서 받은 데이터를 prop으로 내려도 됩니다. */}
+          
 
               <Info />
 

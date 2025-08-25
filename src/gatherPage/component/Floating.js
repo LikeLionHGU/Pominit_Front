@@ -1,4 +1,4 @@
-// Floating.jsx
+
 import React, { useState, useEffect } from "react";
 import styles from "./Floating.module.css";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,10 +14,10 @@ const api = axios.create({
 });
 
 function Floating({ initialState, onJoined }) {
-  const [joinedModalOpen, setJoinedModalOpen] = useState(false); // 가입 성공
-  const [failedModalOpen, setFailedModalOpen] = useState(false); // 가입 실패
-  const [expiredModalOpen, setExpiredModalOpen] = useState(false); // 로그인 만료
-  const [loginModalOpen, setLoginModalOpen] = useState(false); // 로그인 유도
+  const [joinedModalOpen, setJoinedModalOpen] = useState(false); 
+  const [failedModalOpen, setFailedModalOpen] = useState(false); 
+  const [expiredModalOpen, setExpiredModalOpen] = useState(false); 
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -53,7 +53,7 @@ function Floating({ initialState, onJoined }) {
             ? token
             : `Bearer ${token}`;
         }
-        // 서버 상태 조회 엔드포인트에 맞게 사용
+    
         const r = await api.get(`/gather/state/${id}`, { headers });
         const raw = (r?.data?.state || r?.data?.message || "")
           .toString()
@@ -86,7 +86,6 @@ function Floating({ initialState, onJoined }) {
   const fetchJoin = async () => {
     if (submitting) return;
 
-    // 로그인 가드: 로그인 안했으면 버튼은 보이되 클릭 시 로그인 유도
     if (!token) {
       setLoginModalOpen(true);
       navigate("/login");
@@ -96,7 +95,6 @@ function Floating({ initialState, onJoined }) {
     try {
       setSubmitting(true);
 
-      // ✅ Authorization 헤더 보정
       const authHeader = token.startsWith("Bearer ")
         ? token
         : `Bearer ${token}`;
@@ -179,7 +177,7 @@ function Floating({ initialState, onJoined }) {
           })()}
         </div>
       </div>
-      {/* 성공 모달 */}
+  
       <Modal
         className={null}
         isOpen={joinedModalOpen}
@@ -202,7 +200,7 @@ function Floating({ initialState, onJoined }) {
           </button>
         </div>
       </Modal>
-      {/* 실패 모달 */}
+
       <Modal
         className={null}
         isOpen={failedModalOpen}
@@ -223,7 +221,7 @@ function Floating({ initialState, onJoined }) {
           </button>
         </div>
       </Modal>
-      {/* 로그인 만료 모달 */}
+
       <Modal
         className={null}
         isOpen={expiredModalOpen}
@@ -242,7 +240,7 @@ function Floating({ initialState, onJoined }) {
           </button>
         </div>
       </Modal>
-      {/* 로그인 모달 */}
+
       <Modal
         className={null}
         isOpen={loginModalOpen}

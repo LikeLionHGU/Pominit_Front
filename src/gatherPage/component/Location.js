@@ -7,10 +7,7 @@ import LOCATION from "../../asset/img/location.svg";
 import DATE from "../../asset/img/date.svg";
 import { Link } from "react-router-dom";
 
-/**
- * 배포: .env에 REACT_APP_API_URL=https://api.yourdomain.com
- * 개발: dev proxy 사용 시 REACT_APP_API_URL 비워두고 /api로만 호출
- */
+
 const API_BASE = (process.env.REACT_APP_API_BASE_URL || "").replace(/\/+$/, "");
 const api = axios.create({
   baseURL: API_BASE,
@@ -25,9 +22,9 @@ function Location() {
   const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line
-  const locationId = id; // id가 locationId로 사용됨
+  const locationId = id; 
   useEffect(() => {
-    // 검색어가 없으면 호출하지 않음 (불필요한 네트워크 요청 방지)
+ 
 
     const controller = new AbortController();
 
@@ -36,12 +33,11 @@ function Location() {
         setLoading(true);
         setErr(null);
 
-        // 서버 라우트 사례:
+      
         const { data } = await api.get(`gather/location/${id}`, {
           signal: controller.signal,
         });
 
-        // data 예시를 넉넉히 커버 (필드명 다를 수 있어 폴백)
         const normalized = {
           locationId: data?.id ?? id,
           name: data?.name ?? data?.title ?? "이름 미정",

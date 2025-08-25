@@ -111,12 +111,11 @@ export default function Sidebar() {
         if (pathname === "/") return 0;      
         if (pathname === "/compare") return 0;   
         if (pathname === "/" || pathname.startsWith("/detail")) return 0; 
-        if (pathname.startsWith("/gather")) return 1;   // 모임
-        // 필요 시 다른 탭도 추가
+        if (pathname.startsWith("/gather")) return 1;
+    
         return -1;
       }, [pathname]);
 
-  // 경로 → 배너 이미지 매핑
   const BANNERS = useMemo(
     () => [
       { test: (p) => p === "/", img: Banner1 },
@@ -127,7 +126,7 @@ export default function Sidebar() {
     []
   );
 
-  // 현재 경로에 맞는 배너 선택(기본값: Banner1)
+ 
   const bannerSrc = useMemo(
     () => (BANNERS.find((b) => b.test(pathname))?.img) ?? Banner1,
     [BANNERS, pathname]
@@ -181,9 +180,8 @@ export default function Sidebar() {
             </defs>
           </svg>
 
-          {/* 버튼 그룹 (카드 위에 겹치게) */}
           <BtnGroup>
-            {/* 홈 */}
+      
             <Btn active={ACTIVE_INDEX === 0} onClick={() => navigate("/")}>
               <Icon active={ACTIVE_INDEX === 0}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
@@ -196,7 +194,7 @@ export default function Sidebar() {
               홈
             </Btn>
 
-            {/* 모임 */}
+
             <Btn active={ACTIVE_INDEX === 1} onClick={() => navigate("/gather")}>
               <Icon active={ACTIVE_INDEX === 1}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="12" viewBox="0 0 19 12" fill="none">
@@ -209,7 +207,6 @@ export default function Sidebar() {
               모임
             </Btn>
 
-            {/* 챌린지 */}
             <Btn onClick={() => setShowModal(true)}>
               <Icon active={ACTIVE_INDEX === 2}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="16" viewBox="0 0 15 16" fill="none">
@@ -222,7 +219,6 @@ export default function Sidebar() {
               챌린지
             </Btn>
 
-            {/* 마이페이지 */}
             <Btn onClick={() => setShowModal(true)}>
               <Icon active={ACTIVE_INDEX === 3}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
@@ -237,7 +233,7 @@ export default function Sidebar() {
           </BtnGroup>
         </Backbtn>
 
-        {/* 페이지별 배너 */}
+     
         <Banner>
           <img src={bannerSrc} alt="page banner" />
         </Banner>

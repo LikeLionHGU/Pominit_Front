@@ -1,19 +1,10 @@
-// common/compareBasket.js
-// -------------------------------------------------------------
-// "비교 바스켓" 전역 저장(Store) + 훅.
-// - Provider 없이도 useCompareBasket()를 바로 쓸 수 있습니다.
-// - 같은 탭/다른 탭 변경 자동 동기화 (custom event + storage)
-// - 중복 방지, 최대 개수 제한, FIFO 정책 기본 적용
-// -------------------------------------------------------------
 
 import React, { useEffect, useState, useCallback } from "react";
 
 const KEY = "compare:basket:v1";
-const EVT = "compare:basket:changed"; // 같은 탭 동기화용 커스텀 이벤트
+const EVT = "compare:basket:changed"; 
 const MAX_ITEMS = 3;
-const EVICT_OLDEST_WHEN_FULL = true; // false: 거부, true: 오래된 것 제거(FIFO)
-
-// ---------- 로컬스토리지 IO ----------
+const EVICT_OLDEST_WHEN_FULL = true; 
 function read() {
   try {
     const raw = localStorage.getItem(KEY);
@@ -26,14 +17,14 @@ function read() {
 function write(ids) {
   try {
     localStorage.setItem(KEY, JSON.stringify(ids));
-    // 같은 탭 내 다른 훅/컴포넌트에게 변경 알림
+
     window.dispatchEvent(new Event(EVT));
   } catch {}
 }
 const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
-// ---------- 싱글톤 스토어(옵저버 패턴) ----------
-const subscribers = new Set(); // (ids) => void
+
+const subscribers = new Set(); 
 
 function emit(ids) {
   subscribers.forEach((fn) => {
@@ -53,8 +44,8 @@ function addItem(id) {
   if (curr.includes(id)) return curr;
 
   if (curr.length >= MAX_ITEMS) {
-    if (!EVICT_OLDEST_WHEN_FULL) return curr; // 거부 정책
-    const next = [...curr.slice(1), id]; // FIFO
+    if (!EVICT_OLDEST_WHEN_FULL) return curr; 
+    const next = [...curr.slice(1), id]; 
     setAndBroadcast(next);
     return next;
   }
@@ -84,10 +75,10 @@ function setAllItems(arr) {
   return sliced;
 }
 
-// 외부 변경(다른 탭/같은 탭) 수신 → 구독자들에게 배포
+
 (function initGlobalListenersOnce() {
   if (typeof window === "undefined") return;
-  // 중복 바인딩 방지
+
   if (window.__compareBasketInit__) return;
   window.__compareBasketInit__ = true;
 
@@ -98,18 +89,18 @@ function setAllItems(arr) {
   window.addEventListener(EVT, () => emit(read()));
 })();
 
-// ---------- 훅: Provider 없이도 동작 ----------
+
 export function useCompareBasket() {
   const [items, setItems] = useState(() => read());
 
   useEffect(() => {
-    // 구독
+
     const sub = (ids) => setItems((prev) => (eq(prev, ids) ? prev : ids));
     subscribers.add(sub);
-    // 마운트 시 한 번 동기화
+
     const now = read();
     if (!eq(items, now)) setItems(now);
-    // 언마운트 시 구독 해제
+  
     return () => subscribers.delete(sub);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -119,7 +110,7 @@ export function useCompareBasket() {
     if (!Number.isFinite(id)) return false;
     // eslint-disable-next-line
     const next = addItem(id);
-    // addItem 내부에서 브로드캐스트 하므로 여기선 반환만
+
     return read().includes(id);
   }, []);
 
@@ -154,10 +145,7 @@ export function useCompareBasket() {
   };
 }
 
-// ---------- (선택) Provider: 호환용/미래 확장용 ----------
-// 기존 코드에서 <CompareProvider>를 이미 사용 중이어도 깨지지 않게
-// pass-through로 제공해 둡니다. 필요 시 초기 주입/프리로드 기능을
-// 여기에 추가하면 됩니다.
+
 export function CompareProvider({ children }) {
   return <>{children}</>;
 }

@@ -1,4 +1,3 @@
-/* reset */
 * {
   box-sizing: border-box;
 }
@@ -12,15 +11,13 @@ body {
   background: #fff;
 }
 
-/* 원하는 값들 */
 :root {
-  --content-width: 1080px; /* 콘텐츠 폭 */
-  --side-gutter: 100px; /* 좌우 여백 */
-  --gutter: 20px; /* 컬럼 사이 */
+  --content-width: 1080px; 
+  --side-gutter: 100px; 
+  --gutter: 20px; 
   user-select: none;
 }
 
-/* 컨테이너: 1280px에서는 1080 + 좌우 100 = 정중앙 */
 .container {
   width: min(var(--content-width), calc(100vw - (var(--side-gutter) * 2)));
   margin-inline: auto;
@@ -29,24 +26,22 @@ body {
 @media (min-width: 1280px) {
   .container {
     width: var(--content-width);
-  } /* 1080 고정 */
+  } 
 }
 
-/* 수평 스크롤 방지 (세이프가드) */
 html,
 body {
   overflow-x: hidden;
 }
 
-/* 그리드 */
+
 .grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--gutter);
-  /* height: 100vh;  <- 필요 없으면 지워서 세로 스크롤만 남게 */
 }
 
-/* 시각용 가이드라인: border 대신 outline(레이아웃에 영향 없음) */
+
 .grid > div {
   background: rgba(255, 0, 0, 0.12);
   outline: 1px solid rgba(0, 0, 0, 0.05);
