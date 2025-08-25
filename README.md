@@ -1,3 +1,5 @@
+# SeaZle_Front
+
 <span align="center"> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> </span>
 
 
@@ -6,7 +8,10 @@
 
 
 ✨ 기능
-👀 다양한 강습소 정보 한눈에
+
+
+
+### 👀 다양한 강습소 정보 한눈에
 
 카드 리스트로 강습소 핵심 정보(이름, 위치, 가격대, 평점)를 빠르게 스캔
 
@@ -16,7 +21,7 @@
 
 <p align="center"> <img src="https://github.com/user-attachments/assets/c6db2229-b056-4afb-9ab4-26d0d60f681b" width="800" alt="SeaZle Front Preview" /> </p>
 
-🔍 AI 기반 리뷰 분석 및 비교
+### 🔍 AI 기반 리뷰 분석 및 비교
 
 실제 사용자 리뷰를 AI가 요약해 장·단점을 빠르게 파악
 
@@ -28,7 +33,7 @@
  </p>
 
 
-🏄‍♀️ 함께 즐겨요, 모임 기능
+### 🏄‍♀️ 함께 즐겨요, 모임 기능
 
 관심사 기반 모임 모집/참여
 
@@ -39,7 +44,11 @@
 <p> <img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/4e6d0a19-9584-4c6f-a6cf-040643a2a9ee" />
  </p>
 
+ 
+
 🧰 기술 스택
+
+
 
 Frontend: React, CSS Modules / Styled-Components
 
