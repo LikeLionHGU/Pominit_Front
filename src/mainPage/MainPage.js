@@ -119,7 +119,7 @@ Centers 내부에서는 sport, sorting 두가지 props를 활용해서
         <BG />
         <Welcome>
           {userName} 님 반가워요 !<br />
-          포항의 모든 해저 레포츠, 씨즐과 함께 즐겨보세요.
+          포항의 모든 해양 레포츠, 씨즐과 함께 즐겨보세요.
         </Welcome>
         <Header />
         <Typebtn value={sport} onChange={setSport} />
