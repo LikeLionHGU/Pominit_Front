@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
@@ -143,7 +143,7 @@ export default function Review2({ center }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const c = normalizeCenter(center);
+  const c = useMemo(() => normalizeCenter(center), [center]);
 
   const isLoggedIn = () => {
     const token = localStorage.getItem("token");
