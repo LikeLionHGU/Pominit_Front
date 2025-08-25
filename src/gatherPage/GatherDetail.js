@@ -3,14 +3,20 @@ import axios from "axios";
 import Header from "../common/Header";
 import Sidebar from "../common/Sidebar";
 import Floating from "./component/Floating";
-
 import Info from "./component/Info";
 import Member from "./component/Member";
 import Review from "./component/Review";
 import Location from "./component/Location";
+import { createGlobalStyle } from "styled-components";
 
 import { useParams } from "react-router-dom";
 import styles from "./styles/GatherDetail.module.css";
+const LocalGlobalStyle = createGlobalStyle`
+  body { 
+    background: #fafbff;
+  }
+`;
+
 
 function parseJwt(token) {
   try {
@@ -97,6 +103,8 @@ function GatherDetail() {
   }, [id]);
 
   return (
+    <>
+    <LocalGlobalStyle />
     <div className="container">
       <Header />
       <div className={styles.wrap}>
@@ -128,6 +136,7 @@ function GatherDetail() {
         onJoined={handleJoined}
       />
     </div>
+    </>
   );
 }
 
