@@ -1,4 +1,5 @@
 # SeaZle_Front
+> **정보는 한 눈에, 비교는 간편하게, 레포츠는 함께**
 
 <span align="center"> <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> </span>
 
@@ -58,7 +59,7 @@ State & Utils: React Hooks, Axios
 
 AI 요약/분석: 리뷰 텍스트 기반 요약/스코어링 로직
 
-## 우리의 정신
+## ✨우리의 정신
 <img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/fa58369e-4777-4d33-b7aa-c8e2d7c980ec" />
 
 
