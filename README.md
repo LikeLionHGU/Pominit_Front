@@ -58,6 +58,10 @@ State & Utils: React Hooks, Axios
 
 AI 요약/분석: 리뷰 텍스트 기반 요약/스코어링 로직
 
+## 우리의 정신
+<img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/fa58369e-4777-4d33-b7aa-c8e2d7c980ec" />
+
+
 👨‍💻 개발자
 
 <table> <tr> <td align="center"> <img width="160" height="160" alt="image" src="https://github.com/user-attachments/assets/ecf72e67-43f9-4191-88f7-707877164f9d" />
