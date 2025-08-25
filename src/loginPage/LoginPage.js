@@ -2,6 +2,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import ErrorModal from "../common/Wrongpassword";
 import Bg from "../common/signupbg";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -141,6 +142,8 @@ const LoginPage = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [errOpen, setErrOpen] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -168,12 +171,19 @@ const LoginPage = () => {
       navigate("/");
       window.location.reload();
     } catch (err) {
-  
+        const status = err?.response?.status;
+        if (status === 401 || status === 403) {
+          setErrMsg("아이디 또는 비밀번호가 올바르지 않습니다.");
+        } else {
+          setErrMsg("로그인에 실패했습니다. 다시 시도해 주세요.");
+        }
+        setErrOpen(true);
     } finally {
       setLoading(false);
     }
   };
   return (
+    <div>
     <Page>
       <div className="container">
         <Bg />
@@ -225,6 +235,13 @@ const LoginPage = () => {
         </form>
       </div>
     </Page>
+      <ErrorModal
+       open={errOpen}
+       onClose={() => setErrOpen(false)}
+       title="로그인 실패"
+       message={errMsg}
+     />
+     </div>
   );
 };
 
