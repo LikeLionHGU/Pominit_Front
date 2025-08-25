@@ -137,6 +137,7 @@ function GatherDetail() {
       </div>
       <Floating
         initialState={gather?.state ?? gather?.joinState ?? gather?.message}
+        onJoined={handleJoined}
       />
     </div>
   );
