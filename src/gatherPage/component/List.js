@@ -1,8 +1,6 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import fallbackData from "../../data/gather.json";
 
 import styles from "./List.module.css";
 import DateIcon from "../../asset/img/date.svg";
@@ -54,12 +52,10 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
 
         if (r.status === 401) {
           setErrMsg("로그인이 필요합니다.");
-          setList(useFallbackWhenEmpty ? fallbackData : []);
           return;
         }
         if (r.status >= 400) {
           setErrMsg("목록을 불러오지 못했습니다.");
-          setList(useFallbackWhenEmpty ? fallbackData : []);
           return;
         }
 
@@ -75,7 +71,6 @@ function List({ category = "", date = "", useFallbackWhenEmpty = false }) {
         if (e.name === "CanceledError") return;
 
         setErrMsg("네트워크 오류가 발생했습니다.");
-        setList(useFallbackWhenEmpty ? fallbackData : []);
       } finally {
         setLoading(false);
       }
