@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 const Mapstyle = styled.div`
   position: absolute;
@@ -36,7 +36,7 @@ export default function Map({ center }) {
   const mapObjRef = useRef(null);
   const markerRef = useRef(null);
   const [interactive, setInteractive] = useState(false);
-  const c = normalizeCenter(center);
+  const c = useMemo(() => normalizeCenter(center), [center]);
 
   useEffect(() => {
     if (!c) return;
@@ -95,7 +95,7 @@ export default function Map({ center }) {
       document.head.appendChild(s);
     }
 
-  }, [c?.latitude, c?.longitude, c?.name]);
+  }, [c]);
 
   useEffect(() => {
     if (!mapObjRef.current) return;
